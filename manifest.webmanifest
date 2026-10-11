@@ -1,11 +1,11 @@
 {
- "name": "Skin Rotation",
- "short_name": "Rotation",
+ "name": "Rota",
+ "short_name": "Rota",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
- "background_color": "#130d17",
- "theme_color": "#130d17",
+ "background_color": "#11100f",
+ "theme_color": "#11100f",
  "icons": [
   {
    "src": "icon-192.png",

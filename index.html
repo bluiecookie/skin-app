@@ -6,242 +6,246 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Skin Rotation">
-<meta name="theme-color" content="#130d17">
+<meta name="apple-mobile-web-app-title" content="Rota">
+<meta name="theme-color" content="#11100f">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>:root{padding-top:env(safe-area-inset-top,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
 </head>
 <body>
-<title>Skin Rotation</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<title>Rota</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Instrument+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: a phone app. One screen per tab, a floating dock at the bottom, glass cards over two soft glows. Single dark look by choice. */
+/* Layout: a quiet phone app. One score ring leads, everything else is hairline lists on a warm charcoal ground. Serif for headlines and numerals, sans for everything you tap. */
 :root{
   color-scheme:dark;
-  --bg:#130d17; --glow-a:#ff9d7a; --glow-b:#a983ff;
-  --fg:#fcf4f1; --muted:#bbaab8; --faint:#8a7a88;
-  --card:rgba(255,255,255,.06); --card-2:rgba(255,255,255,.09); --line:rgba(255,255,255,.11);
-  --peach:#ffb48c; --rose:#ff8fa3;
-  --lilac:#c9abff;   /* exfoliation nights */
-  --gold:#ffd590;    /* azelaic nights */
-  --mint:#a8e6c4;    /* recovery nights */
-  --ink:#2a1420;     /* text on a filled accent */
-  --dock:rgba(36,26,42,.82); --shadow:rgba(0,0,0,.45);
-  --display:"Fraunces","Iowan Old Style",Georgia,serif;
-  --body:"Plus Jakarta Sans","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --bg:#11100f; --surface:#1a1816; --surface-2:#262320; --line:rgba(236,230,220,.1);
+  --fg:#efe9df; --muted:#a39b90; --faint:#6f685f;
+  --accent:#e3d0b4; --accent-2:#b69a78; --ink:#1a1510;
+  --acid:#bfa9d1; --ret:#d9a08d; --aza:#d9bf8c; --bp:#9db7d1; --rec:#a9c1a5; --warn:#e0a86e;
+  --dock:rgba(20,18,17,.88); --shadow:rgba(0,0,0,.5);
+  --serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --sans:"Instrument Sans","Helvetica Neue","Segoe UI",system-ui,sans-serif;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:var(--bg)}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45;min-height:100vh}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(60% 38% at 12% 0%,color-mix(in srgb,var(--glow-a) 34%,transparent),transparent 70%),
-             radial-gradient(55% 40% at 100% 38%,color-mix(in srgb,var(--glow-b) 26%,transparent),transparent 72%),
-             radial-gradient(70% 40% at 20% 100%,color-mix(in srgb,var(--rose) 16%,transparent),transparent 70%)}
-#app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding-inline:16px;padding-block:22px calc(118px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
-h1,h2,h3,p{margin:0}
-h1{font-family:var(--display);font-weight:500;font-size:32px;line-height:1.1;letter-spacing:-.01em;text-wrap:balance}
-h1 em{font-style:italic;color:var(--peach)}
-h2{font-family:var(--display);font-weight:600;font-size:22px;line-height:1.15}
-h3{font-size:15px;font-weight:600}
-.sub{color:var(--muted);font-size:13.5px}
-.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}
-.num{font-variant-numeric:tabular-nums}
-button,input{font:inherit;color:inherit}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.45;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(90% 42% at 50% -8%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 70%)}
+#app{position:relative;max-width:500px;margin:0 auto;padding-inline:22px;padding-block:14px calc(104px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:22px}
+h1,h2,h3,p,ol,ul{margin:0;padding:0}
+ol,ul{list-style:none}
+h1{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+h1 em{font-style:italic}
+h2{font-family:var(--serif);font-weight:400;font-size:23px;line-height:1.15}
+.sub{color:var(--muted);font-size:14px}
+.eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.num{font-variant-numeric:tabular-nums lining-nums}
+button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;padding:0;text-align:left}
-:focus-visible{outline:2px solid var(--peach);outline-offset:2px}
-svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:1.5px solid var(--accent);outline-offset:3px}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.c-acid{color:var(--acid)} .c-ret{color:var(--ret)} .c-aza{color:var(--aza)} .c-bp{color:var(--bp)} .c-rec{color:var(--rec)}
+.b-acid{background:var(--acid)} .b-ret{background:var(--ret)} .b-aza{background:var(--aza)} .b-bp{background:var(--bp)} .b-rec{background:var(--rec)}
 
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 11px;border-radius:99px;background:var(--card-2);color:var(--muted);align-self:flex-start}
-.hello{display:flex;flex-direction:column;gap:8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:18px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);min-width:0}
-.t-exf{color:var(--lilac)} .t-aza{color:var(--gold)} .t-rec{color:var(--mint)}
-.b-exf{background:var(--lilac)} .b-aza{background:var(--gold)} .b-rec{background:var(--mint)}
+.bar{display:flex;align-items:center;justify-content:space-between;min-height:40px}
+.mark{font-family:var(--serif);font-style:italic;font-size:26px;letter-spacing:-.01em}
+.icon{width:40px;height:40px;display:grid;place-items:center;color:var(--muted);margin-right:-9px}
+.head{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--surface);border-radius:22px;padding:20px;min-width:0}
+.rowhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 
 /* Today */
-.hero{display:flex;align-items:center;gap:18px}
-.ring{position:relative;width:118px;height:118px;flex:none}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 0 12px color-mix(in srgb,var(--peach) 55%,transparent))}
-.ring .track{stroke:var(--card-2)} .ring .bar{stroke:url(#grad);transition:stroke-dashoffset .6s cubic-bezier(.3,.8,.3,1)}
-.ring div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring b{font-family:var(--display);font-size:28px;font-weight:600;line-height:1}
-.ring span{font-size:11px;color:var(--muted);margin-top:3px}
-.hero .meta{display:flex;flex-direction:column;gap:4px;min-width:0}
-.streak{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:13px;font-weight:600;color:var(--peach)}
-.streak svg{width:16px;height:16px}
-
-.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;border-radius:99px;background:var(--card);border:1px solid var(--line)}
-.seg button{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 0;border-radius:99px;font-weight:600;font-size:14px;color:var(--muted)}
-.seg button[aria-pressed="true"]{background:linear-gradient(120deg,var(--peach),var(--rose));color:var(--ink)}
-.seg svg{width:18px;height:18px}
-
-.steps{display:flex;flex-direction:column;gap:10px}
-.step{display:grid;grid-template-columns:46px minmax(0,1fr) 30px;gap:14px;align-items:center;width:100%;padding:12px 14px;border-radius:22px;background:var(--card);border:1px solid var(--line);transition:background .2s,opacity .2s}
-.step .ico{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;background:var(--card-2);color:var(--peach)}
-.step .tick{width:30px;height:30px;border-radius:50%;border:1.6px solid var(--line);display:grid;place-items:center;color:transparent}
-.step .tick svg{width:16px;height:16px;stroke-width:2.4}
-.step[aria-pressed="true"]{background:color-mix(in srgb,var(--peach) 13%,transparent);border-color:color-mix(in srgb,var(--peach) 35%,transparent)}
-.step[aria-pressed="true"] .tick{background:linear-gradient(120deg,var(--peach),var(--rose));border-color:transparent;color:var(--ink)}
-.step[aria-pressed="true"] h3{color:var(--muted)}
-.step.key .ico{color:var(--ink)}
-.tip{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);padding:2px 6px}
-.tip svg{width:18px;height:18px;margin-top:1px;color:var(--peach)}
+.ring{position:relative;width:212px;max-width:100%;aspect-ratio:1;margin:2px auto 0}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .track{stroke:var(--surface-2)} .ring .arc{stroke:url(#grad);transition:stroke-dashoffset .7s cubic-bezier(.3,.8,.3,1)}
+.ring div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ring b{font-family:var(--serif);font-weight:400;font-size:76px;line-height:.95}
+.ring span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line)}
+.trio div{padding:14px 4px;text-align:center;display:flex;flex-direction:column;gap:5px}
+.trio div+div{border-left:1px solid var(--line)}
+.trio b{font-family:var(--serif);font-weight:400;font-size:19px;line-height:1.1}
+.tabs2{display:flex;gap:26px;border-bottom:1px solid var(--line)}
+.tabs2 button{padding:0 0 11px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--faint);border-bottom:1.5px solid transparent;margin-bottom:-1px}
+.tabs2 button[aria-pressed="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.list{margin-top:-14px}
+.list li+li{border-top:1px solid var(--line)}
+.row{display:flex;align-items:center;gap:14px;width:100%;padding:15px 0}
+.row .idx{font-family:var(--serif);font-size:15px;color:var(--faint);width:24px}
+.row .what{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.row .what b{font-weight:500;font-size:16px}
+.row .what small{font-size:13px;color:var(--muted)}
+.tagc{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.tick{width:28px;height:28px;border-radius:50%;border:1.3px solid var(--faint);display:grid;place-items:center;color:transparent;flex:none;transition:background .2s}
+.tick svg{width:15px;height:15px;stroke-width:2}
+[aria-pressed="true"]>.tick{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.row[aria-pressed="true"] .what b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--faint)}
+.empty{padding:18px 0;color:var(--muted);font-size:14px}
+.feel{display:flex;flex-direction:column;gap:12px}
+.pills{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
+.pill{padding:11px 0;border-radius:99px;border:1px solid var(--line);text-align:center;font-size:13.5px;font-weight:500;color:var(--muted)}
+.pill[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.note{font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.4;color:var(--muted);text-wrap:pretty}
 
 /* Week */
-.bar-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.arrows{display:flex;gap:8px}
-.arrows button{width:40px;height:40px;border-radius:50%;background:var(--card-2);display:grid;place-items:center}
+.arrows{display:flex;gap:4px}
+.arrows button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
 .arrows button:disabled{opacity:.3}
-.strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
-.dayb{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 0 9px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
-.dayb small{font-size:11px;color:var(--muted);font-weight:600}
-.dayb b{font-family:var(--display);font-size:19px;font-weight:600;line-height:1}
-.dayb .dot{width:7px;height:7px;border-radius:50%}
+.strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dayb{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 0 10px;border-radius:99px;width:100%}
+.dayb small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.dayb b{font-family:var(--serif);font-weight:400;font-size:21px;line-height:1}
+.dayb .dot{width:6px;height:6px;border-radius:50%}
 .dayb .ap{display:flex;gap:3px}
-.dayb .ap i{width:9px;height:4px;border-radius:2px;background:var(--card-2)}
-.dayb .ap i.on{background:var(--peach)}
-.dayb[aria-pressed="true"]{background:var(--card-2);border-color:var(--peach)}
-.dayb.today small{color:var(--peach)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);justify-content:center}
-.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.big{display:flex;align-items:center;justify-content:center;gap:9px;padding:15px 0;border-radius:20px;background:var(--card-2);font-weight:600}
-.big[aria-pressed="true"]{background:linear-gradient(120deg,var(--peach),var(--rose));color:var(--ink)}
-.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.pills span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:6px 11px 6px 8px;border-radius:99px;background:var(--card-2);color:var(--muted)}
-.pills svg{width:15px;height:15px}
-.pills .key{color:var(--fg)}
+.dayb .ap i{width:8px;height:2px;border-radius:2px;background:var(--surface-2)}
+.dayb .ap i.on{background:var(--accent)}
+.dayb[aria-pressed="true"]{background:var(--surface)}
+.dayb.today small{color:var(--accent)}
+div.dayb{padding:10px 0}
+div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);justify-content:center}
+.legend i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;vertical-align:2px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:15px 0;border-radius:99px;background:var(--accent);color:var(--ink);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--fg)}
+.btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.btn:disabled{opacity:.35}
+.btn svg{width:16px;height:16px}
 
 /* Progress */
-.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.tile{padding:16px 10px;text-align:center}
-.tile b{display:block;font-family:var(--display);font-size:30px;font-weight:600;line-height:1.05}
-.tile span{font-size:11.5px;color:var(--muted)}
-.map{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;margin-top:14px}
-.map i{aspect-ratio:1;border-radius:50%;background:var(--card-2)}
-.map i.l1{background:color-mix(in srgb,var(--peach) 45%,transparent)}
-.map i.l2{background:linear-gradient(135deg,var(--peach),var(--rose));box-shadow:0 0 8px color-mix(in srgb,var(--peach) 50%,transparent)}
-.map i.now{outline:2px solid var(--fg);outline-offset:2px}
-.line{display:flex;flex-direction:column;margin-top:10px}
-.mile{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;padding:9px 0;position:relative}
-.mile .node{width:40px;height:40px;border-radius:50%;background:var(--card-2);display:grid;place-items:center;color:var(--muted);position:relative;z-index:1}
-.mile .node svg{width:18px;height:18px}
-.mile:not(:last-child)::after{content:"";position:absolute;left:19px;top:49px;bottom:-9px;width:2px;background:var(--line)}
-.mile[aria-pressed="true"] .node{background:linear-gradient(120deg,var(--peach),var(--rose));color:var(--ink)}
-.mile[aria-pressed="true"] h3{color:var(--muted)}
-.tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--gold) 22%,transparent);color:var(--gold)}
-.field{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13.5px;color:var(--muted)}
-.field input{background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:7px 10px}
+.map{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:7px;margin-top:18px}
+.map i{aspect-ratio:1;border-radius:50%;background:var(--surface-2)}
+.map i.l1{background:color-mix(in srgb,var(--accent) 45%,var(--surface-2))}
+.map i.l2{background:var(--accent)}
+.map i.now{outline:1.5px solid var(--fg);outline-offset:2px}
+.mile{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:16px;align-items:center;width:100%;padding:14px 0}
+.mile+.mile{border-top:1px solid var(--line)}
+.mile b{font-weight:500;font-size:16px;display:block}
+.mile[aria-pressed="true"] b{color:var(--muted)}
+.tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--warn)}
 .sync{text-align:center;font-size:12px;color:var(--faint)}
 
-/* Shop */
-.meter{height:8px;border-radius:99px;background:var(--card-2);overflow:hidden;margin-top:12px}
-.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--peach),var(--rose));transition:width .4s}
-.group{display:flex;flex-direction:column;gap:8px}
-.item{display:grid;grid-template-columns:30px minmax(0,1fr);gap:14px;align-items:center;width:100%;padding:13px 16px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
-.item .tick{width:30px;height:30px;border-radius:50%;border:1.6px solid var(--line);display:grid;place-items:center;color:transparent}
-.item .tick svg{width:16px;height:16px;stroke-width:2.4}
-.item[aria-pressed="true"] .tick{background:linear-gradient(120deg,var(--peach),var(--rose));border-color:transparent;color:var(--ink)}
-.item[aria-pressed="true"] h3{text-decoration:line-through;color:var(--muted)}
-
-/* Butter */
-.stack{display:flex;height:22px;border-radius:99px;overflow:hidden;gap:2px;margin:16px 0 6px}
-.stack i{display:block;min-width:4px}
-.ing{display:grid;grid-template-columns:12px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
-.ing:last-of-type{border-bottom:0}
-.ing i{width:12px;height:12px;border-radius:50%}
+/* Shop and butter */
+.meter{height:3px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:16px}
+.meter i{display:block;height:100%;background:var(--accent);transition:width .4s}
+.item{display:flex;align-items:center;gap:16px;width:100%;padding:14px 0}
+.item+.item{border-top:1px solid var(--line)}
+.item .what{flex:1;min-width:0}
+.item b{font-weight:500;font-size:16px;display:block}
+.item[aria-pressed="true"] b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--faint)}
+.stack{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px;margin:18px 0 8px}
+.stack i{display:block;min-width:3px}
+.ing{display:grid;grid-template-columns:8px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 0}
+.ing+.ing{border-top:1px solid var(--line)}
+.ing i{width:8px;height:8px;border-radius:50%}
 .ing .pct{color:var(--muted);font-size:13px;min-width:44px;text-align:right}
-.ing b{min-width:62px;text-align:right;font-weight:600}
-.stepper{display:flex;align-items:center;gap:12px}
-.stepper button{width:38px;height:38px;border-radius:50%;background:var(--card-2);display:grid;place-items:center;font-size:20px;font-weight:500}
-.stepper b{font-family:var(--display);font-size:22px;font-weight:600;min-width:72px;text-align:center}
-.how{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none;counter-reset:n}
-.how li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:center;font-size:14px;counter-increment:n}
-.how li::before{content:counter(n);width:28px;height:28px;border-radius:50%;background:var(--card-2);display:grid;place-items:center;font-size:12.5px;font-weight:700;color:var(--peach)}
+.ing b{min-width:64px;text-align:right;font-family:var(--serif);font-weight:400;font-size:17px}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:19px}
+.stepper b{font-family:var(--serif);font-weight:400;font-size:22px;min-width:74px;text-align:center}
+.how li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:13px 0;align-items:baseline}
+.how li+li{border-top:1px solid var(--line)}
+.how li span{font-family:var(--serif);color:var(--faint)}
+
+/* Settings */
+.themes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}
+.theme{display:flex;flex-direction:column;align-items:center;gap:9px;padding:14px 4px 12px;border-radius:18px;border:1px solid var(--line);font-size:12px;font-weight:500;text-align:center;color:var(--muted)}
+.theme i{width:40px;height:40px;border-radius:50%;border:1px solid var(--line)}
+.theme[aria-pressed="true"]{border-color:var(--accent);color:var(--fg)}
+.prod{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:13px 0}
+.prod+.prod{border-top:1px solid var(--line)}
+.prod label,.lab{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;display:block}
+.txt{width:100%;background:transparent;border:0;border-bottom:1px solid transparent;padding:4px 0 3px;font-size:16px;font-weight:500;border-radius:0}
+.txt::placeholder{color:var(--faint);font-weight:400}
+.txt:focus{outline:none;border-bottom-color:var(--accent)}
+.sw{width:46px;height:28px;border-radius:99px;background:var(--surface-2);position:relative;transition:background .2s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--muted);transition:transform .2s}
+.sw[aria-checked="true"]{background:var(--accent)}
+.sw[aria-checked="true"]::after{transform:translateX(18px);background:var(--ink)}
+.del{color:var(--muted);width:40px;height:40px;display:grid;place-items:center;margin-right:-8px}
+.add{display:grid;gap:10px;margin-top:16px}
+.add .txt{border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:var(--bg)}
+.add select.txt{appearance:none;-webkit-appearance:none}
+.field{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0}
+.field+.field{border-top:1px solid var(--line)}
+.field>label,.field>span{font-size:15px}
+.field .txt{max-width:150px;text-align:right}
+.field input[type=date]{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:7px 10px}
+.checks{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.checks li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;font-size:14px;color:var(--muted)}
+.checks svg{width:18px;height:18px;margin-top:1px}
+.checks .ok svg{color:var(--rec)} .checks .warn{color:var(--fg)} .checks .warn svg{color:var(--warn)} .checks .tip svg{color:var(--accent)}
+.fine{font-size:12px;color:var(--faint);text-align:center}
+
+/* Onboarding */
+.ob{min-height:calc(100vh - 150px);display:flex;flex-direction:column;gap:22px}
+.hero-mark{font-family:var(--serif);font-style:italic;font-size:92px;line-height:1;letter-spacing:-.03em;margin-top:18vh}
+.opts{margin-top:-8px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;padding:15px 0}
+.opt+.opt{border-top:1px solid var(--line)}
+.opt .what{flex:1;min-width:0}
+.opt b{font-weight:500;font-size:16px;display:block}
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:4;padding:26px 22px calc(18px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--bg) 34%)}
+.cta .btn{max-width:456px;margin:0 auto}
 
 /* Dock */
-.dock{position:fixed;z-index:5;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;padding-inline:12px;pointer-events:none}
-.dock div{pointer-events:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;width:100%;max-width:440px;padding:6px;border-radius:30px;background:var(--dock);border:1px solid var(--line);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 12px 32px var(--shadow)}
-.dock button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 7px;border-radius:24px;font-size:10.5px;font-weight:600;color:var(--faint)}
-.dock button[aria-current="page"]{background:var(--card-2);color:var(--peach)}
-/* Settings */
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.round{width:40px;height:40px;border-radius:50%;background:var(--card-2);display:grid;place-items:center;flex:none}
-.themes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
-.theme{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px;border-radius:20px;background:var(--card-2);border:1.6px solid transparent;font-size:12px;font-weight:600;text-align:center}
-.theme i{width:44px;height:44px;border-radius:50%;border:1px solid var(--line)}
-.theme[aria-pressed="true"]{border-color:var(--peach)}
-.prod{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
-.prod:last-child{border-bottom:0}
-.prod .ico{width:40px;height:40px;border-radius:14px;background:var(--card-2);display:grid;place-items:center;color:var(--peach)}
-.prod label{font-size:12px;color:var(--muted);font-weight:600;display:block}
-.txt{width:100%;background:transparent;border:0;border-bottom:1px dashed var(--line);padding:3px 0;font-size:15px;font-weight:600;border-radius:0}
-.txt:focus{outline:none;border-bottom-color:var(--peach)}
-.sw{width:46px;height:28px;border-radius:99px;background:var(--card-2);border:1px solid var(--line);position:relative;transition:background .2s;flex:none}
-.sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:var(--fg);transition:transform .2s}
-.sw[aria-checked="true"]{background:linear-gradient(120deg,var(--peach),var(--rose));border-color:transparent}
-.sw[aria-checked="true"]::after{transform:translateX(18px);background:var(--ink)}
-.add{display:grid;gap:10px;margin-top:14px}
-.add .txt{border:1px solid var(--line);border-radius:14px;padding:11px 12px;background:var(--card-2);font-weight:500}
-.btn{padding:13px 0;border-radius:18px;text-align:center;font-weight:700;background:linear-gradient(120deg,var(--peach),var(--rose));color:var(--ink);width:100%}
-.del{color:var(--muted);width:36px;height:36px;display:grid;place-items:center}
-.field .txt{max-width:150px;text-align:right}
+.dock{position:fixed;z-index:5;left:0;right:0;bottom:0;background:var(--dock);border-top:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px))}
+.dock div{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;max-width:500px;margin:0 auto}
+.dock button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 6px;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--faint)}
+.dock button[aria-current="page"]{color:var(--fg)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--peach)"/><stop offset="1" style="stop-color:var(--rose)"/></linearGradient></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient></defs></svg>
 <main id="app"></main>
-<nav class="dock" aria-label="Sections"><div id="dock"></div></nav>
+<nav class="dock" aria-label="Sections" id="docknav"><div id="dock"></div></nav>
 
 <script>
 (function(){
-  var DEFAULT_START='2026-10-11', DAYS=84, DEFAULT_NAME='';
-  var state={start:DEFAULT_START,checks:{},miles:{},shop:{},batch:200,theme:'glow',steps:{},custom:[],name:DEFAULT_NAME};
-  var ui={tab:'today',slot:new Date().getHours()<15?'am':'pm',week:null,day:null,recipe:'butter',frac:0,when:'am',newN:'',newP:''};
+  var PERSONAL=false, MY_NAME='', DAYS=84;
+  var app=document.getElementById('app'), dock=document.getElementById('dock'), docknav=document.getElementById('docknav');
   var ref=null, writing=false, dirty=false, readOnly=false, syncMsg='';
-  var app=document.getElementById('app'), dock=document.getElementById('dock');
 
   var P={
-    drop:'<path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.8a5.5 5.5 0 0 1-11 0c0-3.2 2.5-6.2 5.5-9.8z"/>',
-    waves:'<path d="M3 9q3-3 6 0t6 0t6 0M3 15q3-3 6 0t6 0t6 0"/>',
-    citrus:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17M3.5 12h17M6 6l12 12M18 6L6 18"/>',
-    jar:'<path d="M7 8h10v9a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3zM6 4.5h12V8H6z"/>',
     sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"/>',
-    flask:'<path d="M9.5 3.5h5M10.5 3.5v5.2L5.6 17a2.3 2.3 0 0 0 2 3.5h8.8a2.3 2.3 0 0 0 2-3.5l-4.9-8.3V3.5M8 14.5h8"/>',
-    leaf:'<path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19l7-7"/>',
-    oil:'<path d="M10 3.5h4v3h-4zM8.5 9.5a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v9a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2z"/>',
     moon:'<path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/>',
     check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    alert:'<path d="M12 4l9 15.500H3zM12 10v4.500M12 17v.200"/>',
+    spark:'<path d="M12 3.500c.600 4.600 3.300 7.300 8 8-4.700.700-7.400 3.400-8 8-.600-4.600-3.300-7.300-8-8 4.700-.700 7.400-3.400 8-8z"/>',
     cal:'<path d="M4.5 6.5h15v13h-15zM4.5 10.5h15M8.5 4v4M15.5 4v4"/>',
     chart:'<path d="M5 19v-8M12 19V5M19 19v-6"/>',
     bag:'<path d="M5.5 8h13l-1 12h-11zM9 8V6.5a3 3 0 0 1 6 0V8"/>',
+    jar:'<path d="M7 8h10v9a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3zM6 4.5h12V8H6z"/>',
     cam:'<path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
-    flame:'<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"/>',
     tune:'<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
     trash:'<path d="M5 7h14M9 7V4.5h6V7M7 7l1 12.5h8L17 7"/>',
     left:'<path d="M14.5 6l-6 6 6 6"/>', right:'<path d="M9.5 6l6 6-6 6"/>'
   };
+  function ic(n){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>'}
   function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-  var BASE={bg:'#130d17','glow-a':'#ff9d7a','glow-b':'#a983ff',fg:'#fcf4f1',muted:'#bbaab8',faint:'#8a7a88',card:'rgba(255,255,255,.06)','card-2':'rgba(255,255,255,.09)',line:'rgba(255,255,255,.11)',
-    peach:'#ffb48c',rose:'#ff8fa3',lilac:'#c9abff',gold:'#ffd590',mint:'#a8e6c4',ink:'#2a1420',dock:'rgba(36,26,42,.82)',shadow:'rgba(0,0,0,.45)'};
+
+  /* ---------- themes ---------- */
+  var BASE={bg:'#11100f',surface:'#1a1816','surface-2':'#262320',line:'rgba(236,230,220,.1)',fg:'#efe9df',muted:'#a39b90',faint:'#6f685f',accent:'#e3d0b4','accent-2':'#b69a78',ink:'#1a1510',
+    acid:'#bfa9d1',ret:'#d9a08d',aza:'#d9bf8c',bp:'#9db7d1',rec:'#a9c1a5',warn:'#e0a86e',dock:'rgba(20,18,17,.88)',shadow:'rgba(0,0,0,.5)'};
   var THEMES=[
-    ['glow','Peach glow',{}],
-    ['berry','Berry',{bg:'#170b12','glow-a':'#ff5f8f','glow-b':'#9a4dff',peach:'#ff9dbb',rose:'#d58cff',ink:'#2b0c1b',dock:'rgba(42,22,34,.82)'}],
-    ['lilac','Lilac dusk',{bg:'#100e1c','glow-a':'#a983ff','glow-b':'#5f8bff',peach:'#c9abff',rose:'#8fa8ff',ink:'#17122e',dock:'rgba(28,25,46,.82)'}],
-    ['mint','Ocean mint',{bg:'#0b1514','glow-a':'#4fd1a5','glow-b':'#3a8fb5',peach:'#9eebc9',rose:'#6fd0d6',ink:'#082019',dock:'rgba(18,34,33,.82)'}],
-    ['gold','Golden hour',{bg:'#15100a','glow-a':'#ffb347','glow-b':'#d9773c',peach:'#ffd590',rose:'#ffab6b',ink:'#2a1a06',dock:'rgba(38,29,18,.82)'}],
-    ['day','Daylight',{bg:'#fbf3ee','glow-a':'#ffc9ae','glow-b':'#d9c7ff',fg:'#2b1d26',muted:'#6f5d69',faint:'#94828d',card:'rgba(255,255,255,.66)','card-2':'rgba(70,35,55,.07)',line:'rgba(70,35,55,.13)',
-      peach:'#d9623c',rose:'#dd4f79',lilac:'#7a52d6',gold:'#a06500',mint:'#1f8a5b',ink:'#ffffff',dock:'rgba(255,255,255,.86)',shadow:'rgba(90,50,70,.22)'}]
+    ['stone','Stone',{}],
+    ['ink','Ink',{bg:'#0b0f17',surface:'#131924','surface-2':'#1d2636',line:'rgba(220,230,245,.1)',fg:'#e8edf5',muted:'#8e9bb0',faint:'#5d6a80',accent:'#cfe0f5','accent-2':'#7fa3cf',ink:'#0b1220',dock:'rgba(11,15,23,.9)'}],
+    ['mauve','Mauve',{bg:'#131015',surface:'#1c181f','surface-2':'#29222c',fg:'#f0e8f0',muted:'#a597a8',faint:'#726676',accent:'#e2cfe6','accent-2':'#a98bb3',ink:'#1b1320',dock:'rgba(19,16,21,.9)'}],
+    ['sage','Sage',{bg:'#0e1210',surface:'#161c18','surface-2':'#212a24',fg:'#e9efe6',muted:'#96a394',faint:'#657163',accent:'#d2e0cf','accent-2':'#8fae8b',ink:'#101a11',dock:'rgba(14,18,16,.9)'}],
+    ['clay','Clay',{bg:'#140f0d',surface:'#1e1714','surface-2':'#2b211c',fg:'#f3e8e0',muted:'#ab9a8e',faint:'#77685e',accent:'#edc9b4','accent-2':'#c28467',ink:'#24120a',dock:'rgba(20,15,13,.9)'}],
+    ['bone','Bone',{bg:'#f4efe7',surface:'#fbf8f3','surface-2':'#e9e1d5',line:'rgba(40,32,24,.13)',fg:'#221d18',muted:'#6e665c',faint:'#9a9186',accent:'#2a241e','accent-2':'#6a5c4d',ink:'#f7f2ea',
+      acid:'#7b5ea0',ret:'#b0563d',aza:'#8f6a12',bp:'#3f6f9c',rec:'#47764a',warn:'#a8641a',dock:'rgba(250,247,242,.92)',shadow:'rgba(60,45,30,.18)'}]
   ];
+  var THEME_IDS={}; THEMES.forEach(function(t){THEME_IDS[t[0]]=1});
   function applyTheme(){
     var t=THEMES.filter(function(x){return x[0]===state.theme})[0]||THEMES[0], v=Object.assign({},BASE,t[2]), r=document.documentElement;
     Object.keys(v).forEach(function(k){r.style.setProperty('--'+k,v[k])});
-    r.style.colorScheme=t[0]==='day'?'light':'dark';
+    r.style.colorScheme=t[0]==='bone'?'light':'dark';
     var m=document.querySelector('meta[name="theme-color"]'); if(m)m.setAttribute('content',v.bg);
   }
-  function ic(n){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>'}
 
+  /* ---------- dates ---------- */
   function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
   function key(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
@@ -250,72 +254,115 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stro
   var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function nice(d){return MON[d.getMonth()]+' '+d.getDate()}
 
-  /* Weeks 1 and 2 ramp up. Week 3 onward is the full rotation. */
-  function nightType(d){
-    var week=Math.floor(dayIndex(d)/7)+1, w=d.getDay();
-    if(week<=2){ if(w===1)return 'exf'; if(w===2||w===5)return 'aza'; return 'rec'; }
-    if(w===1||w===4)return 'exf';
-    if(w===0)return 'rec';
-    return 'aza';
+  /* ---------- the routine engine ----------
+     Each product has a type. A type knows where it sits in the morning and evening order,
+     and whether it is an active that needs its own night. */
+  var CATS={
+    oil:{n:'Oil cleanse',pm:1},
+    cl:{n:'Cleanser',am:1,pm:2},
+    acid:{n:'Exfoliant',pm:3,act:'acid'},
+    tn:{n:'Toner',am:2,pm:4},
+    vc:{n:'Vitamin C',am:3},
+    se:{n:'Serum',am:4,pm:5},
+    aza:{n:'Azelaic acid',pm:6,act:'aza'},
+    ret:{n:'Retinoid',pm:6,act:'ret'},
+    bp:{n:'Benzoyl peroxide',pm:6,act:'bp'},
+    mo:{n:'Moisturizer',am:6,pm:8},
+    sp:{n:'Sunscreen',am:7}
+  };
+  var CAT_ORDER=['oil','cl','acid','tn','vc','se','aza','ret','bp','mo','sp'];
+  var NIGHT={
+    acid:{n:'Exfoliate',s:'Exf',tip:'No other actives tonight. If your skin already feels tight, skip the exfoliant.'},
+    ret:{n:'Retinoid',s:'Ret',tip:'A pea size covers the whole face. Follow with moisturizer.'},
+    aza:{n:'Azelaic',s:'Aza',tip:'A few minutes of itch is normal. A lasting burn means moisturizer first next time.'},
+    bp:{n:'Blemish care',s:'BP',tip:'A thin layer on breakout areas only. It can bleach towels.'},
+    rec:{n:'Recovery',s:'Rest',tip:'No actives tonight. Rest nights protect your progress.'}
+  };
+  var GOALS={marks:'Dark marks',texture:'Texture',breakouts:'Breakouts',lines:'Fine lines',dry:'Dryness',habit:'Staying consistent'};
+  var WHEN={am:'Morning',pm:'Evening',both:'Both'};
+  function herProducts(){return [
+    {id:'oc',cat:'oil',n:'',p:'Cleansing oil or balm',w:'',on:false,x:0},
+    {id:'cl',cat:'cl',n:'',p:'Round Lab Birch',w:'',on:true,x:0},
+    {id:'ex',cat:'acid',n:'',p:'Green Plum AHA + BHA',w:'',on:true,x:0},
+    {id:'tn',cat:'tn',n:'',p:'Black Rice Hyaluronic',w:'',on:true,x:0},
+    {id:'vc',cat:'vc',n:'',p:'Dr. Althea',w:'',on:true,x:0},
+    {id:'az',cat:'aza',n:'',p:'Kisocare 15%, pea size',w:'',on:true,x:0},
+    {id:'cr',cat:'mo',n:'',p:'Jumiso Snail + Peptide',w:'',on:true,x:0},
+    {id:'sp',cat:'sp',n:'',p:'Tinted SPF 50',w:'',on:true,x:0}
+  ]}
+  function fresh(){
+    var base={v:2,ramp:2,goals:[],theme:'stone',checks:{},miles:{},shop:{},feel:{},batch:200};
+    return Object.assign(base,PERSONAL?{setup:true,extras:true,start:'2026-10-11',name:MY_NAME,products:herProducts()}
+                                      :{setup:false,extras:false,start:key(new Date()),name:'',products:[]});
   }
-  var TYPES={
-    exf:{name:'Exfoliate',what:'Green Plum AHA + BHA',tip:'No azelaic acid tonight. Skin already tight? Skip the acid toner.'},
-    aza:{name:'Azelaic',what:'Kisocare azelaic acid 15%',tip:'A few minutes of itch is normal. A lasting burn means cream first next time.'},
-    rec:{name:'Recovery',what:'Hydration only',tip:'No actives tonight. Rest nights keep new dark marks away.'}
-  };
-  var S={
-    oc:['oc','oil','Oil cleanse','Cleansing oil or balm'],
-    cl:['cl','drop','Cleanser','Round Lab Birch'],
-    tn:['tn','waves','Toner','Black Rice Hyaluronic'],
-    vc:['vc','citrus','Vitamin C','Dr. Althea'],
-    cr:['cr','jar','Moisturizer','Jumiso Snail + Peptide'],
-    sp:['sp','sun','Sunscreen','Tinted SPF 50',1],
-    ex:['ex','flask','Exfoliate','Green Plum AHA + BHA',1],
-    az:['az','leaf','Azelaic acid','Kisocare 15%, pea size',1]
-  };
-  function on(id){var c=state.steps[id]; if(c&&typeof c.off==='boolean')return !c.off; return id==='oc'?!!state.shop.oilcl:true}
-  function res(x){var c=state.steps[x[0]];return [x[0],x[1],x[2],(c&&c.p)||x[3],x[4]]}
-  function what(t){return t==='exf'?res(S.ex)[3]:t==='aza'?res(S.az)[3]:'Hydration only'}
+  var state=fresh();
+  var ui={tab:'today',slot:new Date().getHours()<15?'am':'pm',week:null,day:null,recipe:'butter',frac:0,when:'both',newCat:'se',newP:'',ob:0,goals:{},react:0,shelf:{}};
+
+  function label(p){return p.n||CATS[p.cat].n}
+  function has(cat){return state.products.some(function(p){return p.on&&p.cat===cat})}
+  function actives(){var a={};state.products.forEach(function(p){var c=CATS[p.cat];if(p.on&&c.act)a[c.act]=1});return a}
+  /* One active per night, Sunday always rests, and the first weeks use fewer active nights. */
+  function plan(ramp){
+    var A=actives(), m=['rec','rec','rec','rec','rec','rec','rec'], fill=['aza','bp'].filter(function(x){return A[x]});
+    if(ramp){
+      if(A.acid)m[1]='acid';
+      if(A.ret)m[3]='ret';
+      if(fill.length){m[2]=fill[0];m[5]=fill[fill.length-1]}
+    }else{
+      if(A.acid){m[1]='acid';m[4]='acid'}
+      if(A.ret){m[2]='ret';m[5]='ret'}
+      if(fill.length)[2,3,5,6].filter(function(i){return m[i]==='rec'}).forEach(function(i,k){m[i]=fill[k%fill.length]});
+    }
+    return m;
+  }
+  function nightOf(d){
+    var week=Math.floor(dayIndex(d)/7)+1, base=plan(week<=state.ramp)[d.getDay()], f=state.feel[key(d)], y=state.feel[key(addDays(d,-1))];
+    if(base!=='rec'&&(f==='tight'||f==='sting'||y==='sting'))return {t:'rec',over:true};
+    return {t:base,over:false};
+  }
+  function what(t){
+    if(t==='rec')return 'Hydration only';
+    var p=state.products.filter(function(x){return x.on&&CATS[x.cat].act===t})[0];
+    return p?(p.p||label(p)):'';
+  }
+  function fits(p,slot){var c=CATS[p.cat]; return (slot in c)&&(!p.w||p.w==='both'||p.w===slot)}
   function stepsFor(d,slot){
-    var base, out=[];
-    if(slot==='am')base=[S.cl,S.tn,S.vc,S.cr,S.sp];
-    else{var t=nightType(d); base=t==='exf'?[S.oc,S.cl,S.ex,S.tn,S.cr]:t==='aza'?[S.oc,S.cl,S.tn,S.az,S.cr]:[S.oc,S.cl,S.tn,S.cr]}
-    base.forEach(function(x){
-      if(x[0]==='cr')state.custom.forEach(function(c){if(c.w===slot||c.w==='both')out.push([c.id,'flask',c.n,c.p||'',0])});
-      if(on(x[0]))out.push(res(x));
-    });
+    var night=slot==='pm'?nightOf(d).t:null;
+    return state.products.map(function(p,i){return [p,i]}).filter(function(x){var p=x[0],c=CATS[p.cat];return p.on&&fits(p,slot)&&(!c.act||c.act===night)})
+      .sort(function(a,b){return (CATS[a[0].cat][slot]-CATS[b[0].cat][slot])||(a[1]-b[1])}).map(function(x){return x[0]});
+  }
+  /* The conflict checker. It reports what the plan already handles and what is missing. */
+  function checks(){
+    var A=actives(), n=Object.keys(A).length, out=[];
+    function add(k,t){out.push([k,t])}
+    if(n&&!has('sp'))add('warn','No sunscreen on your shelf. Actives make skin sun sensitive, so add SPF 30 or higher.');
+    if(n&&!has('mo'))add('warn','No moisturizer. Actives need one on top.');
+    if(n>=3)add('warn','Three or more actives is a lot for one face. Consider dropping one.');
+    if(A.acid&&A.ret)add('ok','Exfoliant and retinoid are kept on separate nights.');
+    if(A.bp&&A.ret)add('ok','Benzoyl peroxide and retinoid are kept on separate nights.');
+    if(n>=2&&!(A.acid&&A.ret))add('ok','One active a night. Nothing strong is layered.');
+    if(has('vc')&&n)add('ok','Vitamin C stays in the morning, away from your night actives.');
+    if(n){add('ok','Sunday is always a recovery night.');add('ok','Weeks 1 to '+state.ramp+' ease in with fewer active nights.')}
+    else add('tip','No actives on your shelf, so every night is a hydration night.');
+    if(A.ret)add('tip','Skip retinoids if you are pregnant or nursing.');
+    var G={marks:[['aza','vc'],'For dark marks, azelaic acid or vitamin C does the most.'],texture:[['acid','ret'],'For texture, an AHA or BHA exfoliant is the usual next step.'],
+      breakouts:[['acid','aza','bp'],'For breakouts, a BHA exfoliant or azelaic acid helps most.'],lines:[['ret'],'For fine lines, a retinoid has the strongest evidence.'],dry:[['se'],'For dryness, add a hydrating serum under your moisturizer.']};
+    state.goals.forEach(function(g){if(G[g]&&!G[g][0].some(has))add('tip',G[g][1])});
     return out;
   }
+  function checksHtml(){return '<ul class="checks">'+checks().map(function(c){return '<li class="'+c[0]+'">'+ic(c[0]==='ok'?'check':c[0]==='warn'?'alert':'spark')+'<span>'+c[1]+'</span></li>'}).join('')+'</ul>'}
+
+  /* ---------- check marks ---------- */
   function val(k,slot){return state.checks[k]&&state.checks[k][slot]}
   function stepOn(k,slot,id){var v=val(k,slot);return v===true||!!(v&&v[id])}
-  function isDone(d,slot){var v=val(key(d),slot);return v===true||!!(v&&stepsFor(d,slot).every(function(s){return v[s[0]]}))}
+  function isDone(d,slot){var v=val(key(d),slot); if(v===true)return true; var s=stepsFor(d,slot); return !!(v&&s.length&&s.every(function(p){return v[p.id]}))}
   function put(k,slot,v){var c=state.checks[k]||{}; if(v)c[slot]=v; else delete c[slot]; if(c.am||c.pm)state.checks[k]=c; else delete state.checks[k]; commit()}
   function toggleStep(d,slot,id){
-    var k=key(d), v=val(k,slot), ids=stepsFor(d,slot).map(function(s){return s[0]}), m={};
+    var k=key(d), v=val(k,slot), ids=stepsFor(d,slot).map(function(p){return p.id}), m={};
     if(v===true)ids.forEach(function(i){m[i]=true}); else if(v)Object.keys(v).forEach(function(i){m[i]=true});
     if(m[id])delete m[id]; else m[id]=true;
     put(k,slot,ids.every(function(i){return m[i]})?true:(Object.keys(m).length?m:null));
   }
-
-  var MILES=[
-    {id:'m0',day:0,t:'Day 1 photo',cam:1},{id:'m1',day:14,t:'Ramp up finished'},
-    {id:'m2',day:28,t:'Week 4 photo',cam:1},{id:'m3',day:56,t:'Week 8 photo',cam:1},{id:'m4',day:84,t:'Week 12 photo',cam:1}
-  ];
-  var SHOP=[
-    ['Face',[['spf','Tinted sunscreen, SPF 50','Match the shade in daylight'],['oilcl','Cleansing oil or balm','Adds a first step to your evenings']]],
-    ['Body',[['lactic','Lactic acid lotion, 12%','Fragrance free, three nights a week']]],
-    ['Butter kit',[['shea','Raw shea butter','Unrefined, ivory'],['jojoba','Jojoba oil','USDA Organic, cold pressed'],['rosehip','Rosehip seed oil','Small bottle, keep in the fridge'],
-      ['tamanu','Tamanu oil','Patch test first'],['vite','Vitamin E','Mixed tocopherols'],['lav','Lavender essential oil','True lavender'],['scale','Kitchen scale','Reads to 1 gram'],['jar','Dark glass jar','With a lid']]]
-  ];
-  var SHOP_N=SHOP.reduce(function(n,g){return n+g[1].length},0);
-  var RECIPES={
-    butter:{rows:[['Shea butter',70,'#f6dfc4'],['Jojoba oil',13.5,'#ffd590'],['Rosehip seed oil',10,'#ff8f7a'],['Tamanu oil',5,'#9ad6a4'],['Vitamin E',1,'#c9abff'],['Lavender oil',0.5,'#9aa8ff']],
-      how:['Melt the shea over a water bath','Stir in jojoba, then freeze 15 minutes','Add the rest once it feels cool','Whip until fluffy. Dark jar, no water']},
-    oil:{rows:[['Jojoba oil',70,'#ffd590'],['Rosehip seed oil',20,'#ff8f7a'],['Tamanu oil',9,'#9ad6a4'],['Vitamin E',1,'#c9abff']],
-      how:['Weigh everything into a dark bottle','Shake until it looks even','Smooth onto damp skin after a shower','On lactic acid nights, lotion goes first']}
-  };
-  var TABS=[['today','sun','Today'],['week','cal','Week'],['progress','chart','Progress'],['shop','bag','Shop'],['butter','jar','Butter']];
-
   function stats(){
     var today=new Date(), ti=dayIndex(today), full=0, got=0, poss=0, start=parse(state.start);
     for(var i=0;i<DAYS;i++){var d=addDays(start,i), a=isDone(d,'am'), p=isDone(d,'pm'); if(a&&p)full++; if(i<=ti){poss+=2; got+=(a?1:0)+(p?1:0)}}
@@ -324,156 +371,223 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stro
     return {streak:streak,full:full,pct:poss?Math.round(got/poss*100):0,ti:ti,week:Math.min(12,Math.max(1,Math.floor(ti/7)+1))};
   }
   function dis(){return readOnly?' disabled':''}
+  function top(){return '<div class="bar"><span class="mark">rota</span><button class="icon" data-act="tab" data-id="settings" aria-label="Settings">'+ic('tune')+'</button></div>'}
+  function back(to,act){return '<div class="bar"><button class="icon" style="margin:0 0 0 -9px" data-act="'+(act||'tab')+'" data-id="'+to+'" aria-label="Back">'+ic('left')+'</button><span></span></div>'}
 
+  /* ---------- screens ---------- */
   function vToday(st){
-    var now=new Date(), k=key(now), t=nightType(now), T=TYPES[t], h=now.getHours();
-    var all=stepsFor(now,'am').length+stepsFor(now,'pm').length, n=0;
-    ['am','pm'].forEach(function(sl){stepsFor(now,sl).forEach(function(s){if(stepOn(k,sl,s[0]))n++})});
-    var frac=all?n/all:0, C=2*Math.PI*46, prev=ui.frac; ui.frac=frac;
-    var phase=st.ti<0?'Starts '+nice(parse(state.start)):st.ti>=DAYS?'12 weeks complete':'Week '+st.week+' of 12 · '+(st.week<=2?'Ramp up':'Full rotation');
-    var rows=stepsFor(now,ui.slot).map(function(s){
-      var on=stepOn(k,ui.slot,s[0]);
-      return '<button class="step'+(s[4]?' key':'')+'" data-act="step" data-id="'+s[0]+'" aria-pressed="'+on+'"'+dis()+'>'+
-        '<span class="ico"'+(s[4]?' style="background:linear-gradient(120deg,var(--peach),var(--rose))"':'')+'>'+ic(s[1])+'</span>'+
-        '<span><h3>'+esc(s[2])+'</h3><p class="sub">'+esc(s[3])+'</p></span><span class="tick">'+ic('check')+'</span></button>'}).join('');
-    var tip=ui.slot==='am'?'Two finger lengths of sunscreen, even indoors by a window.':T.tip;
-    var part=h<12?'morning':h<17?'afternoon':'evening';
-    return '<header class="hello"><div class="top"><span class="chip">'+phase+'</span><button class="round" data-act="tab" data-id="settings" aria-label="Settings">'+ic('tune')+'</button></div>'+
-      '<h1>Good '+(state.name?part+', <em>'+esc(state.name)+'</em>':'<em>'+part+'</em>')+'</h1>'+
-      '<p class="sub">'+DOWL[now.getDay()]+', '+nice(now)+'</p></header>'+
-      '<section class="card hero"><div class="ring"><svg viewBox="0 0 108 108"><circle class="track" cx="54" cy="54" r="46" fill="none" stroke-width="9"/>'+
-      '<circle class="bar" id="bar" cx="54" cy="54" r="46" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-prev))+'" data-to="'+(C*(1-frac))+'"/></svg>'+
-      '<div><b class="num">'+n+'/'+all+'</b><span>steps today</span></div></div>'+
-      '<div class="meta"><p class="eyebrow">Tonight</p><h2 class="t-'+t+'">'+T.name+' night</h2><p class="sub">'+esc(what(t))+'</p>'+
-      '<span class="streak">'+ic('flame')+'<span class="num">'+st.streak+' day streak</span></span></div></section>'+
-      '<div class="seg" role="group" aria-label="Routine"><button data-act="slot" data-id="am" aria-pressed="'+(ui.slot==='am')+'">'+ic('sun')+'Morning</button>'+
-      '<button data-act="slot" data-id="pm" aria-pressed="'+(ui.slot==='pm')+'">'+ic('moon')+'Evening</button></div>'+
-      '<div class="steps">'+rows+'</div><p class="tip">'+ic('leaf')+'<span>'+tip+'</span></p>';
+    var now=new Date(), k=key(now), night=nightOf(now), t=night.t, h=now.getHours();
+    var am=stepsFor(now,'am'), pm=stepsFor(now,'pm'), all=am.length+pm.length, n=0;
+    am.forEach(function(p){if(stepOn(k,'am',p.id))n++}); pm.forEach(function(p){if(stepOn(k,'pm',p.id))n++});
+    var frac=all?n/all:0, C=2*Math.PI*92, prev=ui.frac; ui.frac=frac;
+    var list=ui.slot==='am'?am:pm, part=h<12?'morning':h<17?'afternoon':'evening', f=state.feel[k]||'';
+    var rows=list.length?list.map(function(p,i){
+      return '<li><button class="row" data-act="step" data-id="'+esc(p.id)+'" aria-pressed="'+stepOn(k,ui.slot,p.id)+'"'+dis()+'><span class="idx num">'+String(i+1).padStart(2,'0')+'</span>'+
+        '<span class="what"><b>'+esc(label(p))+'</b>'+(p.p?'<small>'+esc(p.p)+'</small>':'')+'</span>'+(CATS[p.cat].act?'<span class="tagc c-'+t+'">Active</span>':'')+
+        '<span class="tick">'+ic('check')+'</span></button></li>'}).join(''):'<li class="empty">Nothing here yet. Add products in settings.</li>';
+    var tip=night.over?'Tonight is now a recovery night. Actives come back once your skin settles.'
+      :ui.slot==='am'?(has('sp')?'Two finger lengths of sunscreen, even indoors by a window.':'Add a sunscreen. It protects every other step.'):NIGHT[t].tip;
+    var wk=st.ti<0?'Soon':st.ti>=DAYS?'Done':st.week+' of 12';
+    return top()+'<header class="head"><p class="eyebrow">'+DOWL[now.getDay()]+' · '+nice(now)+'</p>'+
+      '<h1>Good '+part+(state.name?', <em>'+esc(state.name)+'</em>':'')+'</h1></header>'+
+      '<div class="ring"><svg viewBox="0 0 200 200"><circle class="track" cx="100" cy="100" r="92" fill="none" stroke-width="5"/>'+
+      '<circle class="arc" id="arc" cx="100" cy="100" r="92" fill="none" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-prev))+'" data-to="'+(C*(1-frac))+'"/></svg>'+
+      '<div><b class="num">'+n+'</b><span>of '+all+' steps</span></div></div>'+
+      '<div class="trio"><div><span class="eyebrow">Tonight</span><b class="c-'+t+'">'+NIGHT[t].n+'</b></div>'+
+      '<div><span class="eyebrow">Week</span><b class="num">'+wk+'</b></div><div><span class="eyebrow">Streak</span><b class="num">'+st.streak+(st.streak===1?' day':' days')+'</b></div></div>'+
+      '<div class="tabs2" role="group" aria-label="Routine"><button data-act="slot" data-id="am" aria-pressed="'+(ui.slot==='am')+'">Morning</button>'+
+      '<button data-act="slot" data-id="pm" aria-pressed="'+(ui.slot==='pm')+'">Evening</button></div>'+
+      '<ol class="list">'+rows+'</ol>'+
+      '<div class="feel"><p class="eyebrow">How does your skin feel today</p><div class="pills">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
+        return '<button class="pill" data-act="feel" data-id="'+o[0]+'" aria-pressed="'+(f===o[0])+'"'+dis()+'>'+o[1]+'</button>'}).join('')+'</div></div>'+
+      '<p class="note">'+tip+'</p>';
   }
 
   function vWeek(st){
-    var tk=key(new Date()), ws=addDays(parse(state.start),(ui.week-1)*7), sel=null, strip='', j, d;
+    var tk=key(new Date()), ws=addDays(parse(state.start),(ui.week-1)*7), sel=null, strip='', j, d, used={rec:1};
     for(j=0;j<7;j++){d=addDays(ws,j); if(key(d)===ui.day)sel=d}
     if(!sel){for(j=0;j<7;j++){d=addDays(ws,j); if(key(d)===tk)sel=d} if(!sel)sel=ws; ui.day=key(sel)}
-    for(j=0;j<7;j++){d=addDays(ws,j); var k=key(d), t=nightType(d);
-      strip+='<button class="dayb'+(k===tk?' today':'')+'" data-act="day" data-id="'+k+'" aria-pressed="'+(k===ui.day)+'" aria-label="'+DOWL[d.getDay()]+' '+nice(d)+', '+TYPES[t].name+' night">'+
+    for(j=0;j<7;j++){d=addDays(ws,j); var k=key(d), t=nightOf(d).t; used[t]=1;
+      strip+='<button class="dayb'+(k===tk?' today':'')+'" data-act="day" data-id="'+k+'" aria-pressed="'+(k===ui.day)+'" aria-label="'+DOWL[d.getDay()]+' '+nice(d)+', '+NIGHT[t].n+' night">'+
         '<small>'+DOW[d.getDay()]+'</small><b class="num">'+d.getDate()+'</b><span class="dot b-'+t+'"></span>'+
         '<span class="ap"><i class="'+(isDone(d,'am')?'on':'')+'"></i><i class="'+(isDone(d,'pm')?'on':'')+'"></i></span></button>'}
-    var t2=nightType(sel), pm=stepsFor(sel,'pm').map(function(s){return '<span class="'+(s[4]?'key':'')+'">'+ic(s[1])+esc(s[2])+'</span>'}).join('');
-    return '<header class="bar-head"><div><h1>Week '+ui.week+'</h1><p class="sub">'+nice(ws)+' to '+nice(addDays(ws,6))+' · '+(ui.week<=2?'Ramp up':'Full rotation')+'</p></div>'+
+    var t2=nightOf(sel).t, pm=stepsFor(sel,'pm').map(function(p){return esc(label(p))}).join(' · ');
+    var ramp=ui.week<=state.ramp;
+    return top()+'<header class="rowhead" style="align-items:center"><div class="head" style="gap:6px"><p class="eyebrow">'+nice(ws)+' to '+nice(addDays(ws,6))+' · '+(ramp?'Easing in':'Full rotation')+'</p><h1>Week '+ui.week+'</h1></div>'+
       '<div class="arrows"><button data-act="wk" data-id="-1" aria-label="Previous week"'+(ui.week<=1?' disabled':'')+'>'+ic('left')+'</button>'+
       '<button data-act="wk" data-id="1" aria-label="Next week"'+(ui.week>=12?' disabled':'')+'>'+ic('right')+'</button></div></header>'+
       '<div class="strip">'+strip+'</div>'+
-      '<p class="legend"><span><i class="b-exf"></i>Exfoliate</span><span><i class="b-aza"></i>Azelaic</span><span><i class="b-rec"></i>Recovery</span></p>'+
-      '<section class="card"><p class="eyebrow">'+DOWL[sel.getDay()]+', '+nice(sel)+'</p><h2 class="t-'+t2+'" style="margin-top:6px">'+TYPES[t2].name+' night</h2>'+
-      '<div class="pills">'+pm+'</div>'+
-      '<div class="duo"><button class="big" data-act="slotday" data-id="am" aria-pressed="'+isDone(sel,'am')+'"'+dis()+'>'+ic(isDone(sel,'am')?'check':'sun')+'Morning</button>'+
-      '<button class="big" data-act="slotday" data-id="pm" aria-pressed="'+isDone(sel,'pm')+'"'+dis()+'>'+ic(isDone(sel,'pm')?'check':'moon')+'Evening</button></div></section>';
+      '<p class="legend">'+['acid','ret','aza','bp','rec'].filter(function(x){return used[x]}).map(function(x){return '<span><i class="b-'+x+'"></i>'+NIGHT[x].n+'</span>'}).join('')+'</p>'+
+      '<section class="card"><p class="eyebrow">'+DOWL[sel.getDay()]+' · '+nice(sel)+'</p><h2 class="c-'+t2+'" style="margin-top:8px">'+NIGHT[t2].n+' night</h2>'+
+      '<p class="sub" style="margin-top:8px">'+(pm||'No evening products yet')+'</p>'+
+      '<div class="duo"><button class="btn ghost" data-act="slotday" data-id="am" aria-pressed="'+isDone(sel,'am')+'"'+dis()+'>'+ic(isDone(sel,'am')?'check':'sun')+'Morning</button>'+
+      '<button class="btn ghost" data-act="slotday" data-id="pm" aria-pressed="'+isDone(sel,'pm')+'"'+dis()+'>'+ic(isDone(sel,'pm')?'check':'moon')+'Evening</button></div></section>';
   }
 
+  function miles(){return [{id:'m0',day:0,t:'Day 1 photo',cam:1},{id:'m1',day:state.ramp*7,t:'Easing in finished'},{id:'m2',day:28,t:'Week 4 photo',cam:1},{id:'m3',day:56,t:'Week 8 photo',cam:1},{id:'m4',day:84,t:'Week 12 photo',cam:1}]}
   function vProgress(st){
     var tk=key(new Date()), start=parse(state.start), dots='';
     for(var i=0;i<DAYS;i++){var d=addDays(start,i), lv=(isDone(d,'am')?1:0)+(isDone(d,'pm')?1:0); dots+='<i class="'+(lv?'l'+lv:'')+(key(d)===tk?' now':'')+'"></i>'}
-    var ms=MILES.map(function(m){var on=!!state.miles[m.id], due=!on&&st.ti>=m.day;
-      return '<button class="mile" data-act="mile" data-id="'+m.id+'" aria-pressed="'+on+'"'+dis()+'><span class="node">'+ic(on?'check':m.cam?'cam':'leaf')+'</span>'+
-        '<span><h3>'+m.t+'</h3><p class="sub">'+nice(addDays(start,m.day))+'</p></span>'+(due?'<span class="tag">Due</span>':'<span></span>')+'</button>'}).join('');
-    return '<header class="hello"><h1>Your <em>progress</em></h1></header>'+
-      '<div class="tiles"><div class="card tile"><b class="num">'+st.streak+'</b><span>day streak</span></div>'+
-      '<div class="card tile"><b class="num">'+st.full+'</b><span>full days</span></div>'+
-      '<div class="card tile"><b class="num">'+st.pct+'%</b><span>of steps</span></div></div>'+
-      '<section class="card"><div class="bar-head"><h2>12 weeks</h2><span class="sub">one dot a day</span></div>'+
+    var ms=miles().map(function(m){var on=!!state.miles[m.id], due=!on&&st.ti>=m.day;
+      return '<button class="mile" data-act="mile" data-id="'+m.id+'" aria-pressed="'+on+'"'+dis()+'><span class="tick">'+ic('check')+'</span>'+
+        '<span><b>'+m.t+'</b><span class="sub">'+nice(addDays(start,m.day))+'</span></span>'+(due?'<span class="tag">Due</span>':'<span></span>')+'</button>'}).join('');
+    return top()+'<header class="head"><p class="eyebrow">12 week plan</p><h1>Progress</h1></header>'+
+      '<div class="trio"><div><span class="eyebrow">Streak</span><b class="num">'+st.streak+'</b></div><div><span class="eyebrow">Full days</span><b class="num">'+st.full+'</b></div>'+
+      '<div><span class="eyebrow">Steps done</span><b class="num">'+st.pct+'%</b></div></div>'+
+      '<section><div class="rowhead"><h2>Every day so far</h2><span class="sub">a column a week</span></div>'+
       '<div class="map" role="img" aria-label="'+st.full+' full days out of 84">'+dots+'</div></section>'+
-      '<section class="card"><h2>Milestones</h2><div class="line">'+ms+'</div></section>'+
-      '<section class="card field"><label for="start">Day 1 of your plan</label><input type="date" id="start" value="'+state.start+'"'+dis()+'></section>'+
-      '<p class="sync">'+syncMsg+'</p>';
+      '<section><h2>Milestones</h2><div style="margin-top:6px">'+ms+'</div></section><p class="sync">'+syncMsg+'</p>';
   }
 
+  var SHOP=[
+    ['Face',[['spf','Tinted sunscreen, SPF 50','Match the shade in daylight'],['oilcl','Cleansing oil or balm','Adds a first step to your evenings']]],
+    ['Body',[['lactic','Lactic acid lotion, 12%','Fragrance free, three nights a week']]],
+    ['Butter kit',[['shea','Raw shea butter','Unrefined, ivory'],['jojoba','Jojoba oil','USDA Organic, cold pressed'],['rosehip','Rosehip seed oil','Small bottle, keep in the fridge'],
+      ['tamanu','Tamanu oil','Patch test first'],['vite','Vitamin E','Mixed tocopherols'],['lav','Lavender essential oil','True lavender'],['scale','Kitchen scale','Reads to 1 gram'],['jar','Dark glass jar','With a lid']]]
+  ];
+  var SHOP_N=SHOP.reduce(function(n,g){return n+g[1].length},0);
   function vShop(){
     var n=0; SHOP.forEach(function(g){g[1].forEach(function(it){if(state.shop[it[0]])n++})});
-    var groups=SHOP.map(function(g){return '<p class="eyebrow" style="margin:6px 4px 0">'+g[0]+'</p><div class="group">'+g[1].map(function(it){
-      return '<button class="item" data-act="shop" data-id="'+it[0]+'" aria-pressed="'+!!state.shop[it[0]]+'"'+dis()+'><span class="tick">'+ic('check')+'</span>'+
-        '<span><h3>'+it[1]+'</h3><p class="sub">'+it[2]+'</p></span></button>'}).join('')+'</div>'}).join('');
-    return '<header class="hello"><h1>Shopping <em>list</em></h1></header>'+
-      '<section class="card"><div class="bar-head"><h2 class="num">'+n+' of '+SHOP_N+'</h2><span class="sub">bought</span></div>'+
-      '<div class="meter"><i style="width:'+(n/SHOP_N*100)+'%"></i></div></section>'+groups;
+    var groups=SHOP.map(function(g){return '<section><p class="eyebrow">'+g[0]+'</p><div style="margin-top:4px">'+g[1].map(function(it){
+      return '<button class="item" data-act="shop" data-id="'+it[0]+'" aria-pressed="'+!!state.shop[it[0]]+'"'+dis()+'><span class="what"><b>'+it[1]+'</b><span class="sub">'+it[2]+'</span></span><span class="tick">'+ic('check')+'</span></button>'}).join('')+'</div></section>'}).join('');
+    return top()+'<header class="head"><p class="eyebrow"><span class="num">'+n+' of '+SHOP_N+'</span> bought</p><h1>Shopping list</h1><div class="meter"><i style="width:'+(n/SHOP_N*100)+'%"></i></div></header>'+groups;
   }
 
+  var RECIPES={
+    butter:{rows:[['Shea butter',70,'#f1dfc6'],['Jojoba oil',13.5,'#d9bf8c'],['Rosehip seed oil',10,'#d9907a'],['Tamanu oil',5,'#a9c1a5'],['Vitamin E',1,'#bfa9d1'],['Lavender oil',0.5,'#9db7d1']],
+      how:['Melt the shea over a water bath','Stir in jojoba, then freeze 15 minutes','Add the rest once it feels cool','Whip until fluffy. Dark jar, no water']},
+    oil:{rows:[['Jojoba oil',70,'#d9bf8c'],['Rosehip seed oil',20,'#d9907a'],['Tamanu oil',9,'#a9c1a5'],['Vitamin E',1,'#bfa9d1']],
+      how:['Weigh everything into a dark bottle','Shake until it looks even','Smooth onto damp skin after a shower','On lactic acid nights, lotion goes first']}
+  };
   function vButter(){
     var R=RECIPES[ui.recipe];
-    return '<header class="hello"><h1>Body <em>'+(ui.recipe==='butter'?'butter':'oil')+'</em></h1></header>'+
-      '<div class="seg" role="group" aria-label="Recipe"><button data-act="recipe" data-id="butter" aria-pressed="'+(ui.recipe==='butter')+'">Whipped butter</button>'+
+    return top()+'<header class="head"><p class="eyebrow">Made at home</p><h1>Body '+(ui.recipe==='butter'?'butter':'oil')+'</h1></header>'+
+      '<div class="tabs2" role="group" aria-label="Recipe"><button data-act="recipe" data-id="butter" aria-pressed="'+(ui.recipe==='butter')+'">Whipped butter</button>'+
       '<button data-act="recipe" data-id="oil" aria-pressed="'+(ui.recipe==='oil')+'">Body oil</button></div>'+
-      '<section class="card"><div class="bar-head"><p class="eyebrow">Batch size</p><div class="stepper"><button data-act="batch" data-id="-50" aria-label="Smaller batch"'+dis()+'>&minus;</button>'+
+      '<section><div class="rowhead" style="align-items:center"><p class="eyebrow">Batch size</p><div class="stepper"><button data-act="batch" data-id="-50" aria-label="Smaller batch"'+dis()+'>&minus;</button>'+
       '<b class="num">'+state.batch+' g</b><button data-act="batch" data-id="50" aria-label="Larger batch"'+dis()+'>+</button></div></div>'+
       '<div class="stack">'+R.rows.map(function(r){return '<i style="flex:'+r[1]+';background:'+r[2]+'"></i>'}).join('')+'</div>'+
       R.rows.map(function(r){return '<div class="ing"><i style="background:'+r[2]+'"></i><span>'+r[0]+'</span><span class="pct num">'+r[1]+'%</span><b class="num">'+(r[1]*state.batch/100).toFixed(1)+' g</b></div>'}).join('')+'</section>'+
-      '<section class="card"><ol class="how">'+R.how.map(function(h){return '<li>'+h+'</li>'}).join('')+'</ol></section>';
+      '<section><h2>Method</h2><ol class="how" style="margin-top:6px">'+R.how.map(function(h,i){return '<li><span class="num">'+(i+1)+'</span>'+h+'</li>'}).join('')+'</ol></section>';
   }
 
-  var WHEN={am:'Morning',pm:'Evening',both:'Both'};
   function vSettings(){
     var th=THEMES.map(function(t){var v=Object.assign({},BASE,t[2]);
-      return '<button class="theme" data-act="theme" data-id="'+t[0]+'" aria-pressed="'+(state.theme===t[0])+'"><i style="background:linear-gradient(135deg,'+v.peach+','+v.rose+' 55%,'+v.bg+' 56%)"></i>'+t[1]+'</button>'}).join('');
-    var rows=['cl','tn','vc','cr','sp','oc','ex','az'].map(function(id){var x=res(S[id]);
-      return '<div class="prod"><span class="ico">'+ic(x[1])+'</span><div><label for="p-'+id+'">'+x[2]+'</label><input class="txt" id="p-'+id+'" data-edit="p" data-id="'+id+'" maxlength="40" value="'+esc(x[3])+'"'+dis()+'></div>'+
-        '<button class="sw" role="switch" data-act="sw" data-id="'+id+'" aria-checked="'+on(id)+'" aria-label="Use '+x[2]+'"'+dis()+'></button></div>'}).join('');
-    var mine=state.custom.map(function(c){
-      return '<div class="prod"><span class="ico">'+ic('flask')+'</span><div><label for="c-'+c.id+'">'+esc(c.n)+' \u00b7 '+WHEN[c.w]+'</label><input class="txt" id="c-'+c.id+'" data-edit="cp" data-id="'+c.id+'" maxlength="40" placeholder="Product name" value="'+esc(c.p)+'"'+dis()+'></div>'+
-        '<button class="del" data-act="delp" data-id="'+c.id+'" aria-label="Remove '+esc(c.n)+'"'+dis()+'>'+ic('trash')+'</button></div>'}).join('');
-    return '<header class="top"><button class="round" data-act="tab" data-id="today" aria-label="Back">'+ic('left')+'</button><h1 style="flex:1">Settings</h1></header>'+
-      '<section class="card"><h2>Color scheme</h2><div class="themes">'+th+'</div></section>'+
-      '<section class="card"><h2>Your products</h2><p class="sub" style="margin:4px 0 6px">Tap a name to change it. Switch off anything you are not using.</p>'+rows+mine+'</section>'+
-      '<section class="card"><h2>Add a product</h2><div class="add"><input class="txt" id="new-n" aria-label="Step name" placeholder="Step, like Niacinamide" maxlength="30" value="'+esc(ui.newN)+'">'+
+      return '<button class="theme" data-act="theme" data-id="'+t[0]+'" aria-pressed="'+(state.theme===t[0])+'"><i style="background:linear-gradient(135deg,'+v.accent+' 50%,'+v.bg+' 50%)"></i>'+t[1]+'</button>'}).join('');
+    var rows=state.products.map(function(p){var id=esc(p.id);
+      return '<div class="prod"><div><label for="p-'+id+'">'+esc(label(p))+(p.w&&p.w!=='both'?' · '+WHEN[p.w]:'')+'</label><input class="txt" id="p-'+id+'" data-edit="p" data-id="'+id+'" maxlength="40" placeholder="Add the product name" value="'+esc(p.p)+'"'+dis()+'></div>'+
+        (p.x?'<button class="del" data-act="delp" data-id="'+id+'" aria-label="Remove '+esc(label(p))+'"'+dis()+'>'+ic('trash')+'</button>'
+            :'<button class="sw" role="switch" data-act="sw" data-id="'+id+'" aria-checked="'+!!p.on+'" aria-label="Use '+esc(label(p))+'"'+dis()+'></button>')+'</div>'}).join('');
+    return back('today')+'<header class="head"><h1>Settings</h1></header>'+
+      '<section><h2>Color scheme</h2><div class="themes">'+th+'</div></section>'+
+      '<section><h2>Your shelf</h2><p class="sub" style="margin:6px 0 4px">Tap a name to change it. Switch off anything you are not using.</p>'+(rows||'<p class="empty">No products yet.</p>')+'</section>'+
+      '<section class="card"><h2>Add a product</h2><div class="add"><select class="txt" id="new-cat" aria-label="Product type">'+CAT_ORDER.map(function(c){return '<option value="'+c+'"'+(ui.newCat===c?' selected':'')+'>'+CATS[c].n+'</option>'}).join('')+'</select>'+
       '<input class="txt" id="new-p" aria-label="Product name" placeholder="Product name" maxlength="40" value="'+esc(ui.newP)+'">'+
-      '<div class="seg" role="group" aria-label="When">'+['am','pm','both'].map(function(w){return '<button data-act="when" data-id="'+w+'" aria-pressed="'+(ui.when===w)+'">'+WHEN[w]+'</button>'}).join('')+'</div>'+
-      '<button class="btn" data-act="addp"'+dis()+'>Add to routine</button><p class="sub">New steps go on just before your moisturizer.</p></div></section>'+
-      '<section class="card field"><label for="name">Name for the greeting</label><input class="txt" id="name" data-edit="name" maxlength="20" placeholder="Optional" value="'+esc(state.name)+'"'+dis()+'></section>'+
-      '<section class="card field"><label for="start">Day 1 of your plan</label><input type="date" id="start" value="'+state.start+'"'+dis()+'></section>';
+      '<div class="pills" role="group" aria-label="When">'+['am','pm','both'].map(function(w){return '<button class="pill" data-act="when" data-id="'+w+'" aria-pressed="'+(ui.when===w)+'">'+WHEN[w]+'</button>'}).join('')+'</div>'+
+      '<button class="btn" data-act="addp"'+dis()+'>Add to routine</button></div></section>'+
+      '<section><h2>Routine check</h2>'+checksHtml()+'<button class="btn ghost" style="margin-top:20px" data-act="redo"'+dis()+'>Rebuild my routine</button></section>'+
+      '<section><div class="field"><label for="name">Name for the greeting</label><input class="txt" id="name" data-edit="name" maxlength="20" placeholder="Optional" value="'+esc(state.name)+'"'+dis()+'></div>'+
+      '<div class="field"><label for="start">Day 1 of your plan</label><input type="date" id="start" value="'+state.start+'"'+dis()+'></div>'+
+      '<div class="field"><span>Shopping list and body butter</span><button class="sw" role="switch" data-act="extras" aria-checked="'+!!state.extras+'" aria-label="Show shopping list and body butter"'+dis()+'></button></div></section>'+
+      '<p class="fine">Rota is a planning tool and not medical advice.</p>';
   }
 
+  var SHELF=[['Basics',[['cl','Cleanser',''],['oil','Cleansing oil or balm',''],['tn','Hydrating toner or essence',''],['vc','Vitamin C serum',''],['se','Hydrating serum','Niacinamide, hyaluronic acid, snail'],['mo','Moisturizer',''],['sp','Sunscreen','']]],
+    ['Actives',[['acid','AHA or BHA exfoliant','Glycolic, lactic, salicylic'],['aza','Azelaic acid',''],['ret','Retinoid','Retinol, adapalene, tretinoin'],['bp','Benzoyl peroxide','']]]];
+  function optRow(act,id,title,sub,on){return '<button class="opt" data-act="'+act+'" data-id="'+id+'" aria-pressed="'+on+'"><span class="what"><b>'+title+'</b>'+(sub?'<span class="sub">'+sub+'</span>':'')+'</span><span class="tick">'+ic('check')+'</span></button>'}
+  function vOnboard(){
+    var s=ui.ob, body, cta;
+    if(s===0){
+      body='<div class="hero-mark">rota</div><h1>A skincare rotation that protects your progress.</h1>'+
+        '<p class="sub">Tell it what is on your shelf. It spaces out your actives, builds in rest nights and eases you in.</p>';
+      cta='<button class="btn" data-act="ob" data-id="1">Begin</button><p class="fine" style="margin-top:12px">A planning tool, not medical advice.</p>';
+    }else if(s===1){
+      body=back('-1','ob')+'<header class="head"><p class="eyebrow">1 of 3</p><h1>What are you working on?</h1></header>'+
+        '<div class="opts">'+Object.keys(GOALS).map(function(g){return optRow('goal',g,GOALS[g],'',!!ui.goals[g])}).join('')+'</div>'+
+        '<h2>How does your skin take to new products?</h2>'+
+        '<div class="opts">'+[['Rarely reacts','A two week ease in'],['Sometimes stings','A three week ease in'],['Marks or irritates easily','A four week ease in']].map(function(o,i){return optRow('react',i,o[0],o[1],ui.react===i)}).join('')+'</div>';
+      cta='<button class="btn" data-act="ob" data-id="1">Continue</button>';
+    }else if(s===2){
+      var any=Object.keys(ui.shelf).some(function(c){return ui.shelf[c]});
+      body=back('-1','ob')+'<header class="head"><p class="eyebrow">2 of 3</p><h1>What is on your shelf?</h1><p class="sub">Pick the types you own. You can name the exact products later.</p></header>'+
+        SHELF.map(function(g){return '<section><p class="eyebrow">'+g[0]+'</p><div class="opts" style="margin-top:4px">'+g[1].map(function(o){return optRow('shelf',o[0],o[1],o[2],!!ui.shelf[o[0]])}).join('')+'</div></section>'}).join('');
+      cta='<button class="btn" data-act="ob" data-id="1"'+(any?'':' disabled')+'>Build my rotation</button>';
+    }else{
+      var m=plan(false);
+      body=back('-1','ob')+'<header class="head"><p class="eyebrow">3 of 3</p><h1>Your rotation</h1><p class="sub">A normal week once you are past the ease in.</p></header>'+
+        '<div class="strip">'+m.map(function(t,i){return '<div class="dayb"><small>'+DOW[i]+'</small><span class="dot b-'+t+'"></span><em>'+NIGHT[t].s+'</em></div>'}).join('')+'</div>'+
+        '<section><h2>Routine check</h2>'+checksHtml()+'</section>'+
+        '<section><div class="field"><label for="name">Your name</label><input class="txt" id="name" data-edit="name" maxlength="20" placeholder="Optional" value="'+esc(state.name)+'"></div></section>';
+      cta='<button class="btn" data-act="finish">Start my rotation</button>';
+    }
+    return '<div class="ob">'+body+'</div><div class="cta">'+cta+'</div>';
+  }
+  function build(){
+    var out=[];
+    CAT_ORDER.forEach(function(c){
+      var ex=state.products.filter(function(p){return p.cat===c});
+      if(ex.length)ex.forEach(function(p){p.on=!!ui.shelf[c];out.push(p)});
+      else if(ui.shelf[c])out.push({id:c,cat:c,n:'',p:'',w:'',on:true,x:0});
+    });
+    state.products=out; state.ramp=[2,3,4][ui.react]||2; state.goals=Object.keys(ui.goals).filter(function(g){return ui.goals[g]});
+  }
+
+  function tabs(){var t=[['today','sun','Today'],['week','cal','Week'],['progress','chart','Progress']]; if(state.extras)t.push(['shop','bag','Shop'],['butter','jar','Butter']); return t}
   function render(){
     applyTheme();
+    if(!state.setup){docknav.hidden=true; app.innerHTML=vOnboard(); return}
     var st=stats(); if(ui.week===null)ui.week=st.week;
-    app.innerHTML=({today:vToday,week:vWeek,progress:vProgress,shop:vShop,butter:vButter,settings:vSettings})[ui.tab](st);
-    dock.innerHTML=TABS.map(function(t){return '<button data-act="tab" data-id="'+t[0]+'"'+(t[0]===ui.tab?' aria-current="page"':'')+'>'+ic(t[1])+t[2]+'</button>'}).join('');
-    var bar=document.getElementById('bar');
-    if(bar)requestAnimationFrame(function(){requestAnimationFrame(function(){bar.setAttribute('stroke-dashoffset',bar.dataset.to)})});
+    var views={today:vToday,week:vWeek,progress:vProgress,shop:vShop,butter:vButter,settings:vSettings};
+    if(!views[ui.tab]||(!state.extras&&(ui.tab==='shop'||ui.tab==='butter')))ui.tab='today';
+    app.innerHTML=views[ui.tab](st);
+    docknav.hidden=false;
+    dock.innerHTML=tabs().map(function(t){return '<button data-act="tab" data-id="'+t[0]+'"'+(t[0]===ui.tab?' aria-current="page"':'')+'>'+ic(t[1])+t[2]+'</button>'}).join('');
+    var arc=document.getElementById('arc');
+    if(arc)requestAnimationFrame(function(){requestAnimationFrame(function(){arc.setAttribute('stroke-dashoffset',arc.dataset.to)})});
   }
 
+  /* ---------- events ---------- */
+  function prod(id){return state.products.filter(function(p){return p.id===id})[0]}
   document.addEventListener('click',function(e){
     var b=e.target.closest('[data-act]'); if(!b||b.disabled)return;
-    var a=b.dataset.act, id=b.dataset.id, now=new Date();
+    var a=b.dataset.act, id=b.dataset.id, now=new Date(), p;
     if(a==='tab'){ui.tab=id; try{history.replaceState(null,'','#'+id)}catch(x){} render(); window.scrollTo(0,0)}
     else if(a==='slot'){ui.slot=id;render()}
     else if(a==='step')toggleStep(now,ui.slot,id);
+    else if(a==='feel'){var k=key(now); if(state.feel[k]===id)delete state.feel[k]; else state.feel[k]=id; commit()}
     else if(a==='day'){ui.day=id;render()}
     else if(a==='wk'){ui.week=Math.min(12,Math.max(1,ui.week+(+id)));ui.day=null;render()}
     else if(a==='slotday'){var d=parse(ui.day);put(ui.day,id,isDone(d,id)?null:true)}
     else if(a==='mile'){if(state.miles[id])delete state.miles[id];else state.miles[id]=true;commit()}
-    else if(a==='shop'){if(state.shop[id])delete state.shop[id];else state.shop[id]=true;commit()}
+    else if(a==='shop'){if(state.shop[id])delete state.shop[id];else state.shop[id]=true;
+      if(id==='oilcl')state.products.forEach(function(x){if(x.cat==='oil')x.on=!!state.shop.oilcl}); commit()}
     else if(a==='recipe'){ui.recipe=id;render()}
-    else if(a==='theme'){state.theme=id;commit()}
-    else if(a==='sw'){var c=state.steps[id]||{};c.off=on(id);state.steps[id]=c;commit()}
-    else if(a==='when'){ui.when=id;render()}
-    else if(a==='addp'){var nn=ui.newN.trim(); if(!nn){var f=document.getElementById('new-n'); if(f)f.focus(); return}
-      state.custom.push({id:'c'+Date.now().toString(36),n:nn.slice(0,30),p:ui.newP.trim().slice(0,40),w:ui.when}); ui.newN='';ui.newP='';commit()}
-    else if(a==='delp'){state.custom=state.custom.filter(function(c){return c.id!==id});commit()}
     else if(a==='batch'){state.batch=Math.min(1000,Math.max(50,state.batch+(+id)));commit()}
+    else if(a==='theme'){state.theme=id;commit()}
+    else if(a==='sw'){p=prod(id); if(p){p.on=!p.on;commit()}}
+    else if(a==='extras'){state.extras=!state.extras;commit()}
+    else if(a==='when'){ui.when=id;render()}
+    else if(a==='addp'){state.products.push({id:'c'+Date.now().toString(36),cat:CATS[ui.newCat]?ui.newCat:'se',n:'',p:ui.newP.trim().slice(0,40),w:ui.when==='both'?'':ui.when,on:true,x:1}); ui.newP='';commit()}
+    else if(a==='delp'){state.products=state.products.filter(function(x){return x.id!==id});commit()}
+    else if(a==='redo'){ui.ob=1;ui.shelf={};state.products.forEach(function(x){if(x.on)ui.shelf[x.cat]=true});ui.goals={};state.goals.forEach(function(g){ui.goals[g]=true});
+      ui.react=Math.max(0,[2,3,4].indexOf(state.ramp));state.setup=false;commit();window.scrollTo(0,0)}
+    else if(a==='goal'){ui.goals[id]=!ui.goals[id];render()}
+    else if(a==='react'){ui.react=+id;render()}
+    else if(a==='shelf'){ui.shelf[id]=!ui.shelf[id];render()}
+    else if(a==='ob'){var nx=ui.ob+(+id); if(ui.ob===2&&nx===3){build();save()} ui.ob=Math.max(0,Math.min(3,nx));render();window.scrollTo(0,0)}
+    else if(a==='finish'){if(!Object.keys(state.checks).length)state.start=key(now); state.setup=true;ui.tab='today';ui.week=null;ui.ob=0;commit();window.scrollTo(0,0)}
   });
-  document.addEventListener('input',function(e){
-    if(e.target.id==='new-n')ui.newN=e.target.value; else if(e.target.id==='new-p')ui.newP=e.target.value;
-  });
+  document.addEventListener('input',function(e){ if(e.target.id==='new-p')ui.newP=e.target.value; });
   document.addEventListener('change',function(e){
-    var ed=e.target.dataset&&e.target.dataset.edit, eid=e.target.dataset&&e.target.dataset.id, v=(e.target.value||'').trim();
-    if(ed&&!readOnly){
-      if(ed==='p'){var c=state.steps[eid]||{}; if(v&&v!==S[eid][3])c.p=v.slice(0,40); else delete c.p; if(Object.keys(c).length)state.steps[eid]=c; else delete state.steps[eid]}
-      else if(ed==='cp'){state.custom.forEach(function(x){if(x.id===eid)x.p=v.slice(0,40)})}
-      else if(ed==='name'){state.name=v.slice(0,20)}
-      save(); return;
-    }
-    if(e.target.id==='start'&&/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)&&!readOnly){state.start=e.target.value;ui.week=null;ui.day=null;commit()}
+    var t=e.target, ed=t.dataset&&t.dataset.edit, v=(t.value||'').trim();
+    if(readOnly)return;
+    if(t.id==='new-cat'){ui.newCat=t.value;return}
+    if(ed==='p'){var p=prod(t.dataset.id); if(p){p.p=v.slice(0,40);save()} return}
+    if(ed==='name'){state.name=v.slice(0,20);save();return}
+    if(t.id==='start'&&/^\d{4}-\d{2}-\d{2}$/.test(t.value)){state.start=t.value;ui.week=null;ui.day=null;commit()}
   });
 
+  /* ---------- saving ---------- */
   function save(){ try{localStorage.setItem('skin-rotation',JSON.stringify(state))}catch(e){} flush(); }
   function commit(){ render(); save(); }
   async function flush(){
@@ -486,17 +600,26 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stro
     }while(dirty);
     writing=false;
   }
-  function obj(o){return (o&&typeof o==='object')?JSON.parse(JSON.stringify(o)):{}}
-  function adopt(d){
-    if(!d)return;
-    state={start:/^\d{4}-\d{2}-\d{2}$/.test(d.start)?d.start:DEFAULT_START,checks:obj(d.checks),miles:obj(d.miles),shop:obj(d.shop),
-      batch:(+d.batch>=50&&+d.batch<=1000)?+d.batch:200,
-      theme:typeof d.theme==='string'?d.theme:'glow',steps:obj(d.steps),
-      custom:Array.isArray(d.custom)?d.custom.filter(function(c){return c&&typeof c.id==='string'&&typeof c.n==='string'&&WHEN[c.w]}).slice(0,12).map(function(c){return {id:c.id,n:c.n.slice(0,30),p:String(c.p||'').slice(0,40),w:c.w}}):[],
-      name:typeof d.name==='string'?d.name.slice(0,20):DEFAULT_NAME};
+  function obj(o){return (o&&typeof o==='object'&&!Array.isArray(o))?JSON.parse(JSON.stringify(o)):{}}
+  /* Data saved by the earlier version of this app is carried over, with its products and check marks intact. */
+  function migrate(d){
+    var st=obj(d.steps), sh=obj(d.shop);
+    var prods=herProducts().map(function(p){var o=st[p.id]||{}; if(typeof o.p==='string'&&o.p)p.p=o.p; if(typeof o.off==='boolean')p.on=!o.off; else if(p.id==='oc')p.on=!!sh.oilcl; return p});
+    (Array.isArray(d.custom)?d.custom:[]).forEach(function(c){if(c&&typeof c.id==='string'&&typeof c.n==='string')prods.push({id:c.id,cat:'se',n:c.n,p:c.p,w:c.w,on:true,x:1})});
+    return {v:2,setup:true,extras:true,start:d.start,ramp:2,goals:[],name:typeof d.name==='string'?d.name:MY_NAME,theme:d.theme,products:prods,checks:d.checks,miles:d.miles,shop:d.shop,feel:{},batch:d.batch};
   }
+  function clean(d){
+    var f=fresh();
+    return {v:2,setup:!!d.setup,extras:!!d.extras,start:/^\d{4}-\d{2}-\d{2}$/.test(d.start)?d.start:f.start,ramp:[2,3,4].indexOf(+d.ramp)>=0?+d.ramp:2,
+      goals:Array.isArray(d.goals)?d.goals.filter(function(g){return GOALS[g]}):[],name:typeof d.name==='string'?d.name.slice(0,20):'',
+      theme:THEME_IDS[d.theme]?d.theme:(d.theme==='day'?'bone':'stone'),
+      products:Array.isArray(d.products)?d.products.filter(function(p){return p&&typeof p.id==='string'&&CATS[p.cat]}).slice(0,24).map(function(p){
+        return {id:p.id.slice(0,24),cat:p.cat,n:typeof p.n==='string'?p.n.slice(0,30):'',p:String(p.p||'').slice(0,40),w:WHEN[p.w]?p.w:'',on:p.on!==false,x:p.x?1:0}}):[],
+      checks:obj(d.checks),miles:obj(d.miles),shop:obj(d.shop),feel:obj(d.feel),batch:(+d.batch>=50&&+d.batch<=1000)?+d.batch:200};
+  }
+  function adopt(d){ if(d&&typeof d==='object')state=clean(d.v===2?d:migrate(d)); }
 
-  var h=(location.hash||'').slice(1); if(TABS.some(function(t){return t[0]===h}))ui.tab=h;
+  var h=(location.hash||'').slice(1); if(h)ui.tab=h;
   try{var saved=localStorage.getItem('skin-rotation'); if(saved)adopt(JSON.parse(saved))}catch(e){}
   syncMsg='Saved on this phone';
   render();
