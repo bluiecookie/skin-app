@@ -21,7 +21,7 @@
 :root{
   color-scheme:dark;
   --bg:#11100f; --surface:#1a1816; --surface-2:#262320; --line:rgba(236,230,220,.1);
-  --fg:#efe9df; --muted:#a39b90; --faint:#6f685f;
+  --fg:#efe9df; --muted:#b0a89d; --faint:#8a8278;
   --accent:#e3d0b4; --accent-2:#b69a78; --ink:#1a1510;
   --acid:#bfa9d1; --ret:#d9a08d; --aza:#d9bf8c; --bp:#9db7d1; --rec:#a9c1a5; --warn:#e0a86e;
   --dock:rgba(20,18,17,.88); --shadow:rgba(0,0,0,.5);
@@ -83,7 +83,9 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stro
 [aria-pressed="true"]>.tick{background:var(--accent);border-color:var(--accent);color:var(--ink)}
 .row[aria-pressed="true"] .what b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--faint)}
 .empty{padding:18px 0;color:var(--muted);font-size:14px}
-.feel{display:flex;flex-direction:column;gap:12px}
+.feel{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-block:-6px}
+.feel .pills{gap:6px;grid-auto-columns:auto;flex:none}
+.feel .pill{padding:8px 13px;font-size:13px}
 .pills{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
 .pill{padding:11px 0;border-radius:99px;border:1px solid var(--line);text-align:center;font-size:13.5px;font-weight:500;color:var(--muted)}
 .pill[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
@@ -104,7 +106,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stro
 .dayb[aria-pressed="true"]{background:var(--surface)}
 .dayb.today small{color:var(--accent)}
 div.dayb{padding:10px 0}
-div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
+.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);justify-content:center}
 .legend i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;vertical-align:2px}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
@@ -195,7 +197,7 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
 .checks{display:flex;flex-direction:column;gap:12px;margin-top:16px}
 .checks li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;font-size:14px;color:var(--muted)}
 .checks svg{width:18px;height:18px;margin-top:1px}
-.checks .ok svg{color:var(--rec)} .checks .warn{color:var(--fg)} .checks .warn svg{color:var(--warn)} .checks .tip svg{color:var(--accent)}
+.checks .ok svg{color:var(--rec)} .checks .warn{color:var(--fg);background:color-mix(in srgb,var(--warn) 14%,transparent);padding:12px 14px;border-radius:14px;margin-inline:-14px} .checks .warn svg{color:var(--warn)} .checks .tip svg{color:var(--accent)}
 .fine{font-size:12px;color:var(--faint);text-align:center}
 
 /* Onboarding */
@@ -211,14 +213,15 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
 
 /* Tonight */
 .tonight{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;align-items:center}
-.tonight h2{font-size:46px;line-height:1;letter-spacing:-.02em;margin:10px 0 8px}
+.tonight{padding:16px 18px}
+.tonight h2{font-size:32px;line-height:1;letter-spacing:-.02em;margin:7px 0 5px}
 .why{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.38;color:var(--muted);text-wrap:pretty}
-.tonight .why{grid-column:1/-1;margin-top:10px;padding-top:14px;border-top:1px solid var(--line)}
-.mini{position:relative;width:78px;height:78px;flex:none}
+.tonight .why{grid-column:1/-1;margin-top:8px;padding-top:12px;border-top:1px solid var(--line);font-size:15.5px}
+.mini{position:relative;width:62px;height:62px;flex:none}
 .mini svg{width:100%;height:100%;transform:rotate(-90deg)}
 .mini .track{stroke:var(--surface-2)} .mini .arc{stroke:url(#grad);transition:stroke-dashoffset .7s cubic-bezier(.3,.8,.3,1)}
 .mini div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.mini b{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1}
+.mini b{font-family:var(--serif);font-weight:400;font-size:20px;line-height:1}
 .mini span{font-size:11px;color:var(--muted)}
 .meta{display:flex;justify-content:space-between;gap:12px;margin-top:-8px}
 /* Shelf */
@@ -244,6 +247,7 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
 <main id="app"></main>
 <nav class="dock" aria-label="Sections" id="docknav"><div id="dock"></div></nav>
 <input type="file" accept="image/*" id="shot" hidden>
+<input type="file" accept="application/json,.json" id="restore" hidden>
 
 <script>
 (function(){
@@ -270,15 +274,15 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
   function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 
   /* ---------- themes ---------- */
-  var BASE={bg:'#11100f',surface:'#1a1816','surface-2':'#262320',line:'rgba(236,230,220,.1)',fg:'#efe9df',muted:'#a39b90',faint:'#6f685f',accent:'#e3d0b4','accent-2':'#b69a78',ink:'#1a1510',
+  var BASE={bg:'#11100f',surface:'#1a1816','surface-2':'#262320',line:'rgba(236,230,220,.1)',fg:'#efe9df',muted:'#b0a89d',faint:'#8a8278',accent:'#e3d0b4','accent-2':'#b69a78',ink:'#1a1510',
     acid:'#bfa9d1',ret:'#d9a08d',aza:'#d9bf8c',bp:'#9db7d1',rec:'#a9c1a5',warn:'#e0a86e',dock:'rgba(20,18,17,.88)',shadow:'rgba(0,0,0,.5)'};
   var THEMES=[
     ['stone','Stone',{}],
-    ['ink','Ink',{bg:'#0b0f17',surface:'#131924','surface-2':'#1d2636',line:'rgba(220,230,245,.1)',fg:'#e8edf5',muted:'#8e9bb0',faint:'#5d6a80',accent:'#cfe0f5','accent-2':'#7fa3cf',ink:'#0b1220',dock:'rgba(11,15,23,.9)'}],
-    ['mauve','Mauve',{bg:'#131015',surface:'#1c181f','surface-2':'#29222c',fg:'#f0e8f0',muted:'#a597a8',faint:'#726676',accent:'#e2cfe6','accent-2':'#a98bb3',ink:'#1b1320',dock:'rgba(19,16,21,.9)'}],
-    ['sage','Sage',{bg:'#0e1210',surface:'#161c18','surface-2':'#212a24',fg:'#e9efe6',muted:'#96a394',faint:'#657163',accent:'#d2e0cf','accent-2':'#8fae8b',ink:'#101a11',dock:'rgba(14,18,16,.9)'}],
-    ['clay','Clay',{bg:'#140f0d',surface:'#1e1714','surface-2':'#2b211c',fg:'#f3e8e0',muted:'#ab9a8e',faint:'#77685e',accent:'#edc9b4','accent-2':'#c28467',ink:'#24120a',dock:'rgba(20,15,13,.9)'}],
-    ['bone','Bone',{bg:'#f4efe7',surface:'#fbf8f3','surface-2':'#e9e1d5',line:'rgba(40,32,24,.13)',fg:'#221d18',muted:'#6e665c',faint:'#9a9186',accent:'#2a241e','accent-2':'#6a5c4d',ink:'#f7f2ea',
+    ['ink','Ink',{bg:'#0b0f17',surface:'#131924','surface-2':'#1d2636',line:'rgba(220,230,245,.1)',fg:'#e8edf5',muted:'#8e9bb0',faint:'#7a879c',accent:'#cfe0f5','accent-2':'#7fa3cf',ink:'#0b1220',dock:'rgba(11,15,23,.9)'}],
+    ['mauve','Mauve',{bg:'#131015',surface:'#1c181f','surface-2':'#29222c',fg:'#f0e8f0',muted:'#a597a8',faint:'#8d8091',accent:'#e2cfe6','accent-2':'#a98bb3',ink:'#1b1320',dock:'rgba(19,16,21,.9)'}],
+    ['sage','Sage',{bg:'#0e1210',surface:'#161c18','surface-2':'#212a24',fg:'#e9efe6',muted:'#96a394',faint:'#7f8b7d',accent:'#d2e0cf','accent-2':'#8fae8b',ink:'#101a11',dock:'rgba(14,18,16,.9)'}],
+    ['clay','Clay',{bg:'#140f0d',surface:'#1e1714','surface-2':'#2b211c',fg:'#f3e8e0',muted:'#ab9a8e',faint:'#928378',accent:'#edc9b4','accent-2':'#c28467',ink:'#24120a',dock:'rgba(20,15,13,.9)'}],
+    ['bone','Bone',{bg:'#f4efe7',surface:'#fbf8f3','surface-2':'#e9e1d5',line:'rgba(40,32,24,.13)',fg:'#221d18',muted:'#6e665c',faint:'#7a7166',accent:'#2a241e','accent-2':'#6a5c4d',ink:'#f7f2ea',
       acid:'#7b5ea0',ret:'#b0563d',aza:'#8f6a12',bp:'#3f6f9c',rec:'#47764a',warn:'#a8641a',dock:'rgba(250,247,242,.92)',shadow:'rgba(60,45,30,.18)'}]
   ];
   var THEME_IDS={}; THEMES.forEach(function(t){THEME_IDS[t[0]]=1});
@@ -335,12 +339,12 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     {id:'sp',cat:'sp',n:'',p:'Tinted SPF 50',w:'',on:true,x:0}
   ]}
   function fresh(){
-    var base={v:2,ramp:2,goals:[],theme:'stone',checks:{},miles:{},shop:{},feel:{},batch:200};
+    var base={v:2,ramp:2,rest:0,goals:[],theme:'stone',checks:{},miles:{},shop:{},feel:{},batch:200};
     return Object.assign(base,PERSONAL?{setup:true,extras:true,start:'2026-10-11',name:MY_NAME,products:herProducts()}
                                       :{setup:false,extras:false,start:key(new Date()),name:'',products:[]});
   }
   var state=fresh();
-  var ui={tab:'today',slot:new Date().getHours()<15?'am':'pm',week:null,day:null,recipe:'butter',frac:0,when:'both',newCat:'se',newP:'',ob:0,goals:{},react:0,shelf:{},photos:[],cmpA:null,cmpB:null,cmpX:50,cmpMode:'slide',selP:null,rm:false,photoMsg:'',pendingMile:null,more:'shop',prodSel:null,pimg:{},shotFor:null};
+  var ui={tab:'today',slot:new Date().getHours()<15?'am':'pm',week:null,day:null,recipe:'butter',frac:0,when:'both',newCat:'se',newP:'',ob:0,goals:{},react:0,shelf:{},photos:[],cmpA:null,cmpB:null,cmpX:50,cmpMode:'slide',selP:null,rm:false,photoMsg:'',pendingMile:null,more:'shop',prodSel:null,pimg:{},shotFor:null,wslot:'pm',backupMsg:''};
 
   function label(p){return p.n||CATS[p.cat].n}
   function has(cat){return state.products.some(function(p){return p.on&&p.cat===cat})}
@@ -351,20 +355,34 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     var A={}, n=d?days(d):0;
     state.products.forEach(function(p){var c=CATS[p.cat]; if(!p.on||!c.act)return;
       var m='full'; if(d){var w=Math.floor((n-days(parse(p.since||state.start)))/7); if(w<0&&p.since)return; m=w<state.ramp?'ramp':'full'}
-      if(A[c.act]!=='full')A[c.act]=m});
+      if(p.used)m='full'; if(A[c.act]!=='full')A[c.act]=m});
     return A;
   }
-  function weekMap(A){
-    var m=['rec','rec','rec','rec','rec','rec','rec'];
-    if(A.acid){m[1]='acid'; if(A.acid==='full')m[4]='acid'}
-    if(A.ret){ if(A.ret==='full'){m[2]='ret';m[5]='ret'} else m[3]='ret' }
+  /* How many nights each active wants, and where it prefers to sit, counted from the rest night. */
+  var PREF={acid:[1,4,6,3],ret:[2,5,3,6,4,1],retEase:[3,2,5,6],fill:[2,5,3,6],fillAll:[2,5,3,6,1,4]}, DEF={acid:2,ret:2,aza:4,bp:4}, LIM={acid:3,ret:5,aza:6,bp:6};
+  function caps(){var c={};state.products.forEach(function(p){var a=CATS[p.cat].act; if(p.on&&a&&p.max>0)c[a]=Math.max(c[a]||0,p.max)});return c}
+  function weekMap(A,cap){
+    cap=cap||caps(); var r=['rec','rec','rec','rec','rec','rec','rec'], m=r.slice(), rest=state.rest||0, i;
+    function want(t,easeN){var w=A[t]==='full'?(cap[t]||DEF[t]):easeN; return cap[t]?Math.min(w,cap[t]):w}
+    function take(t,list,n){list.forEach(function(x){if(n>0&&r[x]==='rec'){r[x]=t;n--}})}
+    if(A.acid)take('acid',PREF.acid,want('acid',1));
+    if(A.ret)take('ret',A.ret==='full'?PREF.ret:PREF.retEase,want('ret',1));
     var F=['aza','bp'].filter(function(x){return A[x]}), left={};
-    F.forEach(function(x){left[x]=A[x]==='full'?9:(F.length>1?1:2)});
-    if(F.length)[2,5,3,6].filter(function(i){return m[i]==='rec'}).forEach(function(i,k){
+    F.forEach(function(x){left[x]=want(x,F.length>1?1:2)});
+    if(F.length)(F.some(function(x){return cap[x]})?PREF.fillAll:PREF.fill).filter(function(x){return r[x]==='rec'}).forEach(function(x,k){
       var a=F[k%F.length], b=F[(k+1)%F.length], pick=left[a]>0?a:(left[b]>0?b:null);
-      if(pick){m[i]=pick;left[pick]--}
+      if(pick){r[x]=pick;left[pick]--}
     });
+    for(i=0;i<7;i++)m[(rest+i)%7]=r[i];
     return m;
+  }
+  /* Two products of the same active type never share a night. They take turns. */
+  function chosen(d,night){
+    var list=state.products.filter(function(p){return p.on&&CATS[p.cat].act===night}); if(list.length<2)return list[0];
+    var m=weekMap(modes(d)), occ=0, i=state.rest||0, guard=0;
+    while(i!==d.getDay()&&guard++<7){ if(m[i]===night)occ++; i=(i+1)%7 }
+    var wkStart=days(d)-((d.getDay()-(state.rest||0)+7)%7);
+    return list[(occ+Math.floor(wkStart/7))%list.length];
   }
   function nightOf(d){
     var A=modes(d), base=weekMap(A)[d.getDay()], f=state.feel[key(d)], y=state.feel[key(addDays(d,-1))];
@@ -378,22 +396,22 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     if(nt.over)return 'You logged '+(state.feel[key(d)]==='tight'?'tight':'stinging')+' skin, so tonight rests. Your actives come back once it settles.';
     if(t==='rec'){
       if(!Object.keys(A).length)return 'No actives on your shelf yet, so every night is a hydration night.';
-      if(d.getDay()===0)return 'Sunday is your weekly rest night. Hydrate and let your skin repair.';
+      if(d.getDay()===(state.rest||0))return DOWL[d.getDay()]+' is your weekly rest night. Hydrate and let your skin repair.';
       return ez.length?'A rest night while your '+ez.join(' and ')+' eases in.':'A rest night between actives.';
     }
     var n=weekMap(A).filter(function(x){return x===t}).length;
     return A[t]==='ramp'?'Still easing in, so '+(n===1?'once':n===2?'twice':n+' nights')+' this week. It steps up after its first '+state.ramp+' weeks.'
       :'On '+(n===1?'one night':n+' nights')+' this week, with rest or a different active in between.';
   }
-  function what(t){
+  function what(t,d){
     if(t==='rec')return 'Hydration only';
-    var p=state.products.filter(function(x){return x.on&&CATS[x.cat].act===t})[0];
+    var p=d?chosen(d,t):state.products.filter(function(x){return x.on&&CATS[x.cat].act===t})[0];
     return p?(p.p||label(p)):'';
   }
   function fits(p,slot){var c=CATS[p.cat]; return (slot in c)&&(!p.w||p.w==='both'||p.w===slot)}
   function stepsFor(d,slot){
-    var night=slot==='pm'?nightOf(d).t:null;
-    return state.products.map(function(p,i){return [p,i]}).filter(function(x){var p=x[0],c=CATS[p.cat];return p.on&&fits(p,slot)&&(!c.act||c.act===night)})
+    var night=slot==='pm'?nightOf(d).t:null, pick=night&&night!=='rec'?chosen(d,night):null;
+    return state.products.map(function(p,i){return [p,i]}).filter(function(x){var p=x[0],c=CATS[p.cat];return p.on&&fits(p,slot)&&(!c.act||(c.act===night&&p===pick))})
       .sort(function(a,b){return (CATS[a[0].cat][slot]-CATS[b[0].cat][slot])||(a[1]-b[1])}).map(function(x){return x[0]});
   }
   /* The conflict checker. It reports what the plan already handles and what is missing. */
@@ -403,11 +421,13 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     if(n&&!has('sp'))add('warn','No sunscreen on your shelf. Actives make skin sun sensitive, so add SPF 30 or higher.');
     if(n&&!has('mo'))add('warn','No moisturizer. Actives need one on top.');
     if(n>=3)add('warn','Three or more actives is a lot for one face. Consider dropping one.');
+    if((caps().acid||0)>=3)add('warn','Exfoliating three nights a week is a lot. Drop back if your skin feels tight.');
+    if(n)add('tip','Rota plans by product type. Follow the label or your dermatologist if they say something different.');
     if(A.acid&&A.ret)add('ok','Exfoliant and retinoid are kept on separate nights.');
     if(A.bp&&A.ret)add('ok','Benzoyl peroxide and retinoid are kept on separate nights.');
     if(n>=2&&!(A.acid&&A.ret))add('ok','One active a night. Nothing strong is layered.');
     if(has('vc')&&n)add('ok','Vitamin C stays in the morning, away from your night actives.');
-    if(n){add('ok','Sunday is always a recovery night.');add('ok','Each active eases in over its first '+state.ramp+' weeks.')}
+    if(n){add('ok',DOWL[state.rest||0]+' is always a recovery night.');add('ok','Each active eases in over its first '+state.ramp+' weeks.')}
     else add('tip','No actives on your shelf, so every night is a hydration night.');
     if(A.ret)add('tip','Skip retinoids if you are pregnant or nursing.');
     var G={marks:[['aza','vc'],'For dark marks, azelaic acid or vitamin C does the most.'],texture:[['acid','ret'],'For texture, an AHA or BHA exfoliant is the usual next step.'],
@@ -440,34 +460,36 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
   function back(to,act){return '<div class="bar"><button class="icon" style="margin:0 0 0 -9px" data-act="'+(act||'tab')+'" data-id="'+to+'" aria-label="Back">'+ic('left')+'</button><span></span></div>'}
 
   /* ---------- screens ---------- */
+  function listHtml(d,slot){
+    var k=key(d), t=nightOf(d).t, list=stepsFor(d,slot);
+    return '<ol class="list">'+(list.length?list.map(function(p,i){
+      return '<li><button class="row" data-act="step" data-id="'+esc(p.id)+'" data-day="'+k+'" data-slot="'+slot+'" aria-pressed="'+stepOn(k,slot,p.id)+'"'+dis()+'>'+
+        (ui.pimg[p.id]?'<img class="th" src="'+ui.pimg[p.id]+'" alt="">':'<span class="idx num">'+String(i+1).padStart(2,'0')+'</span>')+
+        '<span class="what"><b>'+esc(label(p))+'</b>'+(p.p?'<small>'+esc(p.p)+'</small>':'')+'</span>'+(CATS[p.cat].act?'<span class="tagc c-'+t+'">Active</span>':'')+
+        '<span class="tick">'+ic('check')+'</span></button></li>'}).join(''):'<li class="empty">Nothing here yet. Add products on your shelf.</li>')+'</ol>';
+  }
   function vToday(st){
     var now=new Date(), k=key(now), night=nightOf(now), t=night.t, h=now.getHours();
     var am=stepsFor(now,'am'), pm=stepsFor(now,'pm'), all=am.length+pm.length, n=0;
     am.forEach(function(p){if(stepOn(k,'am',p.id))n++}); pm.forEach(function(p){if(stepOn(k,'pm',p.id))n++});
     var frac=all?n/all:0, C=2*Math.PI*34, prev=ui.frac; ui.frac=frac;
     var list=ui.slot==='am'?am:pm, part=h<12?'morning':h<17?'afternoon':'evening', f=state.feel[k]||'';
-    var rows=list.length?list.map(function(p,i){
-      return '<li><button class="row" data-act="step" data-id="'+esc(p.id)+'" aria-pressed="'+stepOn(k,ui.slot,p.id)+'"'+dis()+'>'+
-        (ui.pimg[p.id]?'<img class="th" src="'+ui.pimg[p.id]+'" alt="">':'<span class="idx num">'+String(i+1).padStart(2,'0')+'</span>')+
-        '<span class="what"><b>'+esc(label(p))+'</b>'+(p.p?'<small>'+esc(p.p)+'</small>':'')+'</span>'+(CATS[p.cat].act?'<span class="tagc c-'+t+'">Active</span>':'')+
-        '<span class="tick">'+ic('check')+'</span></button></li>'}).join(''):'<li class="empty">Nothing here yet. Add products on your shelf.</li>';
     var done=list.length&&isDone(now,ui.slot);
     var tip=done?(ui.slot==='am'?'Morning done. See you tonight.':'Evening done. Rest well.')
       :ui.slot==='am'?(has('sp')?'Two finger lengths of sunscreen, even indoors by a window.':'Add a sunscreen. It protects every other step.'):NIGHT[t].tip;
-    var wk=st.ti<0?'starts soon':st.ti>=DAYS?'12 weeks done':'Week '+st.week+' of 12';
-    return top()+'<header class="head"><p class="eyebrow">'+DOWL[now.getDay()]+' \u00b7 '+nice(now)+'</p>'+
+    var wk=st.ti<0?'':st.ti>=DAYS?' · 12 weeks done':' · Week '+st.week;
+    return top()+'<header class="head"><p class="eyebrow">'+DOWL[now.getDay()]+' · '+nice(now)+wk+'</p>'+
       '<h1>Good '+part+(state.name?', <em>'+esc(state.name)+'</em>':'')+'</h1></header>'+
-      '<div class="feel"><p class="eyebrow">How does your skin feel today</p><div class="pills">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
-        return '<button class="pill" data-act="feel" data-id="'+o[0]+'" aria-pressed="'+(f===o[0])+'"'+dis()+'>'+o[1]+'</button>'}).join('')+'</div></div>'+
-      '<section class="card tonight"><div><p class="eyebrow">Tonight</p><h2 class="c-'+t+'">'+NIGHT[t].n+'</h2><p class="sub">'+esc(what(t))+'</p></div>'+
-      '<div class="mini"><svg viewBox="0 0 76 76"><circle class="track" cx="38" cy="38" r="34" fill="none" stroke-width="4"/>'+
-      '<circle class="arc" id="arc" cx="38" cy="38" r="34" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-prev))+'" data-to="'+(C*(1-frac))+'"/></svg>'+
+      '<section class="card tonight"><div><p class="eyebrow">Tonight</p><h2 class="c-'+t+'">'+NIGHT[t].n+'</h2><p class="sub">'+esc(what(t,now))+'</p></div>'+
+      '<div class="mini"><svg viewBox="0 0 76 76"><circle class="track" cx="38" cy="38" r="34" fill="none" stroke-width="5"/>'+
+      '<circle class="arc" id="arc" cx="38" cy="38" r="34" fill="none" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-prev))+'" data-to="'+(C*(1-frac))+'"/></svg>'+
       '<div><b class="num">'+n+'</b><span class="num">of '+all+'</span></div></div>'+
       '<p class="why">'+why(now)+'</p></section>'+
-      '<div class="meta"><span class="eyebrow">'+wk+'</span><span class="eyebrow num">'+st.streak+' day streak</span></div>'+
+      '<div class="feel"><p class="eyebrow">Skin today</p><div class="pills">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
+        return '<button class="pill" data-act="feel" data-id="'+o[0]+'" aria-pressed="'+(f===o[0])+'"'+dis()+'>'+o[1]+'</button>'}).join('')+'</div></div>'+
       '<div class="tabs2" role="group" aria-label="Routine"><button data-act="slot" data-id="am" aria-pressed="'+(ui.slot==='am')+'">Morning</button>'+
       '<button data-act="slot" data-id="pm" aria-pressed="'+(ui.slot==='pm')+'">Evening</button></div>'+
-      '<ol class="list">'+rows+'</ol><p class="note">'+tip+'</p>';
+      listHtml(now,ui.slot)+'<p class="note">'+tip+'</p>';
   }
 
   function vWeek(st){
@@ -476,7 +498,7 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     if(!sel){for(j=0;j<7;j++){d=addDays(ws,j); if(key(d)===tk)sel=d} if(!sel)sel=ws; ui.day=key(sel)}
     for(j=0;j<7;j++){d=addDays(ws,j); var k=key(d), t=nightOf(d).t; used[t]=1;
       strip+='<button class="dayb'+(k===tk?' today':'')+'" data-act="day" data-id="'+k+'" aria-pressed="'+(k===ui.day)+'" aria-label="'+DOWL[d.getDay()]+' '+nice(d)+', '+NIGHT[t].n+' night">'+
-        '<small>'+DOW[d.getDay()]+'</small><b class="num">'+d.getDate()+'</b><span class="dot b-'+t+'"></span>'+
+        '<small>'+DOW[d.getDay()]+'</small><b class="num">'+d.getDate()+'</b><span class="dot b-'+t+'"></span><em>'+NIGHT[t].s+'</em>'+
         '<span class="ap"><i class="'+(isDone(d,'am')?'on':'')+'"></i><i class="'+(isDone(d,'pm')?'on':'')+'"></i></span></button>'}
     var t2=nightOf(sel).t, pm=stepsFor(sel,'pm').map(function(p){return esc(label(p))}).join(' · ');
     var ramp=easing(ws).length>0;
@@ -486,9 +508,10 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
       '<div class="strip">'+strip+'</div>'+
       '<p class="legend">'+['acid','ret','aza','bp','rec'].filter(function(x){return used[x]}).map(function(x){return '<span><i class="b-'+x+'"></i>'+NIGHT[x].n+'</span>'}).join('')+'</p>'+
       '<section class="card"><p class="eyebrow">'+DOWL[sel.getDay()]+' · '+nice(sel)+'</p><h2 class="c-'+t2+'" style="margin-top:8px">'+NIGHT[t2].n+' night</h2>'+
-      '<p class="sub" style="margin-top:8px">'+(pm||'No evening products yet')+'</p><p class="why" style="margin-top:12px">'+why(sel)+'</p>'+
-      '<div class="duo"><button class="btn ghost" data-act="slotday" data-id="am" aria-pressed="'+isDone(sel,'am')+'"'+dis()+'>'+ic(isDone(sel,'am')?'check':'sun')+'Morning</button>'+
-      '<button class="btn ghost" data-act="slotday" data-id="pm" aria-pressed="'+isDone(sel,'pm')+'"'+dis()+'>'+ic(isDone(sel,'pm')?'check':'moon')+'Evening</button></div></section>';
+      '<p class="why" style="margin-top:10px">'+why(sel)+'</p></section>'+
+      '<div class="tabs2" role="group" aria-label="Routine"><button data-act="wslot" data-id="am" aria-pressed="'+(ui.wslot==='am')+'">Morning</button>'+
+      '<button data-act="wslot" data-id="pm" aria-pressed="'+(ui.wslot==='pm')+'">Evening</button></div>'+
+      listHtml(sel,ui.wslot);
   }
 
   function miles(){return [{id:'m0',day:0,t:'Day 1 photo',cam:1},{id:'m1',day:state.ramp*7,t:'Easing in finished'},{id:'m2',day:28,t:'Week 4 photo',cam:1},{id:'m3',day:56,t:'Week 8 photo',cam:1},{id:'m4',day:84,t:'Week 12 photo',cam:1}]}
@@ -578,7 +601,7 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     ['Face',[['spf','Tinted sunscreen, SPF 50','Match the shade in daylight'],['oilcl','Cleansing oil or balm','Adds a first step to your evenings']]],
     ['Body',[['lactic','Lactic acid lotion, 12%','Fragrance free, three nights a week']]],
     ['Butter kit',[['shea','Raw shea butter','Unrefined, ivory'],['jojoba','Jojoba oil','USDA Organic, cold pressed'],['rosehip','Rosehip seed oil','Small bottle, keep in the fridge'],
-      ['tamanu','Tamanu oil','Patch test first'],['vite','Vitamin E','Mixed tocopherols'],['lav','Lavender essential oil','True lavender'],['scale','Kitchen scale','Reads to 1 gram'],['jar','Dark glass jar','With a lid']]]
+      ['tamanu','Tamanu oil','Patch test first'],['vite','Vitamin E','Mixed tocopherols'],['lav','Lavender essential oil','Optional. Patch test first'],['scale','Kitchen scale','Reads to 1 gram'],['jar','Dark glass jar','With a lid']]]
   ];
   var SHOP_N=SHOP.reduce(function(n,g){return n+g[1].length},0);
   function vShop(){
@@ -589,7 +612,7 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
   }
 
   var RECIPES={
-    butter:{rows:[['Shea butter',70,'#f1dfc6'],['Jojoba oil',13.5,'#d9bf8c'],['Rosehip seed oil',10,'#d9907a'],['Tamanu oil',5,'#a9c1a5'],['Vitamin E',1,'#bfa9d1'],['Lavender oil',0.5,'#9db7d1']],
+    butter:{rows:[['Shea butter',70,'#f1dfc6'],['Jojoba oil',13.5,'#d9bf8c'],['Rosehip seed oil',10,'#d9907a'],['Tamanu oil',5,'#a9c1a5'],['Vitamin E',1,'#bfa9d1'],['Lavender oil, optional',0.5,'#9db7d1']],
       how:['Melt the shea over a water bath','Stir in jojoba, then freeze 15 minutes','Add the rest once it feels cool','Whip until fluffy. Dark jar, no water']},
     oil:{rows:[['Jojoba oil',70,'#d9bf8c'],['Rosehip seed oil',20,'#d9907a'],['Tamanu oil',9,'#a9c1a5'],['Vitamin E',1,'#bfa9d1']],
       how:['Weigh everything into a dark bottle','Shake until it looks even','Smooth onto damp skin after a shower','On lactic acid nights, lotion goes first']}
@@ -603,14 +626,15 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
       '<b class="num">'+state.batch+' g</b><button data-act="batch" data-id="50" aria-label="Larger batch"'+dis()+'>+</button></div></div>'+
       '<div class="stack">'+R.rows.map(function(r){return '<i style="flex:'+r[1]+';background:'+r[2]+'"></i>'}).join('')+'</div>'+
       R.rows.map(function(r){return '<div class="ing"><i style="background:'+r[2]+'"></i><span>'+r[0]+'</span><span class="pct num">'+r[1]+'%</span><b class="num">'+(r[1]*state.batch/100).toFixed(1)+' g</b></div>'}).join('')+'</section>'+
-      '<section><h2>Method</h2><ol class="how" style="margin-top:6px">'+R.how.map(function(h,i){return '<li><span class="num">'+(i+1)+'</span>'+h+'</li>'}).join('')+'</ol></section>';
+      '<section><h2>Method</h2><ol class="how" style="margin-top:6px">'+R.how.map(function(h,i){return '<li><span class="num">'+(i+1)+'</span>'+h+'</li>'}).join('')+'</ol></section>'+
+      (ui.recipe==='butter'?'<p class="why">Scent is optional. Fragrance oils can irritate skin, so patch test on your inner arm first or leave it out.</p>':'');
   }
 
   function vMore(){
     return top()+'<div class="pills" role="group" aria-label="Section"><button class="pill" data-act="more" data-id="shop" aria-pressed="'+(ui.more!=='butter')+'">Shopping list</button>'+
       '<button class="pill" data-act="more" data-id="butter" aria-pressed="'+(ui.more==='butter')+'">Body butter</button></div>'+(ui.more==='butter'?vButter():vShop());
   }
-  function ezLine(p){var c=CATS[p.cat]; if(!p.on||!c.act)return ''; var end=addDays(parse(p.since||state.start),state.ramp*7); return days(new Date())<days(end)?'Easing in until '+nice(end):''}
+  function ezLine(p){var c=CATS[p.cat]; if(!p.on||!c.act||p.used)return ''; var end=addDays(parse(p.since||state.start),state.ramp*7); return days(new Date())<days(end)?'Easing in until '+nice(end):''}
   function pic(p){var img=ui.pimg[p.id];return img?'<img src="'+img+'" alt="">':'<span class="init">'+esc(label(p).charAt(0))+'</span>'}
   function vShelf(){
     if(ui.prodSel&&prod(ui.prodSel))return vProduct(prod(ui.prodSel));
@@ -633,6 +657,9 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
       '<section><div class="prod"><div><label for="p-'+id+'">'+esc(label(p))+'</label><input class="txt" style="font-size:22px;font-family:var(--serif);font-weight:400" id="p-'+id+'" data-edit="p" data-id="'+id+'" maxlength="40" placeholder="Name this product" value="'+esc(p.p)+'"'+dis()+'></div></div>'+
       '<div class="field" style="border-top:1px solid var(--line)"><span>In my rotation</span><button class="sw" role="switch" data-act="sw" data-id="'+id+'" aria-checked="'+!!p.on+'" aria-label="In my rotation"'+dis()+'></button></div>'+
       (both?'<div style="padding-top:14px;border-top:1px solid var(--line)"><p class="lab">When</p><div class="pills" style="margin-top:10px" role="group" aria-label="When">'+['am','pm','both'].map(function(x){return '<button class="pill" data-act="pwhen" data-id="'+x+'" aria-pressed="'+(w===x)+'"'+dis()+'>'+WHEN[x]+'</button>'}).join('')+'</div></div>':'')+
+      (c.act?'<div class="field" style="border-top:1px solid var(--line)"><span>Nights a week</span><div class="stepper"><button data-act="pmax" data-id="-1" aria-label="Fewer nights"'+dis()+'>&minus;</button>'+
+        '<b class="num" style="min-width:62px">'+(p.max||'Auto')+'</b><button data-act="pmax" data-id="1" aria-label="More nights"'+dis()+'>+</button></div></div>'+
+        '<div class="field"><span>I already use this regularly</span><button class="sw" role="switch" data-act="pused" aria-checked="'+!!p.used+'" aria-label="I already use this regularly"'+dis()+'></button></div>':'')+
       (ez?'<p class="why" style="margin-top:18px">'+ez+'. It starts on fewer nights and steps up after that.</p>':'')+'</section>'+
       '<button class="link" style="align-self:center" data-act="delp" data-id="'+id+'"'+dis()+'>'+(ui.rm?'Tap again to remove it':'Remove from shelf')+'</button></div>';
   }
@@ -643,8 +670,13 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
       '<section><h2>Color scheme</h2><div class="themes">'+th+'</div></section>'+
       '<section><h2>Routine</h2><p class="sub" style="margin:6px 0 16px">Answer the setup questions again. Your products and check marks are kept.</p><button class="btn ghost" data-act="redo"'+dis()+'>Rebuild my routine</button></section>'+
       '<section><div class="field"><label for="name">Name for the greeting</label><input class="txt" id="name" data-edit="name" maxlength="20" placeholder="Optional" value="'+esc(state.name)+'"'+dis()+'></div>'+
+      '<div class="field"><label for="rest">Weekly rest night</label><select class="txt" id="rest" style="max-width:150px;text-align:right;appearance:none;-webkit-appearance:none"'+dis()+'>'+DOWL.map(function(nm,i){return '<option value="'+i+'"'+((state.rest||0)===i?' selected':'')+'>'+nm+'</option>'}).join('')+'</select></div>'+
       '<div class="field"><label for="start">Day 1 of your plan</label><input type="date" id="start" value="'+state.start+'"'+dis()+'></div>'+
       '<div class="field"><span>Shopping list and body butter</span><button class="sw" role="switch" data-act="extras" aria-checked="'+!!state.extras+'" aria-label="Show shopping list and body butter"'+dis()+'></button></div></section>'+
+      (window.claude&&window.claude.use?'<section><h2>Your data</h2><p class="sub" style="margin-top:6px">Your routine and check marks are saved to your account. Photos stay on this device only.</p></section>'
+        :'<section><h2>Backup</h2><p class="sub" style="margin:6px 0 16px">Everything lives on this phone, photos included. A backup file is the only other copy, so save one before you switch phones.</p>'+
+          '<div class="duo" style="margin-top:0"><button class="btn ghost" data-act="export">Save backup</button><button class="btn ghost" data-act="import">Restore</button></div>'+
+          (ui.backupMsg?'<p class="sub" style="margin-top:12px">'+ui.backupMsg+'</p>':'')+'</section>')+
       '<p class="fine">Rota is a planning tool and not medical advice.</p>';
   }
 
@@ -711,7 +743,8 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     var a=b.dataset.act, id=b.dataset.id, now=new Date(), p;
     if(a==='tab'){ui.tab=id;ui.prodSel=null;ui.rm=false; try{history.replaceState(null,'','#'+id)}catch(x){} render(); window.scrollTo(0,0)}
     else if(a==='slot'){ui.slot=id;render()}
-    else if(a==='step')toggleStep(now,ui.slot,id);
+    else if(a==='step')toggleStep(b.dataset.day?parse(b.dataset.day):now,b.dataset.slot||ui.slot,id);
+    else if(a==='wslot'){ui.wslot=id;render()}
     else if(a==='feel'){var k=key(now); if(state.feel[k]===id)delete state.feel[k]; else state.feel[k]=id; commit()}
     else if(a==='day'){ui.day=id;render()}
     else if(a==='wk'){ui.week=Math.min(12,Math.max(1,ui.week+(+id)));ui.day=null;render()}
@@ -729,6 +762,10 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     else if(a==='theme'){state.theme=id;commit()}
     else if(a==='sw'){p=prod(id); if(p){p.on=!p.on; if(p.on)p.since=key(now); commit()}}
     else if(a==='more'){ui.more=id;render()}
+    else if(a==='pmax'){p=prod(ui.prodSel); if(p){p.max=Math.max(0,Math.min(LIM[CATS[p.cat].act]||7,(p.max||0)+(+id)));commit()}}
+    else if(a==='pused'){p=prod(ui.prodSel); if(p){p.used=!p.used;commit()}}
+    else if(a==='export')exportData();
+    else if(a==='import')document.getElementById('restore').click();
     else if(a==='psel'){ui.prodSel=id;ui.rm=false;render();window.scrollTo(0,0)}
     else if(a==='pback'){ui.prodSel=null;ui.rm=false;render();window.scrollTo(0,0)}
     else if(a==='pwhen'){p=prod(id2(b)); if(p){p.w=id==='both'?'':id;commit()}}
@@ -751,11 +788,41 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     var t=e.target, ed=t.dataset&&t.dataset.edit, v=(t.value||'').trim();
     if(readOnly)return;
     if(t.id==='new-cat'){ui.newCat=t.value;return}
+    if(t.id==='rest'){state.rest=+t.value||0;commit();return}
     if(t.id==='cmp-a'){ui.cmpA=t.value;render();return}
     if(t.id==='cmp-b'){ui.cmpB=t.value;render();return}
     if(ed==='p'){var p=prod(t.dataset.id); if(p){p.p=v.slice(0,40);save()} return}
     if(ed==='name'){state.name=v.slice(0,20);save();return}
     if(t.id==='start'&&/^\d{4}-\d{2}-\d{2}$/.test(t.value)){state.start=t.value;ui.week=null;ui.day=null;commit()}
+  });
+
+  /* ---------- backup: one file with the routine, check marks and photos ---------- */
+  function exportData(){
+    Promise.all([tx('readonly',function(o){return o.getAll()}),tx('readonly',function(o){return o.getAll()},'prod')]).catch(function(){return [[],[]]}).then(function(r){
+      var name='rota-backup-'+key(new Date())+'.json', text=JSON.stringify({rota:1,saved:key(new Date()),state:state,photos:r[0]||[],products:r[1]||[]});
+      var file=null; try{file=new File([text],name,{type:'application/json'})}catch(e){}
+      if(file&&navigator.canShare&&navigator.canShare({files:[file]})){
+        navigator.share({files:[file]}).then(function(){ui.backupMsg='Backup saved.';render()}).catch(function(){});
+        return;
+      }
+      var a=document.createElement('a'), url=URL.createObjectURL(new Blob([text],{type:'application/json'}));
+      a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(url)},8000);
+      ui.backupMsg='Backup saved as '+name+'.'; render();
+    });
+  }
+  document.getElementById('restore').addEventListener('change',function(){
+    var inp=this, f=inp.files&&inp.files[0]; inp.value=''; if(!f)return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      var d=null; try{d=JSON.parse(rd.result)}catch(e){}
+      if(!d||d.rota!==1||!d.state||typeof d.state!=='object'){ui.backupMsg='That file is not a Rota backup.';render();return}
+      adopt(d.state);
+      var ph=(Array.isArray(d.photos)?d.photos:[]).filter(function(x){return x&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)&&okImg(x.u)}).slice(0,120).map(function(x){return {d:x.d,u:x.u}});
+      var pr=(Array.isArray(d.products)?d.products:[]).filter(function(x){return x&&typeof x.id==='string'&&okImg(x.u)}).slice(0,40).map(function(x){return {id:x.id.slice(0,24),u:x.u}});
+      Promise.all([tx('readwrite',function(o){ph.forEach(function(x){o.put(x)})}),tx('readwrite',function(o){pr.forEach(function(x){o.put(x)})},'prod')]).catch(function(){})
+        .then(function(){ui.backupMsg='Restored your backup'+(d.saved?' from '+nice(parse(String(d.saved)))+'.':'.');ui.week=null;ui.day=null;save();return loadPhotos()});
+    };
+    rd.readAsText(f);
   });
 
   /* ---------- saving ---------- */
@@ -783,9 +850,9 @@ div.dayb em{font-style:normal;font-size:12px;color:var(--muted)}
     var f=fresh();
     return {v:2,setup:!!d.setup,extras:!!d.extras,start:/^\d{4}-\d{2}-\d{2}$/.test(d.start)?d.start:f.start,ramp:[2,3,4].indexOf(+d.ramp)>=0?+d.ramp:2,
       goals:Array.isArray(d.goals)?d.goals.filter(function(g){return GOALS[g]}):[],name:typeof d.name==='string'?d.name.slice(0,20):'',
-      theme:THEME_IDS[d.theme]?d.theme:(d.theme==='day'?'bone':'stone'),
+      theme:THEME_IDS[d.theme]?d.theme:(d.theme==='day'?'bone':'stone'),rest:(+d.rest>=0&&+d.rest<=6)?Math.floor(+d.rest):0,
       products:Array.isArray(d.products)?d.products.filter(function(p){return p&&typeof p.id==='string'&&CATS[p.cat]}).slice(0,24).map(function(p){
-        return {id:p.id.slice(0,24),cat:p.cat,n:typeof p.n==='string'?p.n.slice(0,30):'',p:String(p.p||'').slice(0,40),w:WHEN[p.w]?p.w:'',on:p.on!==false,x:p.x?1:0,since:/^\d{4}-\d{2}-\d{2}$/.test(p.since)?p.since:''}}):[],
+        return {id:p.id.slice(0,24),cat:p.cat,n:typeof p.n==='string'?p.n.slice(0,30):'',p:String(p.p||'').slice(0,40),w:WHEN[p.w]?p.w:'',on:p.on!==false,x:p.x?1:0,since:/^\d{4}-\d{2}-\d{2}$/.test(p.since)?p.since:'',max:Math.max(0,Math.min(7,Math.floor(+p.max||0))),used:!!p.used}}):[],
       checks:obj(d.checks),miles:obj(d.miles),shop:obj(d.shop),feel:obj(d.feel),batch:(+d.batch>=50&&+d.batch<=1000)?+d.batch:200};
   }
   function adopt(d){ if(d&&typeof d==='object')state=clean(d.v===2?d:migrate(d)); }
