@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Skin Rotation">
+<meta name="theme-color" content="#130d17">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>:root{padding-top:env(safe-area-inset-top,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<title>Skin Rotation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a phone app. One screen per tab, a floating dock at the bottom, glass cards over two soft glows. Single dark look by choice. */
+:root{
+  color-scheme:dark;
+  --bg:#130d17; --glow-a:#ff9d7a; --glow-b:#a983ff;
+  --fg:#fcf4f1; --muted:#bbaab8; --faint:#8a7a88;
+  --card:rgba(255,255,255,.06); --card-2:rgba(255,255,255,.09); --line:rgba(255,255,255,.11);
+  --peach:#ffb48c; --rose:#ff8fa3;
+  --lilac:#c9abff;   /* exfoliation nights */
+  --gold:#ffd590;    /* azelaic nights */
+  --mint:#a8e6c4;    /* recovery nights */
+  --ink:#2a1420;     /* text on a filled accent */
+  --display:"Fraunces","Iowan Old Style",Georgia,serif;
+  --body:"Plus Jakarta Sans","Avenir Next","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(60% 38% at 12% 0%,color-mix(in srgb,var(--glow-a) 34%,transparent),transparent 70%),
+             radial-gradient(55% 40% at 100% 38%,color-mix(in srgb,var(--glow-b) 26%,transparent),transparent 72%),
+             radial-gradient(70% 40% at 20% 100%,color-mix(in srgb,var(--rose) 16%,transparent),transparent 70%)}
+#app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding-inline:16px;padding-block:22px calc(118px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+h1,h2,h3,p{margin:0}
+h1{font-family:var(--display);font-weight:500;font-size:32px;line-height:1.1;letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-style:italic;color:var(--peach)}
+h2{font-family:var(--display);font-weight:600;font-size:22px;line-height:1.15}
+h3{font-size:15px;font-weight:600}
+.sub{color:var(--muted);font-size:13.5px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0;text-align:left}
+:focus-visible{outline:2px solid var(--peach);outline-offset:2px}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 11px;border-radius:99px;background:var(--card-2);color:var(--muted);align-self:flex-start}
+.hello{display:flex;flex-direction:column;gap:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:18px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);min-width:0}
+.t-exf{color:var(--lilac)} .t-aza{color:var(--gold)} .t-rec{color:var(--mint)}
+.b-exf{background:var(--lilac)} .b-aza{background:var(--gold)} .b-rec{background:var(--mint)}
+
+/* Today */
+.hero{display:flex;align-items:center;gap:18px}
+.ring{position:relative;width:118px;height:118px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 0 12px color-mix(in srgb,var(--peach) 55%,transparent))}
+.ring .track{stroke:var(--card-2)} .ring .bar{stroke:url(#grad);transition:stroke-dashoffset .6s cubic-bezier(.3,.8,.3,1)}
+.ring div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring b{font-family:var(--display);font-size:28px;font-weight:600;line-height:1}
+.ring span{font-size:11px;color:var(--muted);margin-top:3px}
+.hero .meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.streak{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:13px;font-weight:600;color:var(--peach)}
+.streak svg{width:16px;height:16px}
+
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;border-radius:99px;background:var(--card);border:1px solid var(--line)}
+.seg button{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 0;border-radius:99px;font-weight:600;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:linear-gradient(120deg,var(--peach),var(--rose));color:var(--ink)}
+.seg svg{width:18px;height:18px}
+
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:46px minmax(0,1fr) 30px;gap:14px;align-items:center;width:100%;padding:12px 14px;border-radius:22px;background:var(--card);border:1px solid var(--line);transition:background .2s,opacity .2s}
+.step .ico{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;background:var(--card-2);color:var(--peach)}
+.step .tick{width:30px;height:30px;border-radius:50%;border:1.6px solid var(--line);display:grid;place-items:center;color:transparent}
+.step .tick svg{width:16px;height:16px;stroke-width:2.4}
+.step[aria-pressed="true"]{background:color-mix(in srgb,var(--peach) 13%,transparent);border-color:color-mix(in srgb,var(--peach) 35%,transparent)}
+.step[aria-pressed="true"] .tick{background:linear-gradient(120deg,var(--peach),var(--rose));border-color:transparent;color:var(--ink)}
+.step[aria-pressed="true"] h3{color:var(--muted)}
+.step.key .ico{color:var(--ink)}
+.tip{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);padding:2px 6px}
+.tip svg{width:18px;height:18px;margin-top:1px;color:var(--peach)}
+
+/* Week */
+.bar-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.arrows{display:flex;gap:8px}
+.arrows button{width:40px;height:40px;border-radius:50%;background:var(--card-2);display:grid;place-items:center}
+.arrows button:disabled{opacity:.3}
+.strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.dayb{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 0 9px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.dayb small{font-size:11px;color:var(--muted);font-weight:600}
+.dayb b{font-family:var(--display);font-size:19px;font-weight:600;line-height:1}
+.dayb .dot{width:7px;height:7px;border-radius:50%}
+.dayb .ap{display:flex;gap:3px}
+.dayb .ap i{width:9px;height:4px;border-radius:2px;background:var(--card-2)}
+.dayb .ap i.on{background:var(--peach)}
+.dayb[aria-pressed="true"]{background:var(--card-2);border-color:var(--peach)}
+.dayb.today small{color:var(--peach)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);justify-content:center}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.big{display:flex;align-items:center;justify-content:center;gap:9px;padding:15px 0;border-radius:20px;background:var(--card-2);font-weight:600}
+.big[aria-pressed="true"]{background:linear-gradient(120deg,var(--peach),var(--rose));color:var(--ink)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.pills span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:6px 11px 6px 8px;border-radius:99px;background:var(--card-2);color:var(--muted)}
+.pills svg{width:15px;height:15px}
+.pills .key{color:var(--fg)}
+
+/* Progress */
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{padding:16px 10px;text-align:center}
+.tile b{display:block;font-family:var(--display);font-size:30px;font-weight:600;line-height:1.05}
+.tile span{font-size:11.5px;color:var(--muted)}
+.map{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;margin-top:14px}
+.map i{aspect-ratio:1;border-radius:50%;background:var(--card-2)}
+.map i.l1{background:color-mix(in srgb,var(--peach) 45%,transparent)}
+.map i.l2{background:linear-gradient(135deg,var(--peach),var(--rose));box-shadow:0 0 8px color-mix(in srgb,var(--peach) 50%,transparent)}
+.map i.now{outline:2px solid var(--fg);outline-offset:2px}
+.line{display:flex;flex-direction:column;margin-top:10px}
+.mile{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;padding:9px 0;position:relative}
+.mile .node{width:40px;height:40px;border-radius:50%;background:var(--card-2);display:grid;place-items:center;color:var(--muted);position:relative;z-index:1}
+.mile .node svg{width:18px;height:18px}
+.mile:not(:last-child)::after{content:"";position:absolute;left:19px;top:49px;bottom:-9px;width:2px;background:var(--line)}
+.mile[aria-pressed="true"] .node{background:linear-gradient(120deg,var(--peach),var(--rose));color:var(--ink)}
+.mile[aria-pressed="true"] h3{color:var(--muted)}
+.tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--gold) 22%,transparent);color:var(--gold)}
+.field{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13.5px;color:var(--muted)}
+.field input{background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:7px 10px}
+.sync{text-align:center;font-size:12px;color:var(--faint)}
+
+/* Shop */
+.meter{height:8px;border-radius:99px;background:var(--card-2);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--peach),var(--rose));transition:width .4s}
+.group{display:flex;flex-direction:column;gap:8px}
+.item{display:grid;grid-template-columns:30px minmax(0,1fr);gap:14px;align-items:center;width:100%;padding:13px 16px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.item .tick{width:30px;height:30px;border-radius:50%;border:1.6px solid var(--line);display:grid;place-items:center;color:transparent}
+.item .tick svg{width:16px;height:16px;stroke-width:2.4}
+.item[aria-pressed="true"] .tick{background:linear-gradient(120deg,var(--peach),var(--rose));border-color:transparent;color:var(--ink)}
+.item[aria-pressed="true"] h3{text-decoration:line-through;color:var(--muted)}
+
+/* Butter */
+.stack{display:flex;height:22px;border-radius:99px;overflow:hidden;gap:2px;margin:16px 0 6px}
+.stack i{display:block;min-width:4px}
+.ing{display:grid;grid-template-columns:12px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.ing:last-of-type{border-bottom:0}
+.ing i{width:12px;height:12px;border-radius:50%}
+.ing .pct{color:var(--muted);font-size:13px;min-width:44px;text-align:right}
+.ing b{min-width:62px;text-align:right;font-weight:600}
+.stepper{display:flex;align-items:center;gap:12px}
+.stepper button{width:38px;height:38px;border-radius:50%;background:var(--card-2);display:grid;place-items:center;font-size:20px;font-weight:500}
+.stepper b{font-family:var(--display);font-size:22px;font-weight:600;min-width:72px;text-align:center}
+.how{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none;counter-reset:n}
+.how li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:center;font-size:14px;counter-increment:n}
+.how li::before{content:counter(n);width:28px;height:28px;border-radius:50%;background:var(--card-2);display:grid;place-items:center;font-size:12.5px;font-weight:700;color:var(--peach)}
+
+/* Dock */
+.dock{position:fixed;z-index:5;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;padding-inline:12px;pointer-events:none}
+.dock div{pointer-events:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;width:100%;max-width:440px;padding:6px;border-radius:30px;background:rgba(36,26,42,.82);border:1px solid var(--line);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 12px 32px rgba(0,0,0,.45)}
+.dock button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 7px;border-radius:24px;font-size:10.5px;font-weight:600;color:var(--faint)}
+.dock button[aria-current="page"]{background:var(--card-2);color:var(--peach)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb48c"/><stop offset="1" stop-color="#ff8fa3"/></linearGradient></defs></svg>
+<main id="app"></main>
+<nav class="dock" aria-label="Sections"><div id="dock"></div></nav>
+
+<script>
+(function(){
+  var DEFAULT_START='2026-10-11', DAYS=84;
+  var state={start:DEFAULT_START,checks:{},miles:{},shop:{},batch:200};
+  var ui={tab:'today',slot:new Date().getHours()<15?'am':'pm',week:null,day:null,recipe:'butter',frac:0};
+  var ref=null, writing=false, dirty=false, readOnly=false, syncMsg='';
+  var app=document.getElementById('app'), dock=document.getElementById('dock');
+
+  var P={
+    drop:'<path d="M12 3.5c3 3.6 5.5 6.6 5.5 9.8a5.5 5.5 0 0 1-11 0c0-3.2 2.5-6.2 5.5-9.8z"/>',
+    waves:'<path d="M3 9q3-3 6 0t6 0t6 0M3 15q3-3 6 0t6 0t6 0"/>',
+    citrus:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17M3.5 12h17M6 6l12 12M18 6L6 18"/>',
+    jar:'<path d="M7 8h10v9a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3zM6 4.5h12V8H6z"/>',
+    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"/>',
+    flask:'<path d="M9.5 3.5h5M10.5 3.5v5.2L5.6 17a2.3 2.3 0 0 0 2 3.5h8.8a2.3 2.3 0 0 0 2-3.5l-4.9-8.3V3.5M8 14.5h8"/>',
+    leaf:'<path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19l7-7"/>',
+    oil:'<path d="M10 3.5h4v3h-4zM8.5 9.5a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v9a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2z"/>',
+    moon:'<path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/>',
+    check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    cal:'<path d="M4.5 6.5h15v13h-15zM4.5 10.5h15M8.5 4v4M15.5 4v4"/>',
+    chart:'<path d="M5 19v-8M12 19V5M19 19v-6"/>',
+    bag:'<path d="M5.5 8h13l-1 12h-11zM9 8V6.5a3 3 0 0 1 6 0V8"/>',
+    cam:'<path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+    flame:'<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"/>',
+    left:'<path d="M14.5 6l-6 6 6 6"/>', right:'<path d="M9.5 6l6 6-6 6"/>'
+  };
+  function ic(n){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>'}
+
+  function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+  function key(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+  function dayIndex(d){return Math.round((parse(key(d))-parse(state.start))/864e5)}
+  var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function nice(d){return MON[d.getMonth()]+' '+d.getDate()}
+
+  /* Weeks 1 and 2 ramp up. Week 3 onward is the full rotation. */
+  function nightType(d){
+    var week=Math.floor(dayIndex(d)/7)+1, w=d.getDay();
+    if(week<=2){ if(w===1)return 'exf'; if(w===2||w===5)return 'aza'; return 'rec'; }
+    if(w===1||w===4)return 'exf';
+    if(w===0)return 'rec';
+    return 'aza';
+  }
+  var TYPES={
+    exf:{name:'Exfoliate',what:'Green Plum AHA + BHA',tip:'No azelaic acid tonight. Skin already tight? Skip the acid toner.'},
+    aza:{name:'Azelaic',what:'Kisocare azelaic acid 15%',tip:'A few minutes of itch is normal. A lasting burn means cream first next time.'},
+    rec:{name:'Recovery',what:'Hydration only',tip:'No actives tonight. Rest nights keep new dark marks away.'}
+  };
+  var S={
+    oc:['oc','oil','Oil cleanse','Cleansing oil or balm'],
+    cl:['cl','drop','Cleanser','Round Lab Birch'],
+    tn:['tn','waves','Toner','Black Rice Hyaluronic'],
+    vc:['vc','citrus','Vitamin C','Dr. Althea'],
+    cr:['cr','jar','Moisturizer','Jumiso Snail + Peptide'],
+    sp:['sp','sun','Sunscreen','Tinted SPF 50',1],
+    ex:['ex','flask','Exfoliate','Green Plum AHA + BHA',1],
+    az:['az','leaf','Azelaic acid','Kisocare 15%, pea size',1]
+  };
+  function stepsFor(d,slot){
+    if(slot==='am')return [S.cl,S.tn,S.vc,S.cr,S.sp];
+    var t=nightType(d), a=state.shop.oilcl?[S.oc,S.cl]:[S.cl];
+    if(t==='exf')return a.concat([S.ex,S.tn,S.cr]);
+    if(t==='aza')return a.concat([S.tn,S.az,S.cr]);
+    return a.concat([S.tn,S.cr]);
+  }
+  function val(k,slot){return state.checks[k]&&state.checks[k][slot]}
+  function stepOn(k,slot,id){var v=val(k,slot);return v===true||!!(v&&v[id])}
+  function isDone(d,slot){var v=val(key(d),slot);return v===true||!!(v&&stepsFor(d,slot).every(function(s){return v[s[0]]}))}
+  function put(k,slot,v){var c=state.checks[k]||{}; if(v)c[slot]=v; else delete c[slot]; if(c.am||c.pm)state.checks[k]=c; else delete state.checks[k]; commit()}
+  function toggleStep(d,slot,id){
+    var k=key(d), v=val(k,slot), ids=stepsFor(d,slot).map(function(s){return s[0]}), m={};
+    if(v===true)ids.forEach(function(i){m[i]=true}); else if(v)Object.keys(v).forEach(function(i){m[i]=true});
+    if(m[id])delete m[id]; else m[id]=true;
+    put(k,slot,ids.every(function(i){return m[i]})?true:(Object.keys(m).length?m:null));
+  }
+
+  var MILES=[
+    {id:'m0',day:0,t:'Day 1 photo',cam:1},{id:'m1',day:14,t:'Ramp up finished'},
+    {id:'m2',day:28,t:'Week 4 photo',cam:1},{id:'m3',day:56,t:'Week 8 photo',cam:1},{id:'m4',day:84,t:'Week 12 photo',cam:1}
+  ];
+  var SHOP=[
+    ['Face',[['spf','Tinted sunscreen, SPF 50','Match the shade in daylight'],['oilcl','Cleansing oil or balm','Adds a first step to your evenings']]],
+    ['Body',[['lactic','Lactic acid lotion, 12%','Fragrance free, three nights a week']]],
+    ['Butter kit',[['shea','Raw shea butter','Unrefined, ivory'],['jojoba','Jojoba oil','USDA Organic, cold pressed'],['rosehip','Rosehip seed oil','Small bottle, keep in the fridge'],
+      ['tamanu','Tamanu oil','Patch test first'],['vite','Vitamin E','Mixed tocopherols'],['lav','Lavender essential oil','True lavender'],['scale','Kitchen scale','Reads to 1 gram'],['jar','Dark glass jar','With a lid']]]
+  ];
+  var SHOP_N=SHOP.reduce(function(n,g){return n+g[1].length},0);
+  var RECIPES={
+    butter:{rows:[['Shea butter',70,'#f6dfc4'],['Jojoba oil',13.5,'#ffd590'],['Rosehip seed oil',10,'#ff8f7a'],['Tamanu oil',5,'#9ad6a4'],['Vitamin E',1,'#c9abff'],['Lavender oil',0.5,'#9aa8ff']],
+      how:['Melt the shea over a water bath','Stir in jojoba, then freeze 15 minutes','Add the rest once it feels cool','Whip until fluffy. Dark jar, no water']},
+    oil:{rows:[['Jojoba oil',70,'#ffd590'],['Rosehip seed oil',20,'#ff8f7a'],['Tamanu oil',9,'#9ad6a4'],['Vitamin E',1,'#c9abff']],
+      how:['Weigh everything into a dark bottle','Shake until it looks even','Smooth onto damp skin after a shower','On lactic acid nights, lotion goes first']}
+  };
+  var TABS=[['today','sun','Today'],['week','cal','Week'],['progress','chart','Progress'],['shop','bag','Shop'],['butter','jar','Butter']];
+
+  function stats(){
+    var today=new Date(), ti=dayIndex(today), full=0, got=0, poss=0, start=parse(state.start);
+    for(var i=0;i<DAYS;i++){var d=addDays(start,i), a=isDone(d,'am'), p=isDone(d,'pm'); if(a&&p)full++; if(i<=ti){poss+=2; got+=(a?1:0)+(p?1:0)}}
+    var streak=0, d2=today; if(!(isDone(d2,'am')&&isDone(d2,'pm')))d2=addDays(d2,-1);
+    while(isDone(d2,'am')&&isDone(d2,'pm')){streak++;d2=addDays(d2,-1)}
+    return {streak:streak,full:full,pct:poss?Math.round(got/poss*100):0,ti:ti,week:Math.min(12,Math.max(1,Math.floor(ti/7)+1))};
+  }
+  function dis(){return readOnly?' disabled':''}
+
+  function vToday(st){
+    var now=new Date(), k=key(now), t=nightType(now), T=TYPES[t], h=now.getHours();
+    var all=stepsFor(now,'am').length+stepsFor(now,'pm').length, n=0;
+    ['am','pm'].forEach(function(sl){stepsFor(now,sl).forEach(function(s){if(stepOn(k,sl,s[0]))n++})});
+    var frac=n/all, C=2*Math.PI*46, prev=ui.frac; ui.frac=frac;
+    var phase=st.ti<0?'Starts '+nice(parse(state.start)):st.ti>=DAYS?'12 weeks complete':'Week '+st.week+' of 12 · '+(st.week<=2?'Ramp up':'Full rotation');
+    var rows=stepsFor(now,ui.slot).map(function(s){
+      var on=stepOn(k,ui.slot,s[0]);
+      return '<button class="step'+(s[4]?' key':'')+'" data-act="step" data-id="'+s[0]+'" aria-pressed="'+on+'"'+dis()+'>'+
+        '<span class="ico"'+(s[4]?' style="background:linear-gradient(120deg,var(--peach),var(--rose))"':'')+'>'+ic(s[1])+'</span>'+
+        '<span><h3>'+s[2]+'</h3><p class="sub">'+s[3]+'</p></span><span class="tick">'+ic('check')+'</span></button>'}).join('');
+    var tip=ui.slot==='am'?'Two finger lengths of sunscreen, even indoors by a window.':T.tip;
+    return '<header class="hello"><span class="chip">'+phase+'</span><h1>Good <em>'+(h<12?'morning':h<17?'afternoon':'evening')+'</em></h1>'+
+      '<p class="sub">'+DOWL[now.getDay()]+', '+nice(now)+'</p></header>'+
+      '<section class="card hero"><div class="ring"><svg viewBox="0 0 108 108"><circle class="track" cx="54" cy="54" r="46" fill="none" stroke-width="9"/>'+
+      '<circle class="bar" id="bar" cx="54" cy="54" r="46" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-prev))+'" data-to="'+(C*(1-frac))+'"/></svg>'+
+      '<div><b class="num">'+n+'/'+all+'</b><span>steps today</span></div></div>'+
+      '<div class="meta"><p class="eyebrow">Tonight</p><h2 class="t-'+t+'">'+T.name+' night</h2><p class="sub">'+T.what+'</p>'+
+      '<span class="streak">'+ic('flame')+'<span class="num">'+st.streak+' day streak</span></span></div></section>'+
+      '<div class="seg" role="group" aria-label="Routine"><button data-act="slot" data-id="am" aria-pressed="'+(ui.slot==='am')+'">'+ic('sun')+'Morning</button>'+
+      '<button data-act="slot" data-id="pm" aria-pressed="'+(ui.slot==='pm')+'">'+ic('moon')+'Evening</button></div>'+
+      '<div class="steps">'+rows+'</div><p class="tip">'+ic('leaf')+'<span>'+tip+'</span></p>';
+  }
+
+  function vWeek(st){
+    var tk=key(new Date()), ws=addDays(parse(state.start),(ui.week-1)*7), sel=null, strip='', j, d;
+    for(j=0;j<7;j++){d=addDays(ws,j); if(key(d)===ui.day)sel=d}
+    if(!sel){for(j=0;j<7;j++){d=addDays(ws,j); if(key(d)===tk)sel=d} if(!sel)sel=ws; ui.day=key(sel)}
+    for(j=0;j<7;j++){d=addDays(ws,j); var k=key(d), t=nightType(d);
+      strip+='<button class="dayb'+(k===tk?' today':'')+'" data-act="day" data-id="'+k+'" aria-pressed="'+(k===ui.day)+'" aria-label="'+DOWL[d.getDay()]+' '+nice(d)+', '+TYPES[t].name+' night">'+
+        '<small>'+DOW[d.getDay()]+'</small><b class="num">'+d.getDate()+'</b><span class="dot b-'+t+'"></span>'+
+        '<span class="ap"><i class="'+(isDone(d,'am')?'on':'')+'"></i><i class="'+(isDone(d,'pm')?'on':'')+'"></i></span></button>'}
+    var t2=nightType(sel), pm=stepsFor(sel,'pm').map(function(s){return '<span class="'+(s[4]?'key':'')+'">'+ic(s[1])+s[2]+'</span>'}).join('');
+    return '<header class="bar-head"><div><h1>Week '+ui.week+'</h1><p class="sub">'+nice(ws)+' to '+nice(addDays(ws,6))+' · '+(ui.week<=2?'Ramp up':'Full rotation')+'</p></div>'+
+      '<div class="arrows"><button data-act="wk" data-id="-1" aria-label="Previous week"'+(ui.week<=1?' disabled':'')+'>'+ic('left')+'</button>'+
+      '<button data-act="wk" data-id="1" aria-label="Next week"'+(ui.week>=12?' disabled':'')+'>'+ic('right')+'</button></div></header>'+
+      '<div class="strip">'+strip+'</div>'+
+      '<p class="legend"><span><i class="b-exf"></i>Exfoliate</span><span><i class="b-aza"></i>Azelaic</span><span><i class="b-rec"></i>Recovery</span></p>'+
+      '<section class="card"><p class="eyebrow">'+DOWL[sel.getDay()]+', '+nice(sel)+'</p><h2 class="t-'+t2+'" style="margin-top:6px">'+TYPES[t2].name+' night</h2>'+
+      '<div class="pills">'+pm+'</div>'+
+      '<div class="duo"><button class="big" data-act="slotday" data-id="am" aria-pressed="'+isDone(sel,'am')+'"'+dis()+'>'+ic(isDone(sel,'am')?'check':'sun')+'Morning</button>'+
+      '<button class="big" data-act="slotday" data-id="pm" aria-pressed="'+isDone(sel,'pm')+'"'+dis()+'>'+ic(isDone(sel,'pm')?'check':'moon')+'Evening</button></div></section>';
+  }
+
+  function vProgress(st){
+    var tk=key(new Date()), start=parse(state.start), dots='';
+    for(var i=0;i<DAYS;i++){var d=addDays(start,i), lv=(isDone(d,'am')?1:0)+(isDone(d,'pm')?1:0); dots+='<i class="'+(lv?'l'+lv:'')+(key(d)===tk?' now':'')+'"></i>'}
+    var ms=MILES.map(function(m){var on=!!state.miles[m.id], due=!on&&st.ti>=m.day;
+      return '<button class="mile" data-act="mile" data-id="'+m.id+'" aria-pressed="'+on+'"'+dis()+'><span class="node">'+ic(on?'check':m.cam?'cam':'leaf')+'</span>'+
+        '<span><h3>'+m.t+'</h3><p class="sub">'+nice(addDays(start,m.day))+'</p></span>'+(due?'<span class="tag">Due</span>':'<span></span>')+'</button>'}).join('');
+    return '<header class="hello"><h1>Your <em>progress</em></h1></header>'+
+      '<div class="tiles"><div class="card tile"><b class="num">'+st.streak+'</b><span>day streak</span></div>'+
+      '<div class="card tile"><b class="num">'+st.full+'</b><span>full days</span></div>'+
+      '<div class="card tile"><b class="num">'+st.pct+'%</b><span>of steps</span></div></div>'+
+      '<section class="card"><div class="bar-head"><h2>12 weeks</h2><span class="sub">one dot a day</span></div>'+
+      '<div class="map" role="img" aria-label="'+st.full+' full days out of 84">'+dots+'</div></section>'+
+      '<section class="card"><h2>Milestones</h2><div class="line">'+ms+'</div></section>'+
+      '<section class="card field"><label for="start">Day 1 of your plan</label><input type="date" id="start" value="'+state.start+'"'+dis()+'></section>'+
+      '<p class="sync">'+syncMsg+'</p>';
+  }
+
+  function vShop(){
+    var n=0; SHOP.forEach(function(g){g[1].forEach(function(it){if(state.shop[it[0]])n++})});
+    var groups=SHOP.map(function(g){return '<p class="eyebrow" style="margin:6px 4px 0">'+g[0]+'</p><div class="group">'+g[1].map(function(it){
+      return '<button class="item" data-act="shop" data-id="'+it[0]+'" aria-pressed="'+!!state.shop[it[0]]+'"'+dis()+'><span class="tick">'+ic('check')+'</span>'+
+        '<span><h3>'+it[1]+'</h3><p class="sub">'+it[2]+'</p></span></button>'}).join('')+'</div>'}).join('');
+    return '<header class="hello"><h1>Shopping <em>list</em></h1></header>'+
+      '<section class="card"><div class="bar-head"><h2 class="num">'+n+' of '+SHOP_N+'</h2><span class="sub">bought</span></div>'+
+      '<div class="meter"><i style="width:'+(n/SHOP_N*100)+'%"></i></div></section>'+groups;
+  }
+
+  function vButter(){
+    var R=RECIPES[ui.recipe];
+    return '<header class="hello"><h1>Body <em>'+(ui.recipe==='butter'?'butter':'oil')+'</em></h1></header>'+
+      '<div class="seg" role="group" aria-label="Recipe"><button data-act="recipe" data-id="butter" aria-pressed="'+(ui.recipe==='butter')+'">Whipped butter</button>'+
+      '<button data-act="recipe" data-id="oil" aria-pressed="'+(ui.recipe==='oil')+'">Body oil</button></div>'+
+      '<section class="card"><div class="bar-head"><p class="eyebrow">Batch size</p><div class="stepper"><button data-act="batch" data-id="-50" aria-label="Smaller batch"'+dis()+'>&minus;</button>'+
+      '<b class="num">'+state.batch+' g</b><button data-act="batch" data-id="50" aria-label="Larger batch"'+dis()+'>+</button></div></div>'+
+      '<div class="stack">'+R.rows.map(function(r){return '<i style="flex:'+r[1]+';background:'+r[2]+'"></i>'}).join('')+'</div>'+
+      R.rows.map(function(r){return '<div class="ing"><i style="background:'+r[2]+'"></i><span>'+r[0]+'</span><span class="pct num">'+r[1]+'%</span><b class="num">'+(r[1]*state.batch/100).toFixed(1)+' g</b></div>'}).join('')+'</section>'+
+      '<section class="card"><ol class="how">'+R.how.map(function(h){return '<li>'+h+'</li>'}).join('')+'</ol></section>';
+  }
+
+  function render(){
+    var st=stats(); if(ui.week===null)ui.week=st.week;
+    app.innerHTML=({today:vToday,week:vWeek,progress:vProgress,shop:vShop,butter:vButter})[ui.tab](st);
+    dock.innerHTML=TABS.map(function(t){return '<button data-act="tab" data-id="'+t[0]+'"'+(t[0]===ui.tab?' aria-current="page"':'')+'>'+ic(t[1])+t[2]+'</button>'}).join('');
+    var bar=document.getElementById('bar');
+    if(bar)requestAnimationFrame(function(){requestAnimationFrame(function(){bar.setAttribute('stroke-dashoffset',bar.dataset.to)})});
+  }
+
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-act]'); if(!b||b.disabled)return;
+    var a=b.dataset.act, id=b.dataset.id, now=new Date();
+    if(a==='tab'){ui.tab=id; try{history.replaceState(null,'','#'+id)}catch(x){} render(); window.scrollTo(0,0)}
+    else if(a==='slot'){ui.slot=id;render()}
+    else if(a==='step')toggleStep(now,ui.slot,id);
+    else if(a==='day'){ui.day=id;render()}
+    else if(a==='wk'){ui.week=Math.min(12,Math.max(1,ui.week+(+id)));ui.day=null;render()}
+    else if(a==='slotday'){var d=parse(ui.day);put(ui.day,id,isDone(d,id)?null:true)}
+    else if(a==='mile'){if(state.miles[id])delete state.miles[id];else state.miles[id]=true;commit()}
+    else if(a==='shop'){if(state.shop[id])delete state.shop[id];else state.shop[id]=true;commit()}
+    else if(a==='recipe'){ui.recipe=id;render()}
+    else if(a==='batch'){state.batch=Math.min(1000,Math.max(50,state.batch+(+id)));commit()}
+  });
+  document.addEventListener('change',function(e){
+    if(e.target.id==='start'&&/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)&&!readOnly){state.start=e.target.value;ui.week=null;ui.day=null;commit()}
+  });
+
+  function commit(){ render(); try{localStorage.setItem('skin-rotation',JSON.stringify(state))}catch(e){} flush(); }
+  async function flush(){
+    if(!ref||readOnly)return;
+    if(writing){dirty=true;return}
+    writing=true;
+    do{ dirty=false;
+      try{ await ref.set(JSON.parse(JSON.stringify(state))); syncMsg='Saved to your account'; }
+      catch(e){ if(e&&e.code==='invalid_argument'){readOnly=true;syncMsg='View only on this account';render()} else syncMsg='Could not save just now. Your next tap will retry.'; break; }
+    }while(dirty);
+    writing=false;
+  }
+  function obj(o){return (o&&typeof o==='object')?JSON.parse(JSON.stringify(o)):{}}
+  function adopt(d){
+    if(!d)return;
+    state={start:/^\d{4}-\d{2}-\d{2}$/.test(d.start)?d.start:DEFAULT_START,checks:obj(d.checks),miles:obj(d.miles),shop:obj(d.shop),
+      batch:(+d.batch>=50&&+d.batch<=1000)?+d.batch:200};
+  }
+
+  var h=(location.hash||'').slice(1); if(TABS.some(function(t){return t[0]===h}))ui.tab=h;
+  try{var saved=localStorage.getItem('skin-rotation'); if(saved)adopt(JSON.parse(saved))}catch(e){}
+  syncMsg='Saved on this phone';
+  render();
+
+  (window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null)).then(function(db){
+    if(!db)return;
+    ref=db.doc('tracker/state');
+    ref.onSnapshot(function(snap){
+      if(writing||snap.metadata.hasPendingWrites)return;
+      syncMsg='Saved to your account';
+      if(snap.exists){adopt(snap.data());ui.week=null;ui.day=null}
+      render();
+    },function(){ ref=null; syncMsg='Saved on this phone'; });
+  }).catch(function(){});
+})();
+</script>
+
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body>
+</html>
