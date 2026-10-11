@@ -126,6 +126,25 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
 .tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--warn)}
 .sync{text-align:center;font-size:12px;color:var(--faint)}
 
+/* Photos */
+.link{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--accent);padding:8px 0}
+.cmp{position:relative;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:var(--surface);margin-top:16px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;pointer-events:none}
+.lbl{position:absolute;top:12px;padding:5px 10px;border-radius:99px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.lbl.l{left:12px} .lbl.r{right:12px}
+.cmp .bar{position:absolute;top:0;bottom:0;width:2px;background:#fff;transform:translateX(-1px);pointer-events:none}
+.cmp .bar::after{content:"";position:absolute;top:50%;left:50%;width:36px;height:36px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.side{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.side figure{margin:0;position:relative;aspect-ratio:3/4;border-radius:16px;overflow:hidden;background:var(--surface)}
+.side img{width:100%;height:100%;object-fit:cover;display:block}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pick select{width:100%;appearance:none;-webkit-appearance:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 12px;font-size:14px;margin-top:7px}
+.thumbs{display:flex;gap:8px;overflow-x:auto;margin-top:16px;padding-bottom:4px}
+.thumbs button{flex:none;width:62px}
+.thumbs img{width:62px;height:82px;object-fit:cover;border-radius:12px;display:block;border:1.5px solid transparent}
+.thumbs button[aria-pressed="true"] img{border-color:var(--accent)}
+.thumbs small{display:block;text-align:center;font-size:10px;color:var(--muted);margin-top:5px}
+
 /* Shop and butter */
 .meter{height:3px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:16px}
 .meter i{display:block;height:100%;background:var(--accent);transition:width .4s}
@@ -200,6 +219,7 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient></defs></svg>
 <main id="app"></main>
 <nav class="dock" aria-label="Sections" id="docknav"><div id="dock"></div></nav>
+<input type="file" accept="image/*" id="shot" hidden>
 
 <script>
 (function(){
@@ -296,7 +316,7 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
                                       :{setup:false,extras:false,start:key(new Date()),name:'',products:[]});
   }
   var state=fresh();
-  var ui={tab:'today',slot:new Date().getHours()<15?'am':'pm',week:null,day:null,recipe:'butter',frac:0,when:'both',newCat:'se',newP:'',ob:0,goals:{},react:0,shelf:{}};
+  var ui={tab:'today',slot:new Date().getHours()<15?'am':'pm',week:null,day:null,recipe:'butter',frac:0,when:'both',newCat:'se',newP:'',ob:0,goals:{},react:0,shelf:{},photos:[],cmpA:null,cmpB:null,cmpX:50,cmpMode:'slide',selP:null,rm:false,photoMsg:'',pendingMile:null};
 
   function label(p){return p.n||CATS[p.cat].n}
   function has(cat){return state.products.some(function(p){return p.on&&p.cat===cat})}
@@ -425,6 +445,67 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
   }
 
   function miles(){return [{id:'m0',day:0,t:'Day 1 photo',cam:1},{id:'m1',day:state.ramp*7,t:'Easing in finished'},{id:'m2',day:28,t:'Week 4 photo',cam:1},{id:'m3',day:56,t:'Week 8 photo',cam:1},{id:'m4',day:84,t:'Week 12 photo',cam:1}]}
+  /* ---------- photos: kept in this device's own storage, never in the synced state ---------- */
+  var idb=null;
+  function openDB(){return new Promise(function(res,rej){try{var r=indexedDB.open('rota-photos',1);r.onupgradeneeded=function(){r.result.createObjectStore('p',{keyPath:'d'})};r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}}catch(e){rej(e)}})}
+  function tx(mode,fn){return (idb?Promise.resolve(idb):openDB().then(function(d){idb=d;return d})).then(function(d){return new Promise(function(res,rej){var t=d.transaction('p',mode),rq=fn(t.objectStore('p'));t.oncomplete=function(){res(rq&&rq.result)};t.onerror=t.onabort=function(){rej(t.error)}})})}
+  function loadPhotos(){return tx('readonly',function(o){return o.getAll()}).then(function(l){ui.photos=(l||[]).filter(function(x){return x&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)&&typeof x.u==='string'&&x.u.indexOf('data:image/')===0}).sort(function(a,b){return a.d<b.d?-1:1});render()})
+    .catch(function(){ui.photoMsg='Photos cannot be saved in this view.';render()})}
+  function photo(d){return ui.photos.filter(function(x){return x.d===d})[0]}
+  function plabel(d){var i=dayIndex(parse(d));return i<0?nice(parse(d)):'Day '+(i+1)}
+  function photosHtml(){
+    var ph=ui.photos, n=ph.length;
+    if(!n)return '<section><h2>Photos</h2><div class="card" style="margin-top:14px"><p class="note">Take your first photo today. Bare skin, same window, same time of day.</p>'+
+      '<button class="btn" style="margin-top:18px" data-act="photo">'+ic('cam')+'Add first photo</button><p class="fine" style="margin-top:12px">'+(ui.photoMsg||'Photos stay on this phone. They are never uploaded.')+'</p></div></section>';
+    var A=photo(ui.cmpA)||ph[0], B=photo(ui.cmpB)||ph[n-1], x=ui.cmpX, view;
+    if(n===1)view='<div class="cmp"><img src="'+A.u+'" alt="Photo from '+plabel(A.d)+'"><span class="lbl l">'+plabel(A.d)+'</span></div><p class="sub" style="margin-top:12px">Add another on a later day to compare.</p>';
+    else{
+      var opts=function(sel){return ph.map(function(q){return '<option value="'+q.d+'"'+(q.d===sel?' selected':'')+'>'+plabel(q.d)+' \u00b7 '+nice(parse(q.d))+'</option>'}).join('')};
+      view='<div class="tabs2" style="margin-top:14px" role="group" aria-label="Compare view"><button data-act="cmpmode" data-id="slide" aria-pressed="'+(ui.cmpMode==='slide')+'">Slider</button><button data-act="cmpmode" data-id="side" aria-pressed="'+(ui.cmpMode==='side')+'">Side by side</button></div>'+
+        (ui.cmpMode==='slide'
+          ?'<div class="cmp" id="cmp" role="slider" tabindex="0" aria-label="Drag to compare before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Math.round(x)+'"><img src="'+A.u+'" alt="Before, '+plabel(A.d)+'"><img id="cmpb" src="'+B.u+'" alt="After, '+plabel(B.d)+'" style="clip-path:inset(0 0 0 '+x+'%)">'+
+            '<span class="lbl l">'+plabel(A.d)+'</span><span class="lbl r">'+plabel(B.d)+'</span><i class="bar" id="cmpbar" style="left:'+x+'%"></i></div>'
+          :'<div class="side"><figure><img src="'+A.u+'" alt="Before, '+plabel(A.d)+'"><span class="lbl l">'+plabel(A.d)+'</span></figure><figure><img src="'+B.u+'" alt="After, '+plabel(B.d)+'"><span class="lbl l">'+plabel(B.d)+'</span></figure></div>')+
+        '<div class="pick"><label><span class="lab">Before</span><select id="cmp-a">'+opts(A.d)+'</select></label><label><span class="lab">After</span><select id="cmp-b">'+opts(B.d)+'</select></label></div>';
+    }
+    var thumbs='<div class="thumbs">'+ph.map(function(q){return '<button data-act="selp" data-id="'+q.d+'" aria-pressed="'+(ui.selP===q.d)+'" aria-label="Select photo from '+plabel(q.d)+'"><img src="'+q.u+'" alt=""><small>'+plabel(q.d)+'</small></button>'}).join('')+'</div>';
+    var rm=photo(ui.selP)?'<button class="link" data-act="rmphoto">'+(ui.rm?'Tap again to remove it for good':'Remove '+plabel(ui.selP)+' photo')+'</button>':'';
+    return '<section><div class="rowhead" style="align-items:center"><h2>Photos</h2><button class="link" data-act="photo">Add photo</button></div>'+view+thumbs+rm+
+      '<p class="fine" style="margin-top:10px;text-align:left">'+(ui.photoMsg||'Photos stay on this phone. They are never uploaded. One photo a day.')+'</p></section>';
+  }
+  function setX(e){
+    var c=document.getElementById('cmp'); if(!c)return; var r=c.getBoundingClientRect();
+    ui.cmpX=Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)); paintX();
+  }
+  function paintX(){
+    var b=document.getElementById('cmpb'), bar=document.getElementById('cmpbar'), c=document.getElementById('cmp'); if(!b)return;
+    b.style.clipPath='inset(0 0 0 '+ui.cmpX+'%)'; bar.style.left=ui.cmpX+'%'; c.setAttribute('aria-valuenow',Math.round(ui.cmpX));
+  }
+  var dragging=false;
+  document.addEventListener('pointerdown',function(e){var c=e.target.closest&&e.target.closest('#cmp'); if(!c)return; dragging=true; try{c.setPointerCapture(e.pointerId)}catch(x){} setX(e)});
+  document.addEventListener('pointermove',function(e){if(dragging)setX(e)});
+  document.addEventListener('pointerup',function(){dragging=false});
+  document.addEventListener('pointercancel',function(){dragging=false});
+  document.addEventListener('keydown',function(e){if(e.target.id!=='cmp')return; if(e.key==='ArrowLeft'){ui.cmpX=Math.max(0,ui.cmpX-5);paintX()} else if(e.key==='ArrowRight'){ui.cmpX=Math.min(100,ui.cmpX+5);paintX()}});
+  var shot=document.getElementById('shot');
+  shot.addEventListener('change',function(){
+    var f=shot.files&&shot.files[0]; shot.value=''; if(!f)return;
+    var url=URL.createObjectURL(f), img=new Image();
+    img.onload=function(){
+      var k=Math.min(1,1400/Math.max(img.naturalWidth,img.naturalHeight)), c=document.createElement('canvas');
+      c.width=Math.round(img.naturalWidth*k); c.height=Math.round(img.naturalHeight*k);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(url);
+      var rec={d:key(new Date()),u:c.toDataURL('image/jpeg',.84)};
+      tx('readwrite',function(o){return o.put(rec)}).then(function(){
+        try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(x){}
+        if(ui.pendingMile){state.miles[ui.pendingMile]=true;ui.pendingMile=null;save()}
+        ui.cmpB=rec.d; ui.photoMsg=''; return loadPhotos();
+      }).catch(function(){ui.photoMsg='This photo could not be saved on this device.';render()});
+    };
+    img.onerror=function(){URL.revokeObjectURL(url);ui.photoMsg='That file could not be read as a photo.';render()};
+    img.src=url;
+  });
+
   function vProgress(st){
     var tk=key(new Date()), start=parse(state.start), dots='';
     for(var i=0;i<DAYS;i++){var d=addDays(start,i), lv=(isDone(d,'am')?1:0)+(isDone(d,'pm')?1:0); dots+='<i class="'+(lv?'l'+lv:'')+(key(d)===tk?' now':'')+'"></i>'}
@@ -434,6 +515,7 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
     return top()+'<header class="head"><p class="eyebrow">12 week plan</p><h1>Progress</h1></header>'+
       '<div class="trio"><div><span class="eyebrow">Streak</span><b class="num">'+st.streak+'</b></div><div><span class="eyebrow">Full days</span><b class="num">'+st.full+'</b></div>'+
       '<div><span class="eyebrow">Steps done</span><b class="num">'+st.pct+'%</b></div></div>'+
+      photosHtml()+
       '<section><div class="rowhead"><h2>Every day so far</h2><span class="sub">a column a week</span></div>'+
       '<div class="map" role="img" aria-label="'+st.full+' full days out of 84">'+dots+'</div></section>'+
       '<section><h2>Milestones</h2><div style="margin-top:6px">'+ms+'</div></section><p class="sync">'+syncMsg+'</p>';
@@ -558,7 +640,12 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
     else if(a==='day'){ui.day=id;render()}
     else if(a==='wk'){ui.week=Math.min(12,Math.max(1,ui.week+(+id)));ui.day=null;render()}
     else if(a==='slotday'){var d=parse(ui.day);put(ui.day,id,isDone(d,id)?null:true)}
-    else if(a==='mile'){if(state.miles[id])delete state.miles[id];else state.miles[id]=true;commit()}
+    else if(a==='mile'){var mm=miles().filter(function(x){return x.id===id})[0];
+      if(state.miles[id]){delete state.miles[id];commit()} else if(mm&&mm.cam&&!ui.photoMsg){ui.pendingMile=id;shot.click()} else {state.miles[id]=true;commit()}}
+    else if(a==='photo'){ui.pendingMile=null;shot.click()}
+    else if(a==='cmpmode'){ui.cmpMode=id;render()}
+    else if(a==='selp'){ui.selP=ui.selP===id?null:id;ui.rm=false;render()}
+    else if(a==='rmphoto'){if(!ui.rm){ui.rm=true;render()} else {var gone=ui.selP;ui.selP=null;ui.rm=false;tx('readwrite',function(o){return o.delete(gone)}).then(loadPhotos).catch(function(){render()})}}
     else if(a==='shop'){if(state.shop[id])delete state.shop[id];else state.shop[id]=true;
       if(id==='oilcl')state.products.forEach(function(x){if(x.cat==='oil')x.on=!!state.shop.oilcl}); commit()}
     else if(a==='recipe'){ui.recipe=id;render()}
@@ -582,6 +669,8 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
     var t=e.target, ed=t.dataset&&t.dataset.edit, v=(t.value||'').trim();
     if(readOnly)return;
     if(t.id==='new-cat'){ui.newCat=t.value;return}
+    if(t.id==='cmp-a'){ui.cmpA=t.value;render();return}
+    if(t.id==='cmp-b'){ui.cmpB=t.value;render();return}
     if(ed==='p'){var p=prod(t.dataset.id); if(p){p.p=v.slice(0,40);save()} return}
     if(ed==='name'){state.name=v.slice(0,20);save();return}
     if(t.id==='start'&&/^\d{4}-\d{2}-\d{2}$/.test(t.value)){state.start=t.value;ui.week=null;ui.day=null;commit()}
@@ -623,6 +712,7 @@ div.dayb em{font-style:normal;font-size:11px;color:var(--muted)}
   try{var saved=localStorage.getItem('skin-rotation'); if(saved)adopt(JSON.parse(saved))}catch(e){}
   syncMsg='Saved on this phone';
   render();
+  loadPhotos();
 
   (window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null)).then(function(db){
     if(!db)return;
