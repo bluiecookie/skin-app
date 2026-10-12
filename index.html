@@ -294,6 +294,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   var CATS={
     oil:{n:'Oil cleanse',pm:1},
     cl:{n:'Cleanser',am:1,pm:2},
+    mask:{n:'Mask',pm:2.5,weekly:1},
     acid:{n:'Exfoliant',pm:3,act:'acid'},
     tn:{n:'Toner',am:2,pm:4},
     vc:{n:'Vitamin C',am:3},
@@ -304,7 +305,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     mo:{n:'Moisturizer',am:6,pm:8},
     sp:{n:'Sunscreen',am:7}
   };
-  var CAT_ORDER=['oil','cl','acid','tn','vc','se','aza','ret','bp','mo','sp'];
+  var CAT_ORDER=['oil','cl','mask','acid','tn','vc','se','aza','ret','bp','mo','sp'];
   var NIGHT={
     acid:{n:'Exfoliate',s:'Exf',tip:'No other actives tonight. If your skin already feels tight, skip the exfoliant.'},
     ret:{n:'Retinoid',s:'Ret',tip:'A pea size covers the whole face. Follow with moisturizer.'},
@@ -395,9 +396,11 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     return p?(p.p||label(p)):'';
   }
   function fits(p,slot){var c=CATS[p.cat]; return (slot in c)&&(!p.w||p.w==='both'||p.w===slot)}
+  /* A wash-off mask is a once a week step. It sits on the rest night and is skipped when skin is tight or stinging. */
+  function maskNight(d){var f=state.feel[key(d)], y=state.feel[key(addDays(d,-1))]; return d.getDay()===(state.rest||0)&&f!=='tight'&&f!=='sting'&&y!=='sting'}
   function stepsFor(d,slot){
     var night=slot==='pm'?nightOf(d).t:null, pick=night&&night!=='rec'?chosen(d,night):null;
-    return state.products.map(function(p,i){return [p,i]}).filter(function(x){var p=x[0],c=CATS[p.cat];return p.on&&fits(p,slot)&&(!c.act||(c.act===night&&p===pick))})
+    return state.products.map(function(p,i){return [p,i]}).filter(function(x){var p=x[0],c=CATS[p.cat];return p.on&&fits(p,slot)&&(!c.act||(c.act===night&&p===pick))&&(!c.weekly||maskNight(d))})
       .sort(function(a,b){return (CATS[a[0].cat][slot]-CATS[b[0].cat][slot])||(a[1]-b[1])}).map(function(x){return x[0]});
   }
   /* The conflict checker. It reports what the plan already handles and what is missing. */
@@ -413,6 +416,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     if(A.bp&&A.ret)add('ok','Benzoyl peroxide and retinoid are kept on separate nights.');
     if(n>=2&&!(A.acid&&A.ret))add('ok','One active a night. Nothing strong is layered.');
     if(has('vc')&&n)add('ok','Vitamin C stays in the morning, away from your night actives.');
+    if(has('mask'))add('ok','Your mask is kept to once a week, on '+DOWL[state.rest||0]+', away from your actives.');
     if(n){add('ok',DOWL[state.rest||0]+' is always a recovery night.');add('ok','Each active eases in over its first '+state.ramp+' weeks.')}
     else add('tip','No actives on your shelf, so every night is a hydration night.');
     if(A.ret)add('tip','Skip retinoids if you are pregnant or nursing.');
@@ -474,7 +478,8 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     var ws=addDays(parse(state.start),(st.week-1)*7), wn=0; for(var i=0;i<7;i++){var wd=addDays(ws,i); wn+=(isDone(wd,'am')?1:0)+(isDone(wd,'pm')?1:0)}
     var list=ui.slot==='am'?am:pm, part=h<12?'morning':h<17?'afternoon':'evening', f=state.feel[k]||'';
     var done=list.length&&isDone(now,ui.slot), full=am.length&&pm.length&&isDone(now,'am')&&isDone(now,'pm');
-    var tip=ui.slot==='am'?(has('sp')?'Two finger lengths of sunscreen, even indoors by a window.':'Add a sunscreen. It protects every other step.'):NIGHT[t].tip;
+    var tip=ui.slot==='am'?(has('sp')?'Two finger lengths of sunscreen, even indoors by a window.':'Add a sunscreen. It protects every other step.')
+      :pm.some(function(x){return x.cat==='mask'})?'Mask night. Rinse it off before it dries hard, then moisturize well.':NIGHT[t].tip;
     ui.tone=t;
     return '<div class="field has-rings'+(full?' full':'')+'">'+top()+ringsHtml([frac(now,'am'),frac(now,'pm'),wn/14],n,all)+
       '<span class="kick">Good '+part+(state.name?', '+esc(state.name):'')+'</span><span class="kick k2">Tonight is</span>'+
@@ -664,7 +669,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
       '<p class="fine">Rota is a planning tool and not medical advice.</p></div>';
   }
 
-  var SHELF=[['Basics',[['cl','Cleanser',''],['oil','Cleansing oil or balm',''],['tn','Hydrating toner or essence',''],['vc','Vitamin C serum',''],['se','Hydrating serum','Niacinamide, hyaluronic acid, snail'],['mo','Moisturizer',''],['sp','Sunscreen','']]],
+  var SHELF=[['Basics',[['cl','Cleanser',''],['oil','Cleansing oil or balm',''],['tn','Hydrating toner or essence',''],['mask','Clay or wash-off mask','Once a week, on your rest night'],['vc','Vitamin C serum',''],['se','Hydrating serum','Niacinamide, hyaluronic acid, snail'],['mo','Moisturizer',''],['sp','Sunscreen','']]],
     ['Actives',[['acid','AHA or BHA exfoliant','Glycolic, lactic, salicylic'],['aza','Azelaic acid',''],['ret','Retinoid','Retinol, adapalene, tretinoin'],['bp','Benzoyl peroxide','']]]];
   function optRow(act,id,title,sub,on){return '<button class="opt" data-act="'+act+'" data-id="'+id+'" aria-pressed="'+on+'"><span class="what"><b>'+title+'</b>'+(sub?'<span class="sub">'+sub+'</span>':'')+'</span><span class="tick">'+ic('check')+'</span></button>'}
   function vOnboard(){
