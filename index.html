@@ -200,11 +200,115 @@ textarea.inp{min-height:80px;resize:vertical}
 .timer b{font-size:20px}
 .timer button{padding:5px 11px;border-radius:9px;border:2px solid currentColor;font-size:12.5px;font-weight:800}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- motion and play ---------- */
+.btn,.pillar,.card,.dayb,.pill,.palettes button,.opt,.gem,.seg button,.tick,.timerbtn,.dragchip,.slot{transition:transform .12s ease,box-shadow .12s ease,background-color .2s}
+.btn:active,.pillar:active,button.card:active,.dayb:active,.palettes button:active,.opt:active,.dragchip:active{transform:translate(3px,3px)!important;box-shadow:1px 1px 0 var(--ol)!important}
+.pill:active,.seg button:active,.timerbtn:active{transform:translate(1px,1px) scale(.96)}
+.tick:active{transform:scale(.86)}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.045) rotate(-.7deg)}100%{transform:scale(1)}}
+.step.pop{animation:pop .4s cubic-bezier(.3,1.6,.5,1)}
+@keyframes draw{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.step.pop .tick::after{animation:draw .32s ease-out}
+@keyframes flip{0%{transform:perspective(900px) rotateY(-95deg) rotate(-1.2deg);opacity:.4}100%{transform:perspective(900px) rotateY(0) rotate(-1.2deg);opacity:1}}
+.hero.flip{animation:flip .5s cubic-bezier(.2,.9,.3,1.15)}
+@keyframes drop{0%{transform:translateY(-46px) rotate(-8deg);opacity:0}55%{transform:translateY(5px) rotate(.6deg);opacity:1}78%{transform:translateY(-2px) rotate(-2deg)}100%{transform:rotate(-1.2deg)}}
+.hero.drop{animation:drop .65s cubic-bezier(.2,.8,.3,1)}
+@keyframes rise{from{transform:translateY(26px);opacity:0}}
+.rise{animation:rise .5s cubic-bezier(.2,.8,.3,1.15) both;animation-delay:calc(var(--i,0)*70ms)}
+.step{position:relative;touch-action:pan-y}
+.step.dragging{transition:none}
+.step.sw-r{background:var(--done);color:#151215}
+.step.sw-l{background:var(--line)}
+.step.skip{opacity:.55}
+.step.skip .what b{text-decoration:line-through;text-decoration-style:dashed}
+.swipehint{text-align:center;font-family:var(--hand);font-weight:700;font-size:17px;color:var(--sub);margin-top:-6px}
+.timer svg{width:30px;height:30px;transform:rotate(-90deg);flex:none}
+.timer svg circle{fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round}
+.timer svg .bg{opacity:.25}
+@keyframes jig{0%,100%{transform:translateX(-50%) rotate(0)}20%{transform:translateX(-50%) rotate(-5deg)}40%{transform:translateX(-50%) rotate(5deg)}60%{transform:translateX(-50%) rotate(-3deg)}80%{transform:translateX(-50%) rotate(3deg)}}
+.timer.ding{animation:jig .6s 3}
+
+.ov{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:rgba(21,18,21,.5);padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.ov.clear{background:transparent;pointer-events:none;align-items:center;overflow:hidden}
+.sheet{width:100%;max-width:480px;background:var(--card);color:var(--txt);border:3px solid var(--ol);border-radius:20px;box-shadow:6px 6px 0 var(--ol);padding:20px;animation:up .45s cubic-bezier(.2,.9,.3,1.12)}
+@keyframes up{from{transform:translateY(115%)}}
+.pick3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.pick3 button{aspect-ratio:1;border:2.5px dashed var(--line);border-radius:16px;padding:12px;transition:transform .15s}
+.pick3 button svg{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.pick3 button:hover,.pick3 button:focus-visible{transform:scale(1.07) rotate(-5deg);border-color:var(--ol)}
+.pick3 button:nth-child(2){animation:rise .4s .08s both}.pick3 button:nth-child(3){animation:rise .4s .16s both}.pick3 button:nth-child(1){animation:rise .4s both}
+.slap{width:min(56vw,230px);animation:slap .6s cubic-bezier(.3,1.5,.5,1) both}
+.slap svg{width:100%;display:block;filter:drop-shadow(0 8px 6px rgba(0,0,0,.35))}
+@keyframes slap{0%{transform:scale(3.2) rotate(28deg);opacity:0}55%{transform:scale(.88) rotate(-9deg);opacity:1}75%{transform:scale(1.06) rotate(-4deg)}100%{transform:scale(1) rotate(-6deg)}}
+.cheer{position:absolute;bottom:20%;left:0;right:0;text-align:center;font-family:var(--hand);font-size:38px;font-weight:700;color:var(--txt);text-shadow:0 2px 0 var(--paper),0 -2px 0 var(--paper),2px 0 0 var(--paper),-2px 0 0 var(--paper);animation:rise .5s .25s both}
+.conf{position:absolute;top:48%;left:50%;width:11px;height:15px;border:2px solid var(--ol);border-radius:2px;animation:boom 1.5s cubic-bezier(.15,.7,.35,1) forwards}
+@keyframes boom{0%{transform:translate(-50%,-50%) rotate(0) scale(.4)}20%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1);opacity:0}}
+
+.play{min-height:calc(100vh - 60px);display:flex;flex-direction:column;gap:16px}
+.segs{display:flex;gap:4px}
+.segs i{flex:1;height:11px;border:2px solid var(--ol);border-radius:4px;background:var(--card);transition:background .3s}
+.segs i.on{background:var(--c1)} .segs i.sk{background:var(--line)}
+.playcard{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;background:var(--tone);color:var(--ontone);border:3px solid var(--ol);border-radius:22px;box-shadow:8px 8px 0 var(--ol);padding:28px 22px;transform:rotate(-1.2deg);animation:drop .55s cubic-bezier(.2,.8,.3,1);min-height:300px}
+.playcard .big{font-weight:800;font-size:clamp(48px,15vw,68px);line-height:.86;letter-spacing:-.055em;overflow-wrap:anywhere}
+.playcard p{font-size:16px;font-weight:500}
+.playcard .eyebrow{color:inherit;opacity:.85}
+.btn.huge{padding:22px 0;font-size:21px;border-radius:18px}
+
+.peek{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.2,.8,.3,1)}
+.peek.open{max-height:220px}
+.peekcard{margin:10px 6px 4px;background:var(--tone);color:var(--ontone);border:2.5px dashed var(--ol);border-radius:14px;padding:12px 14px;transform:rotate(1deg)}
+.peekcard b{font-weight:800;font-size:28px;letter-spacing:-.04em;display:block;line-height:1}
+.grip{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;padding:6px 0 0;font-family:var(--hand);font-weight:700;font-size:18px;color:var(--sub);touch-action:none;margin-top:-6px}
+.grip i{width:44px;height:5px;border-radius:3px;background:var(--ol);opacity:.35}
+
+.pack{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.pack span{aspect-ratio:1;display:block}
+.pack svg{width:100%;height:100%;display:block;filter:drop-shadow(0 1.5px 1px rgba(0,0,0,.3))}
+.pack.locked svg{filter:grayscale(1) opacity(.3)}
+.meterbar{height:12px;border:2px solid var(--ol);border-radius:6px;background:var(--card);overflow:hidden;margin-top:10px}
+.meterbar i{display:block;height:100%;background:var(--c1)}
+
+.mix{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center;margin-top:12px}
+.slot{min-height:66px;border:2.5px dashed var(--line);border-radius:14px;display:grid;place-items:center;text-align:center;padding:8px;font-size:12.5px;font-weight:700;color:var(--sub);overflow-wrap:anywhere}
+.slot.full{border:2.5px solid var(--ol);background:var(--c2);color:#151215;box-shadow:3px 3px 0 var(--ol);animation:pop .35s}
+.slot.hot{border-color:var(--ol);border-style:solid;background:var(--done);color:#151215}
+.plus{font-weight:800;font-size:24px}
+.chiprow{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 8px;margin:4px -4px 0}
+.dragchip{flex:none;padding:8px 12px;border:2px solid var(--ol);border-radius:12px;background:var(--card);font-weight:700;font-size:13px;touch-action:none;white-space:nowrap;box-shadow:2px 2px 0 var(--ol);user-select:none;-webkit-user-select:none}
+.dragchip.used{opacity:.4}
+.ghost{position:fixed;z-index:30;pointer-events:none;transform:translate(-50%,-70%) rotate(-5deg) scale(1.08);box-shadow:5px 5px 0 var(--ol)}
+.verdict{margin-top:14px;border:2.5px solid var(--ol);border-radius:14px;padding:12px 14px;box-shadow:3px 3px 0 var(--ol);animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.verdict.ok{background:var(--c2);color:#151215} .verdict.no{background:#ff9b9b;color:#151215} .verdict.care{background:#ffd48a;color:#151215}
+.verdict b{display:block;font-weight:800;font-size:19px;margin-bottom:2px}
+
+.story{position:fixed;inset:0;z-index:25;display:flex;flex-direction:column;gap:14px;background:var(--tone);color:var(--ontone);padding:calc(14px + env(safe-area-inset-top,0px)) 22px calc(28px + env(safe-area-inset-bottom,0px));transition:background .4s}
+.story .bars{display:flex;gap:5px}
+.story .bars i{flex:1;height:6px;border-radius:3px;background:currentColor;opacity:.25;position:relative;overflow:hidden}
+.story .bars i.done{opacity:1}
+.story .bars i.cur{opacity:1;background:transparent;box-shadow:inset 0 0 0 1.5px currentColor}
+.story .bars i.cur span{position:absolute;inset:0;background:currentColor;transform-origin:left;animation:fill 5s linear forwards}
+@keyframes fill{from{transform:scaleX(0)}}
+.story .top{display:flex;justify-content:space-between;align-items:center}
+.story .x{width:44px;height:44px;display:grid;place-items:center;margin-right:-10px}
+.story .slide{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;animation:rise .5s both}
+.story .giant{font-weight:800;font-size:clamp(96px,32vw,150px);line-height:.82;letter-spacing:-.065em}
+.story .lead{font-weight:800;font-size:32px;line-height:1;letter-spacing:-.04em}
+.story .eyebrow{color:inherit;opacity:.85}
+.story .stks{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.story .stks span{aspect-ratio:1;display:block;border:2px dashed currentColor;border-radius:10px;opacity:.5}
+.story .stks span.got{border:0;opacity:1;animation:slap .55s both}
+.story .stks svg{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.story .row7{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.story .row7 div{border:2px solid var(--ol);border-radius:10px;padding:6px 0;text-align:center;font-weight:800;font-size:11px;color:#151215}
+.story .tap{text-align:center;font-family:var(--hand);font-size:18px;font-weight:700;opacity:.8}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
 <main id="app"></main>
 <nav class="dock" id="docknav" aria-label="Sections"><div id="dock"></div></nav>
 <div class="timer" id="timer" hidden></div>
+<div id="fx"></div>
 <input type="file" accept="image/*" id="shot" hidden>
 <input type="file" accept="application/json,.json" id="restore" hidden>
 
@@ -223,7 +327,8 @@ textarea.inp{min-height:80px;resize:vertical}
     check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>', left:'<path d="M14.5 6l-6 6 6 6"/>', right:'<path d="M9.5 6l6 6-6 6"/>',
     alert:'<path d="M12 4l9 15.5H3zM12 10v4.5M12 17v.2"/>', spark:'<path d="M12 3.5c.6 4.6 3.3 7.3 8 8-4.7.7-7.4 3.4-8 8-.6-4.6-3.3-7.3-8-8 4.7-.7 7.4-3.4 8-8z"/>',
     clock:'<circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 2M9.5 3.5h5"/>', plus:'<path d="M12 5v14M5 12h14"/>', search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/>',
-    cam:'<path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', trash:'<path d="M5 7h14M9 7V4.5h6V7M7 7l1 12.5h8L17 7"/>', tune:'<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>'
+    cam:'<path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', trash:'<path d="M5 7h14M9 7V4.5h6V7M7 7l1 12.5h8L17 7"/>', tune:'<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+    x:'<path d="M6 6l12 12M18 6L6 18"/>', play:'<path d="M8 5.5v13l10-6.5z"/>'
   };
   function ic(n){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>'}
   function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -325,9 +430,9 @@ textarea.inp{min-height:80px;resize:vertical}
   ]}
   function herState(){return {v:3,setup:true,name:MY_NAME,start:'2026-10-20',rest:0,
     profile:{skin:'normal',sens:2,face:['marks','texture','circles'],body:['strawberry','texture','tone','hands'],hair:['strength','length','moisture'],tex:'4c',por:'unsure',washes:3,styles:['braids','wigs']},
-    hair:{washDays:[1,3,5],installed:null,takedown:null,trim:null},products:herProducts(),checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'}}}
+    hair:{washDays:[1,3,5],installed:null,takedown:null,trim:null},products:herProducts(),checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'},stickers:{},recapSeen:''}}
   function blank(){return {v:3,setup:false,name:'',start:key(today()),rest:0,profile:{skin:'',sens:1,face:[],body:[],hair:[],tex:'',por:'',washes:2,styles:[]},
-    hair:{washDays:[2,6],installed:null,takedown:null,trim:null},products:[],checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'}}}
+    hair:{washDays:[2,6],installed:null,takedown:null,trim:null},products:[],checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'},stickers:{},recapSeen:''}}
   var state=PERSONAL?herState():blank();
   var ui={tab:'home',area:'face',slot:{face:new Date().getHours()<15?'am':'pm',body:new Date().getHours()<15?'am':'pm',hair:'wash'},day:null,take:false,
     shelf:'all',q:'',add:null,sel:null,rm:false,ob:0,obd:null,photos:[],cmpA:null,cmpB:null,cmpX:50,jday:null,msg:''};
@@ -431,7 +536,7 @@ textarea.inp{min-height:80px;resize:vertical}
   function fullDay(d){var r=prog('face',d);return r[1]>0&&r[0]===r[1]}
   function weekStickers(){var t=today(), s=addDays(t,-t.getDay()), n=0, h='';
     for(var i=0;i<7;i++){var d=addDays(s,i), f=fullDay(d); if(f)n++; h+='<div><div class="sc'+(key(d)===key(t)?' now':'')+'">'+(f?sticker(d):'')+'</div>'+DOW[d.getDay()].charAt(0)+'</div>'}
-    return '<section class="card"><div class="rowh"><h2>This week</h2><span class="hand">'+n+' sticker'+(n===1?'':'s')+'</span></div><div class="sweek" role="img" aria-label="'+n+' finished days this week">'+h+'</div><p class="tiny" style="margin-top:8px">Finish every face step in a day to earn its sticker.</p></section>'}
+    return '<button class="card" style="width:100%;display:block" data-act="tab" data-id="stickers"><div class="rowh"><h2>This week</h2><span class="hand">'+n+' sticker'+(n===1?'':'s')+'</span></div><div class="sweek" role="img" aria-label="'+n+' finished days this week">'+h+'</div><p class="tiny" style="margin-top:8px">Finish every face step in a day to earn its sticker. Tap for your sticker book.</p></button>'}
   function monthStickers(d0){var y=d0.getFullYear(), m=d0.getMonth(), first=new Date(y,m,1), last=new Date(y,m+1,0).getDate(), h=['S','M','T','W','T','F','S'].map(function(l){return '<div class="lab">'+l+'</div>'}).join(''), n=0;
     for(var i=0;i<first.getDay();i++)h+='<div></div>';
     for(var dd=1;dd<=last;dd++){var d=new Date(y,m,dd), f=days(d)<=days(today())&&fullDay(d); if(f)n++; h+='<div class="'+(key(d)===key(today())&&!f?'now':'')+'">'+(f?sticker(d):dd)+'</div>'}
@@ -446,8 +551,9 @@ textarea.inp{min-height:80px;resize:vertical}
       ['hair',hairNext,state.hair.installed?'<span class="chip">Style in '+Math.max(0,Math.floor((days(d)-days(parse(state.hair.installed)))/7))+' wk</span>':'',washDay(d)?'a':'r']];
     var exp=state.products.filter(function(p){var e=expiry(p);return p.on&&e&&days(e)-days(d)<=60});
     return bar()+'<header><p class="eyebrow">'+state.products.filter(function(p){return p.on}).length+' products in rotation · '+streak()+' day streak</p><h1 style="margin-top:6px">Good '+part+(state.name?', <em>'+esc(state.name)+'</em>':'')+'</h1></header>'+weekStickers()+
-      cards.map(function(c){var A=AREAS[c[0]],pr=prog(c[0],d);
-        return '<button class="pillar" style="'+tone(c[3])+'" data-act="area" data-id="'+c[0]+'"><h2>'+A.n+'</h2>'+ic('right')+'</button>'}).join('')+
+      cards.map(function(c,i){var A=AREAS[c[0]],pr=prog(c[0],d);
+        return '<button class="pillar'+(ui.enter?' rise':'')+'" style="--i:'+i+';'+tone(c[3])+'" data-act="area" data-id="'+c[0]+'"><h2>'+A.n+'</h2>'+ic('right')+'</button>'}).join('')+
+      (function(){var sun=today().getDay()===0;return '<button class="card" style="width:100%;display:block;'+(sun?tone('a')+';background:var(--tone);color:var(--ontone)':'')+'" data-act="recap"><div class="rowh"><div><span class="eyebrow" style="color:inherit">'+(sun?'sunday recap is ready!':'your week')+'</span><h2 style="margin-top:4px">Play your week recap</h2></div>'+ic('play')+'</div></button>'})()+
       '<section class="card"><div class="rowh"><h2>How is your skin today?</h2></div><div class="pills" style="margin-top:12px">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
         return '<button class="pill" data-act="feel" data-id="'+o[0]+'" aria-pressed="'+(state.feel[key(d)]===o[0])+'">'+o[1]+'</button>'}).join('')+'</div><p class="tiny" style="margin-top:10px">Tight or stinging skin turns tonight into a rest night.</p></section>'+
       ((r.warn.length||exp.length)?'<section class="card"><h2>Needs attention</h2>'+alertsHtml({warn:r.warn.concat(exp.filter(function(p){return days(expiry(p))>=days(d)}).map(function(p){return label(p)+' should be used by '+nice(expiry(p))+'.'})),ok:[],tip:[]})+'</section>':'')+
@@ -456,14 +562,14 @@ textarea.inp{min-height:80px;resize:vertical}
 
   function stepRow(p,area,slot,d){
     var on=isOn(d,area+'-'+slot,p.id), wait=p.wait!=null?p.wait:(T(p).wait||0), live=ui.timer&&ui.timer.id===p.id;
-    return '<div class="step'+(on?' done':'')+'"><button class="tick" data-act="step" data-id="'+esc(p.id)+'" data-k="'+area+'-'+slot+'" data-d="'+key(d)+'" aria-pressed="'+on+'" aria-label="Done, '+esc(label(p))+'">'+ic('check')+'</button>'+
+    return '<div class="step'+(on?' done':'')+(isSkip(d,area+'-'+slot,p.id)?' skip':'')+(ui.pop===p.id?' pop':'')+'" data-sw="'+esc(p.id)+'" data-k="'+area+'-'+slot+'" data-d="'+key(d)+'"><button class="tick" data-act="step" data-id="'+esc(p.id)+'" data-k="'+area+'-'+slot+'" data-d="'+key(d)+'" aria-pressed="'+on+'" aria-label="Done, '+esc(label(p))+'">'+ic('check')+'</button>'+
       '<div class="what"><b>'+esc(label(p))+'</b><small>'+esc(p.name)+(p.note?' · '+esc(p.note):'')+'</small>'+
       ((T(p).act||T(p).bact||p.buy)?'<div class="tags">'+(T(p).act||T(p).bact?'<span class="hand">active!</span>':'')+(p.buy?'<span class="chip buy">To buy</span>':'')+'</div>':'')+'</div>'+
       (wait?'<button class="timerbtn'+(live?' on':'')+'" data-act="timer" data-id="'+esc(p.id)+'" data-m="'+wait+'">'+ic('clock')+wait+' min</button>':'<span></span>')+'</div>';
   }
   function list(area,slot,d){var st=steps(area,slot,d);
     if(!st.length)return '<p class="note">'+(area==='hair'&&slot==='wash'?'Not a wash day. Your next one is '+nextWash(d)+'.':'Nothing scheduled here. Add products on your shelf.')+'</p>';
-    return '<div class="steps">'+st.map(function(p){return stepRow(p,area,slot,d)}).join('')+'</div>'}
+    return '<div class="steps">'+st.map(function(p){return stepRow(p,area,slot,d)}).join('')+'</div><p class="swipehint">swipe right to tick, left to skip</p>'}
   function nextWash(d){for(var i=1;i<8;i++){var x=addDays(d,i);if(washDay(x))return DOWL[x.getDay()]}return 'not set'}
   function weekStrip(area,d0){
     var s='';for(var i=0;i<7;i++){var d=addDays(d0,i), k=key(d), lab='', kd='k-r';
@@ -498,9 +604,9 @@ textarea.inp{min-height:80px;resize:vertical}
     var mine=r.warn.filter(function(t){return area==='face'?/face|retinoid|exfoliant|mask|benzoyl|sunscreen|active/i.test(t):area==='body'?/body/i.test(t):/wash|conditioner|style|shampoo/i.test(t)});
     return bar(['tab','home'])+'<div class="rowh"><h1>'+A.n+'</h1><span class="chip pc num">'+pr[0]+' of '+pr[1]+' done</span></div>'+
       '<div class="pills">'+['face','body','hair'].map(function(x){return '<button class="pill" data-act="area" data-id="'+x+'" aria-pressed="'+(x===area)+'">'+AREAS[x].n+'</button>'}).join('')+'</div>'+
-      '<section class="hero" style="'+tone(hk)+'">'+hero+'</section>'+(area==='face'?'<div class="feel"><span class="eyebrow">Skin today</span><div class="pills">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
+      '<section class="hero'+(ui.flip?' flip':ui.enter?' drop':'')+'" style="'+tone(hk)+'">'+hero+'</section>'+(isToday?'<button class="grip" data-act="peek" aria-expanded="'+!!ui.peek+'"><i></i>'+(ui.peek?'hide tomorrow':'pull for tomorrow')+'</button>'+peekHtml(area):'')+(area==='face'?'<div class="feel"><span class="eyebrow">Skin today</span><div class="pills">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
         return '<button class="pill" data-act="feel" data-id="'+o[0]+'" data-d="'+key(d)+'" aria-pressed="'+(state.feel[key(d)]===o[0])+'">'+o[1]+'</button>'}).join('')+'</div></div>':'')+
-      tabs+list(area,slot,d)+
+      tabs+(isToday&&steps(area,slot,d).length?'<button class="btn" data-act="play">'+ic('play')+'Start '+(A.slots.filter(function(x){return x[0]===slot})[0]||['',''])[1].toLowerCase()+' routine</button>':'')+list(area,slot,d)+
       '<section><div class="rowh"><h2>This week</h2>'+(ui.day?'<button class="link" data-act="day" data-id="">Back to today</button>':'')+'</div><div style="margin-top:12px">'+weekStrip(area,today())+'</div></section>'+
       (mine.length?'<section class="card"><h2>Safety check</h2>'+alertsHtml({warn:mine,ok:[],tip:[]})+'</section>':'');
   }
@@ -532,7 +638,7 @@ textarea.inp{min-height:80px;resize:vertical}
     return bar()+'<div class="rowh"><h1>Shelf</h1><button class="btn sm" data-act="addopen">'+ic('plus')+'Add</button></div>'+
       '<label class="search">'+ic('search')+'<input id="q" placeholder="Search your shelf" value="'+esc(ui.q)+'" aria-label="Search your shelf"></label>'+
       '<div class="pills">'+[['all','All'],['face','Face'],['body','Body'],['hair','Hair']].map(function(x){return '<button class="pill" data-act="shelfa" data-id="'+x[0]+'" aria-pressed="'+(ui.shelf===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+
-      (buy?'<p class="tiny">'+buy+' products marked to buy.</p>':'')+(groups||'<p class="note">Nothing here yet.</p>')+
+      mixHtml()+(buy?'<p class="tiny">'+buy+' products marked to buy.</p>':'')+(groups||'<p class="note">Nothing here yet.</p>')+
       '<section class="card"><h2>Safety check</h2>'+alertsHtml(checks())+'</section>';
   }
   function typeOpts(area,sel){return Object.keys(TYPES).filter(function(t){return TYPES[t].a===area}).map(function(t){return '<option value="'+t+'"'+(t===sel?' selected':'')+'>'+TYPES[t].n+'</option>'}).join('')}
@@ -667,16 +773,173 @@ textarea.inp{min-height:80px;resize:vertical}
     state.products=list; state.start=st; state.profile={skin:'',sens:sens,face:D.face,body:D.body,hair:D.hair,tex:D.tex,por:D.por,washes:w,styles:[]}; state.setup=true;
   }
 
+
+  /* ================= interactive layer ================= */
+  var RM=false; try{RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+  function face(e,m){return '<circle cx="12" cy="12" r="9.2" fill="#ffd84d" stroke="#fff" stroke-width="2.2"/>'+e+m}
+  var EYE='<circle cx="9" cy="10.5" r="1.3" fill="#2a2050"/><circle cx="15" cy="10.5" r="1.3" fill="#2a2050"/>', SMILE='<path d="M8.5 14.2q3.5 3.4 7 0" stroke="#2a2050" stroke-width="1.6" fill="none" stroke-linecap="round"/>';
+  Object.assign(STK,{
+    strawberry:'<path d="M12 21.5c-4.3-2-7.3-6.2-7.3-10.2 0-2.6 2.6-3.6 7.3-3.6s7.3 1 7.3 3.6c0 4-3 8.2-7.3 10.2z" fill="#ff5c6b" stroke="#fff" stroke-width="2"/><path d="M7.8 7.6l2.2-3.2 2 2.1 2-2.1 2.2 3.2" fill="#5fd39a" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/><g fill="#ffe08a"><circle cx="9" cy="11.5" r=".85"/><circle cx="12" cy="10.6" r=".85"/><circle cx="15" cy="11.5" r=".85"/><circle cx="10.5" cy="14.6" r=".85"/><circle cx="13.5" cy="14.6" r=".85"/><circle cx="12" cy="17.6" r=".85"/></g>',
+    lemon:'<ellipse cx="12" cy="12" rx="9" ry="6.6" fill="#ffd84d" stroke="#fff" stroke-width="2.2" transform="rotate(-22 12 12)"/><ellipse cx="9.6" cy="10" rx="3" ry="1.4" fill="#fff" opacity=".55" transform="rotate(-22 9.6 10)"/>',
+    cherry:'<path d="M8 14.5C9 9 12 5.2 16.5 3M16 14.5c0-5-1-8 .5-11.5" stroke="#3d7a4a" stroke-width="1.7" fill="none" stroke-linecap="round"/><circle cx="8" cy="16.3" r="4.4" fill="#e2394f" stroke="#fff" stroke-width="2"/><circle cx="16" cy="16.3" r="4.4" fill="#e2394f" stroke="#fff" stroke-width="2"/><circle cx="6.6" cy="15" r="1" fill="#fff" opacity=".7"/>',
+    peach:'<circle cx="12" cy="13.6" r="7.6" fill="#ffab7a" stroke="#fff" stroke-width="2.2"/><path d="M12 6.8c-1.6 3.2-1.6 9.4 0 13.4" stroke="#f28a5e" stroke-width="1.4" fill="none"/><path d="M12.2 6.4c1-2.6 3.6-3.6 5.8-3.1-.6 2.6-3.2 3.6-5.8 3.1z" fill="#5fd39a" stroke="#fff" stroke-width="1.3"/>',
+    avocado:'<path d="M12 2.6c3.1 0 4.6 4.1 6.1 8.4 1.6 4.6-1.6 10.4-6.1 10.4S4.3 15.6 5.9 11C7.4 6.7 8.9 2.6 12 2.6z" fill="#6cb85a" stroke="#fff" stroke-width="2.2"/><path d="M12 6.6c2 0 3.2 3 4 5.8 1 3.3-1.2 6.4-4 6.4s-5-3.1-4-6.4c.8-2.8 2-5.8 4-5.8z" fill="#e8f5b5"/><circle cx="12" cy="14" r="2.9" fill="#9a6538"/>',
+    sun:'<g stroke="#ffb020" stroke-width="2.3" stroke-linecap="round"><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3M4.7 4.7l2.1 2.1M17.2 17.2l2.1 2.1M19.3 4.7l-2.1 2.1M6.8 17.2l-2.1 2.1"/></g><circle cx="12" cy="12" r="5.7" fill="#ffd84d" stroke="#fff" stroke-width="2"/>',
+    rainbow:'<path d="M2.6 18.5a9.4 9.4 0 0 1 18.8 0" stroke="#fff" stroke-width="10.5" fill="none" stroke-linecap="round"/><g fill="none" stroke-width="2.7" stroke-linecap="round"><path d="M3.2 18.5a8.8 8.8 0 0 1 17.6 0" stroke="#ff5c6b"/><path d="M6.2 18.5a5.8 5.8 0 0 1 11.6 0" stroke="#ffd84d"/><path d="M9.2 18.5a2.8 2.8 0 0 1 5.6 0" stroke="#6fa8ff"/></g>',
+    cloud:'<path d="M7 18.5a4.1 4.1 0 0 1-.6-8.2 5.6 5.6 0 0 1 10.8-1.3 4.3 4.3 0 0 1 .4 9.5z" fill="#dbeaff" stroke="#fff" stroke-width="2.2"/><circle cx="10" cy="13.5" r=".9" fill="#2a2050"/><circle cx="14" cy="13.5" r=".9" fill="#2a2050"/>',
+    sparkle:'<path d="M12 2c.8 5 2.9 7.2 8 8-5.1.8-7.2 3-8 8-.8-5-2.9-7.2-8-8 5.1-.8 7.2-3 8-8z" fill="#c4b0ff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><circle cx="19" cy="19" r="2.2" fill="#ff9ec4" stroke="#fff" stroke-width="1.4"/>',
+    planet:'<circle cx="12" cy="12" r="6.2" fill="#b79cff" stroke="#fff" stroke-width="2"/><ellipse cx="12" cy="12" rx="10.6" ry="3.6" fill="none" stroke="#fff" stroke-width="4.4" transform="rotate(-20 12 12)"/><ellipse cx="12" cy="12" rx="10.6" ry="3.6" fill="none" stroke="#ffb020" stroke-width="1.9" transform="rotate(-20 12 12)"/>',
+    smile:face(EYE,SMILE),
+    wink:face('<circle cx="9" cy="10.5" r="1.3" fill="#2a2050"/><path d="M13.6 10.6h2.8" stroke="#2a2050" stroke-width="1.6" stroke-linecap="round"/>',SMILE),
+    sleepy:face('<path d="M7.6 10.4q1.4 1.2 2.8 0M13.6 10.4q1.4 1.2 2.8 0" stroke="#2a2050" stroke-width="1.5" fill="none" stroke-linecap="round"/>','<circle cx="12" cy="15.2" r="1.3" fill="#2a2050"/><text x="16.5" y="6.5" font-size="5" font-weight="800" fill="#2a2050" font-family="sans-serif">z</text>'),
+    hearteyes:face('<path d="M9 12.3s-2.2-1.3-2.2-2.8a1.1 1.1 0 0 1 2.2-.3 1.1 1.1 0 0 1 2.2.3c0 1.5-2.2 2.8-2.2 2.8zM15 12.3s-2.2-1.3-2.2-2.8a1.1 1.1 0 0 1 2.2-.3 1.1 1.1 0 0 1 2.2.3c0 1.5-2.2 2.8-2.2 2.8z" fill="#ff5c6b"/>',SMILE),
+    stareyes:face('<path d="M9 7.9l.8 1.6 1.7.2-1.3 1.2.4 1.7L9 11.8l-1.6.8.4-1.7-1.3-1.2 1.7-.2zM15 7.9l.8 1.6 1.7.2-1.3 1.2.4 1.7-1.6-.8-1.6.8.4-1.7-1.3-1.2 1.7-.2z" fill="#ff8a00"/>','<path d="M8.5 14q3.5 4 7 0z" fill="#2a2050"/>')
+  });
+  var PACKS=[['Classics',0,['star','heart','moon','flower','drop']],['Fruit stand',7,['strawberry','lemon','cherry','peach','avocado']],['Sky',14,['sun','rainbow','cloud','sparkle','planet']],['Faces',30,['smile','wink','sleepy','hearteyes','stareyes']]];
+  function svgOf(n){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+(STK[n]||STK.star)+'</svg>'}
+  sticker=function(d){var k=key(d), n=days(d), nm=(state.stickers&&state.stickers[k])||SK[((n%5)+5)%5];return '<span class="st" style="--r:'+((n*37)%21-10)+'deg">'+svgOf(nm)+'</span>'};
+  function earned(){var n=0,t=days(today());Object.keys(state.checks).forEach(function(k){if(isDate(k)&&days(parse(k))<=t&&fullDay(parse(k)))n++});return n}
+  function unlockedNames(){var e=earned(),o=[];PACKS.forEach(function(p){if(e>=p[1])o=o.concat(p[2])});return o}
+  function pickOptions(){var e=earned(), packs=PACKS.filter(function(p){return e>=p[1]}), newest=packs[packs.length-1][2], all=unlockedNames(), o=[newest[Math.floor(Math.random()*5)]];
+    while(o.length<3){var c=all[Math.floor(Math.random()*all.length)];if(o.indexOf(c)<0)o.push(c)}return o}
+
+  /* one place that marks a step, so ticks, swipes and routine mode all celebrate the same way */
+  function markStep(dk,sk,id,val){
+    var td=key(today()), was=dk===td&&fullDay(today()), c=state.checks[dk]||(state.checks[dk]={}), m=c[sk]||(c[sk]={});
+    if(val==null){if(m[id]===true)delete m[id];else m[id]=true}else if(val===false)delete m[id];else m[id]=val;
+    if(m[id]===true)ui.pop=id;
+    if(dk===td&&!was&&fullDay(today())){if(state.stickers&&state.stickers[td])ui.slap=state.stickers[td];else ui.pick=pickOptions()}
+    commit();
+  }
+  isOn=function(d,slotKey,id){return ck(d,slotKey)[id]===true};
+  function isSkip(d,slotKey,id){return ck(d,slotKey)[id]==='skip'}
+
+  /* ---------- effects layer: sticker picker, slap with confetti, weekly recap ---------- */
+  var fx=document.getElementById('fx'), slapT=null, storyT=null;
+  function confetti(){if(RM)return '';var cols=['var(--c1)','var(--c2)','var(--c3)','#ff7a8a','#ffd84d','#5fd39a'],h='';
+    for(var i=0;i<34;i++){var a=Math.random()*Math.PI*2, r=140+Math.random()*260;
+      h+='<i class="conf" style="background:'+cols[i%cols.length]+';--x:'+Math.round(Math.cos(a)*r)+'px;--y:'+Math.round(Math.sin(a)*r+120)+'px;--r:'+Math.round(Math.random()*720-360)+'deg;animation-delay:'+Math.round(Math.random()*120)+'ms"></i>'}return h}
+  function fxRender(){
+    clearTimeout(storyT);
+    if(ui.pick){fx.innerHTML='<div class="ov" role="dialog" aria-label="Pick your sticker"><div class="sheet"><span class="hand">day complete!</span><h2 style="margin-top:4px">Pick your sticker</h2><p class="sub" style="margin-top:4px">It goes on today in your sticker book.</p><div class="pick3">'+
+      ui.pick.map(function(n){return '<button data-act="stpick" data-id="'+n+'" aria-label="'+n+' sticker">'+svgOf(n)+'</button>'}).join('')+'</div></div></div>';return}
+    if(ui.slap){fx.innerHTML='<div class="ov clear">'+confetti()+'<div class="slap">'+svgOf(ui.slap)+'</div><p class="cheer">sticker earned!</p></div>';
+      clearTimeout(slapT);slapT=setTimeout(function(){ui.slap=null;fxRender()},1900);return}
+    if(ui.recap){fx.innerHTML=storyHtml();storyT=setTimeout(function(){nextSlide()},5000);return}
+    fx.innerHTML='';
+  }
+  function nextSlide(){if(!ui.recap)return;ui.recap.i++;if(ui.recap.i>=4)ui.recap=null;fxRender()}
+  function storyHtml(){
+    var t=today(), s0=addDays(t,-6), i=ui.recap.i, got=0, steps7=0, all7=0, feel={calm:0,tight:0,sting:0}, rates=[];
+    for(var k=0;k<7;k++){var d=addDays(s0,k);if(fullDay(d))got++;['face','body','hair'].forEach(function(a){var r=prog(a,d);steps7+=r[0];all7+=r[1]});var f=state.feel[key(d)];if(f)feel[f]++;var j=state.journal[key(d)];if(j&&j.face)rates.push(j.face)}
+    var pct=all7?Math.round(steps7/all7*100):0, avg=rates.length?(rates.reduce(function(a,b){return a+b},0)/rates.length).toFixed(1):null, body='', tn='a';
+    if(i===0){tn='a';body='<p class="eyebrow">your week</p><div class="giant num">'+got+'</div><p class="lead">sticker'+(got===1?'':'s')+' earned</p><div class="stks">'+
+      [0,1,2,3,4,5,6].map(function(k){var d=addDays(s0,k);return fullDay(d)?'<span class="got" style="animation-delay:'+(k*90+250)+'ms">'+svgOf((state.stickers&&state.stickers[key(d)])||SK[((days(d)%5)+5)%5])+'</span>':'<span></span>'}).join('')+'</div>'}
+    else if(i===1){tn='r';body='<p class="eyebrow">you showed up</p><div class="giant num">'+pct+'%</div><p class="lead">of your steps done</p><p style="font-weight:600">'+got+' full day'+(got===1?'':'s')+' across face, body and hair.</p>'}
+    else if(i===2){tn='x';body='<p class="eyebrow">how your skin felt</p><p class="lead" style="font-size:44px">Calm '+feel.calm+'<br>Tight '+feel.tight+'<br>Stinging '+feel.sting+'</p>'+(avg?'<p style="font-weight:600">Average face rating '+avg+' out of 5.</p>':'<p style="font-weight:600">Log your skin each day and this fills in.</p>')}
+    else{tn='a';var nx=addDays(t,1),acts=0,cells='';for(var q=0;q<7;q++){var dd=addDays(nx,q),tt=tonight(dd);if(tt!=='rest')acts++;cells+='<div class="'+(tt==='rest'?'k-r':tt==='exf'?'k-x':'k-a')+'">'+DOW[dd.getDay()].charAt(0)+'<br>'+(tt==='rest'?'Rest':ACT_N[tt].slice(0,3))+'</div>'}
+      body='<p class="eyebrow">coming up</p><p class="lead" style="font-size:42px">'+acts+' active night'+(acts===1?'':'s')+', '+(7-acts)+' rest</p><div class="row7">'+cells+'</div>'}
+    return '<div class="story" style="'+tone(tn)+'" data-act="snext" role="dialog" aria-label="Your week recap"><div class="bars">'+[0,1,2,3].map(function(k){return '<i class="'+(k<i?'done':k===i?'cur':'')+'">'+(k===i?'<span></span>':'')+'</i>'}).join('')+'</div>'+
+      '<div class="top"><span class="brand">rota</span><button class="x" data-act="sclose" aria-label="Close recap">'+ic('x')+'</button></div><div class="slide" key="'+i+'">'+body+'</div><p class="tap">tap for next</p></div>';
+  }
+
+  /* ---------- routine mode: one step at a time ---------- */
+  function vPlay(){
+    var P=ui.play, d=today(), sk=P.area+'-'+P.slot, st=steps(P.area,P.slot,d), A=AREAS[P.area];
+    var cur=st.filter(function(p){return !isOn(d,sk,p.id)&&!isSkip(d,sk,p.id)})[0];
+    var segs='<div class="segs">'+st.map(function(p){return '<i class="'+(isOn(d,sk,p.id)?'on':isSkip(d,sk,p.id)?'sk':'')+'"></i>'}).join('')+'</div>';
+    var top='<div class="bar"><button class="icon l" data-act="playexit" aria-label="Leave routine">'+ic('x')+'</button><span class="hand" style="color:var(--txt)">'+A.n.toLowerCase()+' · '+(A.slots.filter(function(x){return x[0]===P.slot})[0]||['',''])[1].toLowerCase()+'</span></div>';
+    if(!cur){var full=fullDay(d);
+      return '<div class="play">'+top+segs+'<div class="playcard" style="'+tone('r')+'"><p class="eyebrow">all done!</p><div class="big">'+(P.slot==='am'?'Morning':P.slot==='wash'?'Wash day':'Evening')+' done</div><p>'+(full?'Today is complete. Your sticker is in the book.':'Nice work. Finish your other routine to earn today’s sticker.')+'</p></div><button class="btn huge" data-act="playexit">Close</button></div>'}
+    var n=st.indexOf(cur)+1, wait=cur.wait!=null?cur.wait:(T(cur).wait||0), k=T(cur).act||T(cur).bact?'a':n%2?'r':'x';
+    return '<div class="play">'+top+segs+'<div class="playcard" style="'+tone(k)+'" key="'+cur.id+'"><p class="eyebrow">step '+n+' of '+st.length+'</p><div class="big">'+esc(label(cur))+'</div><p><b>'+esc(cur.name)+'</b>'+(cur.note?'<br>'+esc(cur.note):'')+'</p>'+
+      (wait?'<p style="font-weight:700">Then wait '+wait+' min. The timer starts when you tap Done.</p>':'')+((T(cur).act||T(cur).bact)?'<span class="hand" style="color:inherit">active!</span>':'')+'</div>'+
+      '<button class="btn huge" data-act="playdone" data-id="'+esc(cur.id)+'">'+ic('check')+'Done</button><button class="btn ghost" data-act="playskip" data-id="'+esc(cur.id)+'">Skip this one</button></div>';
+  }
+
+  /* ---------- sticker book ---------- */
+  function vStickers(){
+    var e=earned(), next=PACKS.filter(function(p){return p[1]>e})[0], recent=Object.keys(state.checks).filter(function(k){return isDate(k)&&days(parse(k))<=days(today())&&fullDay(parse(k))}).sort().reverse().slice(0,14);
+    return bar(['tab','home'])+'<h1>Sticker <em>book</em></h1><p class="sub">'+e+' sticker'+(e===1?'':'s')+' collected. Every finished day adds one.</p>'+
+      (next?'<section class="card"><div class="rowh"><h2>Next pack: '+next[0]+'</h2><span class="hand">'+(next[1]-e)+' to go</span></div><div class="meterbar"><i style="width:'+Math.min(100,e/next[1]*100)+'%"></i></div></section>':'<section class="card"><h2>Every pack unlocked!</h2></section>')+
+      PACKS.map(function(p,i){var open=e>=p[1];return '<section class="card rise" style="--i:'+i+'"><div class="rowh"><h2>'+p[0]+'</h2><span class="tiny">'+(open?'unlocked':'unlocks at '+p[1])+'</span></div><div class="pack'+(open?'':' locked')+'">'+p[2].map(function(n){return '<span>'+svgOf(n)+'</span>'}).join('')+'</div></section>'}).join('')+
+      (recent.length?'<section class="card"><h2>Recent days</h2><div class="sweek">'+recent.slice(0,7).map(function(k){var d=parse(k);return '<div><div class="sc">'+sticker(d)+'</div>'+nice(d)+'</div>'}).join('')+'</div></section>':'');
+  }
+
+  /* ---------- can I use these together? ---------- */
+  function clash(a,b){
+    if(!a||!b)return null; if(a===b)return ['care','Same product','Pick two different products.'];
+    var A=T(a),B=T(b),S={};S[a.t]=1;S[b.t]=1;
+    function has(x,y){return S[x]&&S[y]&&(x!==y||a.t===b.t)}
+    if(A.a!==B.a)return ['ok','No clash','These are for different areas, so they never meet.'];
+    if(a.t===b.t&&(A.act||A.bact))return ['no','One at a time','Two of the same active in one night is too much. Rota alternates them.'];
+    if(has('exf','ret'))return ['no','Not the same night','Both are strong actives. Together they strip and irritate, so Rota keeps them on separate nights.'];
+    if(has('ret','bp'))return ['no','Not together','Benzoyl peroxide can break down many retinoids, and both dry the skin.'];
+    if((A.mask||B.mask)&&(A.act||B.act))return ['care','Separate nights','Use the mask on a rest night, not alongside an active.'];
+    if(has('aza','exf')||has('aza','ret')||has('aza','bp'))return ['care','Possible, but go slowly','They can pair, but for skin that marks easily start them on separate nights and combine only if your skin stays calm.'];
+    if(has('vc','exf')||has('vc','ret')||has('vc','aza'))return ['ok','No problem','Vitamin C is a morning step and this one is for the evening, so they never overlap.'];
+    if(has('vc','sp'))return ['ok','Great pair','Vitamin C under sunscreen adds extra protection.'];
+    if(has('shamp','cond')||has('cowash','cond'))return ['ok','Perfect pair','Always condition after cleansing.'];
+    if(has('shamp','cowash'))return ['care','Pick one per wash','Both cleanse. Rota alternates them on your wash days.'];
+    if(A.bact&&B.bact)return ['no','One at a time','Use one body acid a night.'];
+    return ['ok','No known clash','Layer from thinnest to thickest.'];
+  }
+  function mixHtml(){
+    var m=ui.mix||(ui.mix=[null,null]), pa=prod(m[0]), pb=prod(m[1]), v=clash(pa,pb), on=state.products.filter(function(p){return p.on});
+    function slot(i,p){return '<button class="slot'+(p?' full':'')+'" data-act="mixclear" data-id="'+i+'" data-slot="'+i+'">'+(p?esc(label(p))+'<br><span style="font-weight:500">'+esc(p.name.split(' ').slice(0,3).join(' '))+'</span>':'drop a product')+'</button>'}
+    return '<section class="card"><h2>Can I use these together?</h2><p class="sub" style="margin-top:4px">Drag two products into the boxes, or tap them.</p><div class="mix">'+slot(0,pa)+'<span class="plus">+</span>'+slot(1,pb)+'</div>'+
+      '<div class="chiprow">'+on.map(function(p){return '<button class="dragchip'+(m.indexOf(p.id)>=0?' used':'')+'" data-act="mixadd" data-id="'+esc(p.id)+'">'+esc(label(p))+'</button>'}).join('')+'</div>'+
+      (v?'<div class="verdict '+v[0]+'" role="status"><b>'+v[1]+'</b>'+v[2]+'</div>':'')+'</section>';
+  }
+
+  /* ---------- peek at tomorrow ---------- */
+  function peekHtml(area){
+    var d=addDays(today(),1), nm, why, k;
+    if(area==='face'){var t=tonight(d);nm=t==='rest'?'Rest':ACT_N[t];k=t==='rest'?'r':t==='exf'?'x':'a';why=t==='rest'?'A calm night.':esc((steps('face','pm',d).filter(function(p){return T(p).act})[0]||{}).name||'')}
+    else if(area==='body'){var b=steps('body','pm',d).filter(function(p){return T(p).bact})[0];nm=b?'Exfoliate':'Moisture';k=b?'x':'r';why=b?esc(label(b)):'Lotion and butter.'}
+    else{var w=washDay(d);nm=w?(coDay(d)?'Co-wash':'Wash day'):'Moisture';k=w?'a':'r';why=w?'Cleanse and condition.':'Bonnet on.'}
+    return '<div class="peek'+(ui.peek?' open':'')+'" id="peek"><div class="peekcard" style="'+tone(k)+'"><span class="eyebrow" style="color:inherit">tomorrow, '+DOWL[d.getDay()]+'</span><b>'+nm+'</b><span style="font-weight:600;font-size:13px">'+why+'</span></div></div>';
+  }
+
+  /* ---------- gestures: swipe steps, drag chips, pull to peek ---------- */
+  var G=null, lastSwipe=0;
+  document.addEventListener('pointerdown',function(e){
+    if(e.button>0)return;
+    var st=e.target.closest&&e.target.closest('.step[data-sw]'), ch=e.target.closest&&e.target.closest('.dragchip'), gr=e.target.closest&&e.target.closest('.grip');
+    if(st&&!e.target.closest('button')){G={k:'sw',el:st,x:e.clientX,y:e.clientY,dx:0,on:false};return}
+    if(ch){G={k:'ch',el:ch,x:e.clientX,y:e.clientY,on:false,id:ch.dataset.id};return}
+    if(gr){G={k:'gr',el:document.getElementById('peek'),y:e.clientY,dy:0,on:false};try{gr.setPointerCapture(e.pointerId)}catch(x){}}
+  });
+  document.addEventListener('pointermove',function(e){
+    if(!G)return; var dx=e.clientX-G.x, dy=e.clientY-G.y;
+    if(G.k==='sw'){if(!G.on){if(Math.abs(dx)>12&&Math.abs(dx)>Math.abs(dy)*1.3){G.on=true;G.el.classList.add('dragging');try{G.el.setPointerCapture(e.pointerId)}catch(x){}}else if(Math.abs(dy)>12){G=null;return}else return}
+      G.dx=dx;G.el.style.transform='translateX('+Math.max(-140,Math.min(140,dx))+'px) rotate('+(dx/40)+'deg)';G.el.classList.toggle('sw-r',dx>80);G.el.classList.toggle('sw-l',dx<-80);e.preventDefault()}
+    else if(G.k==='ch'){if(!G.on&&Math.hypot(dx,dy)>8){G.on=true;G.g=G.el.cloneNode(true);G.g.classList.add('ghost');document.body.appendChild(G.g);try{G.el.setPointerCapture(e.pointerId)}catch(x){}}
+      if(G.on){G.g.style.left=e.clientX+'px';G.g.style.top=e.clientY+'px';var hot=document.elementFromPoint(e.clientX,e.clientY);document.querySelectorAll('.slot').forEach(function(s){s.classList.toggle('hot',!!hot&&s.contains(hot))});e.preventDefault()}}
+    else if(G.k==='gr'&&G.el){G.on=true;G.dy=e.clientY-G.y;G.el.style.transition='none';G.el.style.maxHeight=Math.max(0,Math.min(220,(ui.peek?220:0)+G.dy*1.4))+'px'}
+  },{passive:false});
+  document.addEventListener('pointerup',function(e){
+    if(!G)return; var g=G; G=null;
+    if(g.k==='sw'&&g.on){lastSwipe=Date.now();var el=g.el;el.classList.remove('dragging');el.style.transform='';
+      if(g.dx>80)markStep(el.dataset.d,el.dataset.k,el.dataset.sw,true);else if(g.dx<-80)markStep(el.dataset.d,el.dataset.k,el.dataset.sw,isSkip(parse(el.dataset.d),el.dataset.k,el.dataset.sw)?false:'skip');else{el.classList.remove('sw-r','sw-l')}}
+    else if(g.k==='ch'&&g.on){lastSwipe=Date.now();if(g.g)g.g.remove();var hot=document.elementFromPoint(e.clientX,e.clientY), s=hot&&hot.closest&&hot.closest('.slot');
+      document.querySelectorAll('.slot').forEach(function(x){x.classList.remove('hot')});if(s){ui.mix[+s.dataset.slot]=g.id;render()}}
+    else if(g.k==='gr'&&g.on&&g.el){lastSwipe=Date.now();g.el.style.transition='';g.el.style.maxHeight='';ui.peek=ui.peek?g.dy>-40:g.dy>50;render()}
+  });
+  document.addEventListener('pointercancel',function(){if(G&&G.el&&G.k==='sw'){G.el.style.transform='';G.el.classList.remove('dragging','sw-r','sw-l')}if(G&&G.g)G.g.remove();G=null});
+  document.addEventListener('click',function(e){if(Date.now()-lastSwipe<350){e.stopPropagation();e.preventDefault()}},true);
+
   /* ---------- render ---------- */
   function render(){
     applyLook();
     if(!state.setup){docknav.hidden=true;setPillar('face');if(!ui.obd)ui.obd={face:[],body:[],hair:[],sens:'1',tex:'',por:'',washes:'2',shelf:{}};app.innerHTML=vOnboard();return}
     docknav.hidden=false;
     setPillar(ui.tab==='area'?ui.area:'face');
-    app.innerHTML=({home:vHome,area:vArea,shelf:vShelf,journal:vJournal,profile:vProfile}[ui.tab]||vHome)();
-    var tabs=[['home','home','Home'],['shelf','shelf','Shelf'],['journal','book','Journal'],['profile','user','Profile']], cur=ui.tab==='area'?'home':ui.tab;
+    if(ui.play){docknav.hidden=true;app.innerHTML=vPlay();paintTimer();fxRender();ui.pop=null;return}
+    app.innerHTML=({home:vHome,area:vArea,shelf:vShelf,journal:vJournal,profile:vProfile,stickers:vStickers}[ui.tab]||vHome)();
+    var tabs=[['home','home','Home'],['shelf','shelf','Shelf'],['journal','book','Journal'],['profile','user','Profile']], cur=(ui.tab==='area'||ui.tab==='stickers')?'home':ui.tab;
     dock.innerHTML=tabs.map(function(t){return '<button data-act="tab" data-id="'+t[0]+'"'+(t[0]===cur?' aria-current="page"':'')+'>'+ic(t[1])+t[2]+'</button>'}).join('');
-    paintTimer();
+    paintTimer();fxRender();ui.pop=null;ui.flip=false;ui.enter=false;
   }
 
   /* ---------- timers ---------- */
@@ -685,9 +948,10 @@ textarea.inp{min-height:80px;resize:vertical}
     if(!ui.timer){timerEl.hidden=true;return}
     var left=Math.max(0,Math.round((ui.timer.end-Date.now())/1000)), m=Math.floor(left/60), s=left%60;
     timerEl.hidden=false;
-    timerEl.innerHTML=left?'<span>'+esc(ui.timer.n)+'</span><b class="num">'+m+':'+String(s).padStart(2,'0')+'</b><button data-act="tstop">Stop</button>':'<span>Ready for the next step</span><button data-act="tstop">Done</button>';
+    var C=75.4, fr=ui.timer.total?left/ui.timer.total:0; timerEl.classList.toggle('ding',!left);
+    timerEl.innerHTML=left?'<svg viewBox="0 0 30 30" aria-hidden="true"><circle class="bg" cx="15" cy="15" r="12"/><circle cx="15" cy="15" r="12" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-fr)).toFixed(2)+'"/></svg><span>'+esc(ui.timer.n)+'</span><b class="num">'+m+':'+String(s).padStart(2,'0')+'</b><button data-act="tstop">Stop</button>':'<span>Ready for the next step</span><button data-act="tstop">Done</button>';
   }
-  function startTimer(id,mins,name){ui.timer={id:id,end:Date.now()+mins*60000,n:name};clearInterval(tick);tick=setInterval(function(){paintTimer();if(ui.timer&&Date.now()>=ui.timer.end){clearInterval(tick);try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}}},1000);render()}
+  function startTimer(id,mins,name){ui.timer={id:id,end:Date.now()+mins*60000,n:name,total:mins*60};clearInterval(tick);tick=setInterval(function(){paintTimer();if(ui.timer&&Date.now()>=ui.timer.end){clearInterval(tick);try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}}},1000);render()}
 
   /* ---------- events ---------- */
   function prod(id){return state.products.filter(function(p){return p.id===id})[0]}
@@ -695,14 +959,25 @@ textarea.inp{min-height:80px;resize:vertical}
   document.addEventListener('click',function(e){
     var b=e.target.closest('[data-act]'); if(!b||b.disabled)return;
     var a=b.dataset.act, id=b.dataset.id, p;
-    if(a==='tab'){ui.tab=id;ui.sel=null;ui.add=null;ui.take=false;ui.day=null;ui.rm=false;render();window.scrollTo(0,0)}
-    else if(a==='area'){ui.tab='area';ui.area=id;ui.day=null;ui.take=false;render();window.scrollTo(0,0)}
+    if(a==='tab'){ui.enter=true;ui.tab=id;ui.sel=null;ui.add=null;ui.take=false;ui.day=null;ui.rm=false;render();window.scrollTo(0,0)}
+    else if(a==='area'){ui.enter=true;ui.peek=false;ui.tab='area';ui.area=id;ui.day=null;ui.take=false;render();window.scrollTo(0,0)}
     else if(a==='slot'){ui.slot[ui.area]=id;render()}
-    else if(a==='day'){ui.day=id||null;render()}
+    else if(a==='day'){ui.day=id||null;ui.flip=true;render()}
     else if(a==='feel'){var k=b.dataset.d||key(today());if(state.feel[k]===id)delete state.feel[k];else state.feel[k]=id;commit()}
-    else if(a==='step'){var dk=b.dataset.d, sk=b.dataset.k, c=state.checks[dk]||(state.checks[dk]={}), m=c[sk]||(c[sk]={}); if(m[id])delete m[id];else m[id]=true;commit()}
+    else if(a==='step'){markStep(b.dataset.d,b.dataset.k,id)}
     else if(a==='timer'){if(ui.timer&&ui.timer.id===id){ui.timer=null;clearInterval(tick);render()}else{p=prod(id);startTimer(id,+b.dataset.m,p?label(p):'Wait')}}
     else if(a==='tstop'){ui.timer=null;clearInterval(tick);render()}
+    else if(a==='stpick'){state.stickers=state.stickers||{};state.stickers[key(today())]=id;ui.pick=null;ui.slap=id;commit()}
+    else if(a==='play'){ui.play={area:ui.area,slot:ui.slot[ui.area]};render();window.scrollTo(0,0)}
+    else if(a==='playexit'){ui.play=null;ui.enter=true;render();window.scrollTo(0,0)}
+    else if(a==='playdone'){p=prod(id);var pw=p?(p.wait!=null?p.wait:(T(p).wait||0)):0;markStep(key(today()),ui.play.area+'-'+ui.play.slot,id,true);if(pw)startTimer(id,pw,label(p))}
+    else if(a==='playskip'){markStep(key(today()),ui.play.area+'-'+ui.play.slot,id,'skip')}
+    else if(a==='recap'){ui.recap={i:0};fxRender()}
+    else if(a==='snext'){nextSlide()}
+    else if(a==='sclose'){ui.recap=null;fxRender()}
+    else if(a==='peek'){ui.peek=!ui.peek;render()}
+    else if(a==='mixadd'){var mm=ui.mix||(ui.mix=[null,null]),ix=mm.indexOf(id);if(ix>=0)mm[ix]=null;else if(!mm[0])mm[0]=id;else if(!mm[1])mm[1]=id;else{mm[0]=mm[1];mm[1]=id}render()}
+    else if(a==='mixclear'){(ui.mix||[])[+id]=null;render()}
     else if(a==='take'){ui.take=true;render();window.scrollTo(0,0)}
     else if(a==='untake'){ui.take=false;render()}
     else if(a==='takedone'){state.hair.takedown=key(today());state.hair.installed=null;commit()}
@@ -815,7 +1090,7 @@ textarea.inp{min-height:80px;resize:vertical}
       products:(Array.isArray(d.products)?d.products:[]).filter(function(p){return p&&typeof p.id==='string'&&TYPES[p.t]}).slice(0,80).map(function(p){
         return {id:p.id.slice(0,30),t:p.t,name:String(p.name||'').slice(0,60),label:p.label?String(p.label).slice(0,40):undefined,note:p.note?String(p.note).slice(0,80):undefined,on:p.on!==false,buy:!!p.buy,
           slot:['am','pm','wash','night'].indexOf(p.slot)>=0?p.slot:undefined,opened:isDate(p.opened)?p.opened:'',pao:p.pao!=null&&+p.pao>=0?Math.min(60,Math.floor(+p.pao)):undefined,wait:p.wait!=null&&+p.wait>=0?Math.min(60,Math.floor(+p.wait)):undefined,ph:cleanPh(p.ph)}}),
-      checks:obj(d.checks),feel:obj(d.feel),journal:obj(d.journal),look:{pal:PAL[obj(d.look).pal]?d.look.pal:'blue',mode:obj(d.look).mode==='dark'?'dark':'light'}};
+      checks:obj(d.checks),feel:obj(d.feel),journal:obj(d.journal),look:{pal:PAL[obj(d.look).pal]?d.look.pal:'blue',mode:obj(d.look).mode==='dark'?'dark':'light'},stickers:(function(o){var r={};Object.keys(o).forEach(function(k){if(isDate(k)&&typeof o[k]==='string'&&STK[o[k]])r[k]=o[k]});return r})(obj(d.stickers)),recapSeen:isDate(d.recapSeen)?d.recapSeen:''};
   }
   /* Someone who used the earlier Rota app gets Al's plan carried over once. */
   function fromRota(){try{var o=JSON.parse(localStorage.getItem('skin-rotation')||'null');if(!o||!Array.isArray(o.products))return false;var ids={};o.products.forEach(function(p){ids[p&&p.id]=1});
@@ -825,6 +1100,7 @@ textarea.inp{min-height:80px;resize:vertical}
   try{var sv=localStorage.getItem('auraskin');if(sv){adopt(JSON.parse(sv));loaded=true}}catch(e){}
   if(!loaded&&fromRota())save();
   render(); loadPhotos();
+  if(state.setup&&today().getDay()===0&&state.recapSeen!==key(today())){state.recapSeen=key(today());save();ui.recap={i:0};fxRender()}
   (window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null)).then(function(db){if(!db)return;ref=db.doc('aura/state');
     ref.onSnapshot(function(s){if(writing||s.metadata.hasPendingWrites)return;if(s.exists){adopt(s.data());render()}else save()},function(){ref=null})}).catch(function(){});
 })();
