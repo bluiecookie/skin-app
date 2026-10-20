@@ -76,7 +76,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
 .rowhead{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .card{background:var(--surface);border-radius:22px;padding:20px;min-width:0}
 .tabs2{display:flex;gap:8px;align-items:center}
-.tabs2 button{padding:9px 16px;border-radius:99px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid var(--surface-2);color:var(--muted)}
+.tabs2 button{padding:9px 14px;border-radius:99px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid var(--surface-2);color:var(--muted)}
 .tabs2 button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .tabs2 .count{margin-left:auto;font-family:var(--serif);font-size:23px}
 .list{margin-top:-12px}
@@ -303,9 +303,14 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     ret:{n:'Retinoid',pm:6,act:'ret'},
     bp:{n:'Benzoyl peroxide',pm:6,act:'bp'},
     mo:{n:'Moisturizer',am:6,pm:8},
-    sp:{n:'Sunscreen',am:7}
+    sp:{n:'Sunscreen',am:7},
+    hand:{n:'Hand care',am:7.5,body:5},
+    lip:{n:'Lips',am:8,pm:9},
+    bacid:{n:'Body exfoliant',body:2},
+    blot:{n:'Body lotion',body:3},
+    butter:{n:'Body butter or oil',body:4}
   };
-  var CAT_ORDER=['oil','cl','mask','acid','tn','vc','se','aza','ret','bp','mo','sp'];
+  var CAT_ORDER=['oil','cl','mask','acid','tn','vc','se','aza','ret','bp','mo','sp','lip','hand','bacid','blot','butter'];
   var NIGHT={
     acid:{n:'Exfoliate',s:'Exf',tip:'No other actives tonight. If your skin already feels tight, skip the exfoliant.'},
     ret:{n:'Retinoid',s:'Ret',tip:'A pea size covers the whole face. Follow with moisturizer.'},
@@ -314,20 +319,30 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     rec:{n:'Recovery',s:'Rest',tip:'No actives tonight. Rest nights protect your progress.'}
   };
   var GOALS={marks:'Dark marks',texture:'Texture',breakouts:'Breakouts',lines:'Fine lines',dry:'Dryness',habit:'Staying consistent'};
-  var WHEN={am:'Morning',pm:'Evening',both:'Both'};
+  var WHEN={am:'Morning',pm:'Evening',both:'Both',body:'Body care'};
+  /* Al's plan. Day 1 is Tue Oct 20. One new product at a time: vitamin C in week 2, azelaic acid in week 3, body acids slowly, the clay mask from week 7. */
   function herProducts(){return [
-    {id:'oc',cat:'oil',n:'',p:'Cleansing oil or balm',w:'',on:false,x:0},
-    {id:'cl',cat:'cl',n:'',p:'Round Lab Birch',w:'',on:true,x:0},
-    {id:'ex',cat:'acid',n:'',p:'Green Plum AHA + BHA',w:'',on:true,x:0},
-    {id:'tn',cat:'tn',n:'',p:'Black Rice Hyaluronic',w:'',on:true,x:0},
-    {id:'vc',cat:'vc',n:'',p:'Dr. Althea',w:'',on:true,x:0},
-    {id:'az',cat:'aza',n:'',p:'Kisocare 15%, pea size',w:'',on:true,x:0},
-    {id:'cr',cat:'mo',n:'',p:'Jumiso Snail + Peptide',w:'',on:true,x:0},
-    {id:'sp',cat:'sp',n:'',p:'Tinted SPF 50',w:'',on:true,x:0}
+    {id:'oc',cat:'oil',n:'',p:'Cleansing balm (to buy)',w:'',on:false,x:0},
+    {id:'cl',cat:'cl',n:'',p:'Round Lab Birch Juice Cleanser',w:'',on:true,x:0},
+    {id:'tn',cat:'tn',n:'',p:'haruharu Black Rice Hyaluronic Toner',w:'',on:true,x:0},
+    {id:'vc',cat:'vc',n:'Brightening serum',p:'Dr. Althea Vitamin C Boosting Serum, 2 to 3 drops',w:'',on:true,x:0,ph:[{from:'2026-10-27',days:[1,3,5]},{from:'2026-11-03'}]},
+    {id:'mask',cat:'mask',n:'Clay mask',p:'Aztec Secret Clay, mixed with water, 5 to 10 min',w:'',on:true,x:0,ph:[{from:'2026-12-06',days:[0],every:2}]},
+    {id:'ex',cat:'acid',n:'',p:'Beauty of Joseon Green Plum AHA + BHA (on hold)',w:'',on:false,x:0},
+    {id:'az',cat:'aza',n:'',p:'Kisocare Azelaic Acid 15%, pea size',w:'',on:true,x:0,used:true,ph:[{from:'2026-11-03',days:[2,5]},{from:'2026-11-24',days:[1,3,5]},{from:'2026-12-08',days:[1,3,5,6]}]},
+    {id:'cr',cat:'mo',n:'',p:'Jumiso Snail Mucin 88 + Peptide Cream',w:'',on:true,x:0},
+    {id:'sp',cat:'sp',n:'',p:'Tinted mineral SPF 30 to 50, two finger lengths',w:'',on:true,x:0},
+    {id:'lipd',cat:'lip',n:'Lip SPF',p:'SPF 30+ lip balm',w:'am',on:true,x:0},
+    {id:'lipn',cat:'lip',n:'Lip balm',p:'Plain petroleum jelly, thin layer',w:'pm',on:true,x:0},
+    {id:'hcd',cat:'hand',n:'Hand cream',p:"O'Keeffe's Working Hands Fragrance Free, after every wash",w:'am',on:true,x:0},
+    {id:'aml',cat:'bacid',n:'Lactic acid, legs and arms',p:'AmLactin Daily 12%, on dry skin',w:'',on:true,x:0,ph:[{from:'2026-10-29',days:[4]},{from:'2026-11-10',days:[1,4]}]},
+    {id:'gly',cat:'bacid',n:'Glycolic, knees and elbows',p:'Glycolic acid 7%, thin layer',w:'',on:true,x:0,ph:[{from:'2026-11-14',days:[6]}]},
+    {id:'eu',cat:'blot',n:'',p:'Eucerin Original Healing Cream, on damp skin',w:'',on:true,x:0},
+    {id:'sh',cat:'butter',n:'',p:'Whipped shea butter or body oil, on top',w:'',on:true,x:0},
+    {id:'hcn',cat:'hand',n:'Hands overnight',p:'Eucerin, plus Desitin on cracked knuckles, then cotton gloves',w:'body',on:true,x:0}
   ]}
   function fresh(){
     var base={v:2,ramp:2,rest:0,goals:[],theme:'stone',checks:{},miles:{},shop:{},feel:{},batch:200};
-    return Object.assign(base,PERSONAL?{setup:true,extras:true,start:'2026-10-11',name:MY_NAME,products:herProducts()}
+    return Object.assign(base,PERSONAL?{setup:true,extras:true,start:'2026-10-20',planV:3,name:MY_NAME,products:herProducts()}
                                       :{setup:false,extras:false,start:key(new Date()),name:'',products:[]});
   }
   var state=fresh();
@@ -338,9 +353,15 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   function actives(){var a={};state.products.forEach(function(p){var c=CATS[p.cat];if(p.on&&c.act)a[c.act]=1});return a}
   /* One active per night and Sunday always rests. Each active eases in on its own clock, counted from the day it joined the shelf. */
   function days(d){return Math.round(parse(key(d)).getTime()/864e5)}
+  function phase(p,d){ if(!p.ph)return undefined; var cur=null, n=days(d); p.ph.forEach(function(f){if(n>=days(parse(f.from)))cur=f}); return cur }
+  function nextPhase(p,d){ if(!p.ph)return null; var n=days(d); return p.ph.filter(function(f){return days(parse(f.from))>n})[0]||null }
+  function onDay(p,d){ var f=phase(p,d); if(f===undefined)return true; if(!f)return false;
+    if(f.every&&Math.floor((days(d)-days(parse(f.from)))/7)%f.every)return false; return !f.days||f.days.indexOf(d.getDay())>=0 }
+  function building(d){ return easing(d).length>0||state.products.some(function(p){return p.on&&p.ph&&nextPhase(p,d)}) }
+  function hasBody(){ return state.products.some(function(p){return p.on&&('body' in CATS[p.cat])}) }
   function modes(d){
     var A={}, n=d?days(d):0;
-    state.products.forEach(function(p){var c=CATS[p.cat]; if(!p.on||!c.act)return;
+    state.products.forEach(function(p){var c=CATS[p.cat]; if(!p.on||!c.act||p.ph)return;
       var m='full'; if(d){var w=Math.floor((n-days(parse(p.since||state.start)))/7); if(w<0&&p.since)return; m=w<state.ramp?'ramp':'full'}
       if(p.used)m='full'; if(A[c.act]!=='full')A[c.act]=m});
     return A;
@@ -365,7 +386,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   }
   /* Two products of the same active type never share a night. They take turns. */
   function chosen(d,night){
-    var list=state.products.filter(function(p){return p.on&&CATS[p.cat].act===night}); if(list.length<2)return list[0];
+    var list=state.products.filter(function(p){return p.on&&CATS[p.cat].act===night&&(!p.ph||onDay(p,d))}); if(list.length<2)return list[0];
     var m=weekMap(modes(d)), occ=0, i=state.rest||0, guard=0;
     while(i!==d.getDay()&&guard++<7){ if(m[i]===night)occ++; i=(i+1)%7 }
     var wkStart=days(d)-((d.getDay()-(state.rest||0)+7)%7);
@@ -373,6 +394,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   }
   function nightOf(d){
     var A=modes(d), base=weekMap(A)[d.getDay()], f=state.feel[key(d)], y=state.feel[key(addDays(d,-1))];
+    if(base==='rec'){var pp=state.products.filter(function(p){return p.on&&p.ph&&CATS[p.cat].act&&onDay(p,d)})[0]; if(pp)base=CATS[pp.cat].act}
     if(base!=='rec'&&(f==='tight'||f==='sting'||y==='sting'))return {t:'rec',over:true,A:A};
     return {t:base,over:false,A:A};
   }
@@ -382,10 +404,15 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     var nt=nightOf(d), t=nt.t, A=nt.A, ez=easing(d).map(function(k){return EZ[k]});
     if(nt.over)return 'You logged '+(state.feel[key(d)]==='tight'?'tight':'stinging')+' skin, so tonight rests. Your actives come back once it settles.';
     if(t==='rec'){
-      if(!Object.keys(A).length)return 'No actives on your shelf yet, so every night is a hydration night.';
+      var pa=state.products.filter(function(p){return p.on&&p.ph&&CATS[p.cat].act});
+      if(!Object.keys(A).length&&pa.length&&phase(pa[0],d)===null)return label(pa[0])+' starts on '+nice(parse(pa[0].ph[0].from))+'. Until then, these nights build a calm, hydrated base.';
+      if(!Object.keys(A).length&&!pa.length)return 'No actives on your shelf yet, so every night is a hydration night.';
       if(d.getDay()===(state.rest||0))return DOWL[d.getDay()]+' is your weekly rest night. Hydrate and let your skin repair.';
       return ez.length?'A rest night while your '+ez.join(' and ')+' eases in.':'A rest night between actives.';
     }
+    var cp=chosen(d,t);
+    if(cp&&cp.ph){var fz=phase(cp,d), nn=fz&&fz.days?fz.days.length:7, nxt=nextPhase(cp,d);
+      return (nn===1?'Once':nn===2?'Twice':nn+' nights')+' a week for now'+(nxt?'. It steps up on '+nice(parse(nxt.from))+'.':'. This is your full schedule.')}
     var n=weekMap(A).filter(function(x){return x===t}).length;
     return A[t]==='ramp'?'Still easing in, so '+(n===1?'once':n===2?'twice':n+' nights')+' this week. It steps up after its first '+state.ramp+' weeks.'
       :'On '+(n===1?'one night':n+' nights')+' this week, with rest or a different active in between.';
@@ -398,9 +425,10 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   function fits(p,slot){var c=CATS[p.cat]; return (slot in c)&&(!p.w||p.w==='both'||p.w===slot)}
   /* A wash-off mask is a once a week step. It sits on the rest night and is skipped when skin is tight or stinging. */
   function maskNight(d){var f=state.feel[key(d)], y=state.feel[key(addDays(d,-1))]; return d.getDay()===(state.rest||0)&&f!=='tight'&&f!=='sting'&&y!=='sting'}
+  function maskOk(p,d){var f=state.feel[key(d)], y=state.feel[key(addDays(d,-1))]; if(f==='tight'||f==='sting'||y==='sting')return false; return p.ph?true:d.getDay()===(state.rest||0)}
   function stepsFor(d,slot){
     var night=slot==='pm'?nightOf(d).t:null, pick=night&&night!=='rec'?chosen(d,night):null;
-    return state.products.map(function(p,i){return [p,i]}).filter(function(x){var p=x[0],c=CATS[p.cat];return p.on&&fits(p,slot)&&(!c.act||(c.act===night&&p===pick))&&(!c.weekly||maskNight(d))})
+    return state.products.map(function(p,i){return [p,i]}).filter(function(x){var p=x[0],c=CATS[p.cat];return p.on&&fits(p,slot)&&(!c.act||(c.act===night&&p===pick))&&(c.act||onDay(p,d))&&(!c.weekly||maskOk(p,d))})
       .sort(function(a,b){return (CATS[a[0].cat][slot]-CATS[b[0].cat][slot])||(a[1]-b[1])}).map(function(x){return x[0]});
   }
   /* The conflict checker. It reports what the plan already handles and what is missing. */
@@ -416,6 +444,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     if(A.bp&&A.ret)add('ok','Benzoyl peroxide and retinoid are kept on separate nights.');
     if(n>=2&&!(A.acid&&A.ret))add('ok','One active a night. Nothing strong is layered.');
     if(has('vc')&&n)add('ok','Vitamin C stays in the morning, away from your night actives.');
+    var ba=state.products.filter(function(p){return p.on&&p.cat==='bacid'}); if(ba.length>1)add('ok','Your body acids are on different nights, and both skip freshly shaved skin.');
     if(has('mask'))add('ok','Your mask is kept to once a week, on '+DOWL[state.rest||0]+', away from your actives.');
     if(n){add('ok',DOWL[state.rest||0]+' is always a recovery night.');add('ok','Each active eases in over its first '+state.ramp+' weeks.')}
     else add('tip','No actives on your shelf, so every night is a hydration night.');
@@ -462,7 +491,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   function slotTabs(act,cur,d){
     var s=stepsFor(d,cur), k=key(d), n=s.filter(function(p){return stepOn(k,cur,p.id)}).length;
     return '<div class="tabs2" role="group" aria-label="Routine"><button data-act="'+act+'" data-id="am" aria-pressed="'+(cur==='am')+'">Morning</button>'+
-      '<button data-act="'+act+'" data-id="pm" aria-pressed="'+(cur==='pm')+'">Evening</button><span class="count num">'+n+'/'+s.length+'</span></div>';
+      '<button data-act="'+act+'" data-id="pm" aria-pressed="'+(cur==='pm')+'">Evening</button>'+(hasBody()?'<button data-act="'+act+'" data-id="body" aria-pressed="'+(cur==='body')+'">Body</button>':'')+'<span class="count num">'+n+'/'+s.length+'</span></div>';
   }
   function frac(d,slot){var s=stepsFor(d,slot), k=key(d); if(isDone(d,slot))return 1; return s.length?s.filter(function(p){return stepOn(k,slot,p.id)}).length/s.length:0}
   function ringsHtml(fr,n,all){
@@ -476,9 +505,9 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
     var am=stepsFor(now,'am'), pm=stepsFor(now,'pm'), all=am.length+pm.length, n=0;
     am.forEach(function(p){if(stepOn(k,'am',p.id))n++}); pm.forEach(function(p){if(stepOn(k,'pm',p.id))n++});
     var ws=addDays(parse(state.start),(st.week-1)*7), wn=0; for(var i=0;i<7;i++){var wd=addDays(ws,i); wn+=(isDone(wd,'am')?1:0)+(isDone(wd,'pm')?1:0)}
-    var list=ui.slot==='am'?am:pm, part=h<12?'morning':h<17?'afternoon':'evening', f=state.feel[k]||'';
+    var list=ui.slot==='am'?am:ui.slot==='pm'?pm:stepsFor(now,'body'), part=h<12?'morning':h<17?'afternoon':'evening', f=state.feel[k]||'';
     var done=list.length&&isDone(now,ui.slot), full=am.length&&pm.length&&isDone(now,'am')&&isDone(now,'pm');
-    var tip=ui.slot==='am'?(has('sp')?'Two finger lengths of sunscreen, even indoors by a window.':'Add a sunscreen. It protects every other step.')
+    var tip=ui.slot==='body'?'Lotion on damp skin straight after your shower, butter or oil on top. Acids go on dry skin, never freshly shaved skin.':ui.slot==='am'?(has('sp')?'Two finger lengths of sunscreen, even indoors by a window.':'Add a sunscreen. It protects every other step.')
       :pm.some(function(x){return x.cat==='mask'})?'Mask night. Rinse it off before it dries hard, then moisturize well.':NIGHT[t].tip;
     ui.tone=t;
     return '<div class="field has-rings'+(full?' full':'')+'">'+top()+ringsHtml([frac(now,'am'),frac(now,'pm'),wn/14],n,all)+
@@ -487,7 +516,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
       '<div class="sheet"><div class="feel"><p class="eyebrow">Skin today</p><div class="pills">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
         return '<button class="pill" data-act="feel" data-id="'+o[0]+'" aria-pressed="'+(f===o[0])+'"'+dis()+'>'+o[1]+'</button>'}).join('')+'</div></div>'+
       slotTabs('slot',ui.slot,now)+listHtml(now,ui.slot)+
-      (done?'<p class="cheer">'+(ui.slot==='am'?'Morning done. See you tonight.':'Evening done. Rest well.')+'</p>':'<p class="note">'+tip+'</p>')+'</div>';
+      (done?'<p class="cheer">'+(ui.slot==='am'?'Morning done. See you tonight.':ui.slot==='body'?'Body care done.':'Evening done. Rest well.')+'</p>':'<p class="note">'+tip+'</p>')+'</div>';
   }
 
   function vWeek(st){
@@ -500,7 +529,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
         '<span class="ap"><i class="'+(isDone(d,'am')?'on':'')+'"></i><i class="'+(isDone(d,'pm')?'on':'')+'"></i></span></button>'}
     var t2=nightOf(sel).t; ui.tone=t2;
     return '<div class="field">'+top()+head('Week '+ui.week+' · '+DOWL[sel.getDay()]+', '+nice(sel),NIGHT[t2].n,'<p>'+why(sel)+'</p>')+'</div>'+
-      '<div class="sheet"><div class="rowhead"><p class="eyebrow">'+nice(ws)+' to '+nice(addDays(ws,6))+' · '+(easing(ws).length?'Easing in':'Full rotation')+'</p>'+
+      '<div class="sheet"><div class="rowhead"><p class="eyebrow">'+nice(ws)+' to '+nice(addDays(ws,6))+' · '+(building(ws)?'Building up':'Full rotation')+'</p>'+
       '<div class="arrows"><button data-act="wk" data-id="-1" aria-label="Previous week"'+(ui.week<=1?' disabled':'')+'>'+ic('left')+'</button>'+
       '<button data-act="wk" data-id="1" aria-label="Next week"'+(ui.week>=12?' disabled':'')+'>'+ic('right')+'</button></div></div>'+
       '<div class="strip">'+strip+'</div>'+slotTabs('wslot',ui.wslot,sel)+listHtml(sel,ui.wslot)+'</div>';
@@ -588,10 +617,10 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   }
 
   var SHOP=[
-    ['Face',[['spf','Tinted sunscreen, SPF 50','Match the shade in daylight'],['oilcl','Cleansing oil or balm','Adds a first step to your evenings']]],
-    ['Body',[['lactic','Lactic acid lotion, 12%','Fragrance free, three nights a week']]],
+    ['Face',[['spf','Tinted mineral sunscreen, SPF 30 to 50','La Roche-Posay Anthelios Mineral Tinted. Test Medium Deep on your jaw in daylight'],['oilcl','Cleansing balm','Beauty of Joseon Ginseng Cleansing Balm, to lift tinted sunscreen'],['lipspf','SPF 30+ lip balm','Fragrance free']]],
+    ['Body and hands',[['lactic','AmLactin Daily, 12% lactic acid','Only if the one you own is not 12%'],['hcream','Fragrance-free hand cream',"O'Keeffe's Working Hands Fragrance Free"],['vas','Plain petroleum jelly','Lips and knuckles at night'],['gloves','Cotton gloves','For overnight hand care']]],
     ['Butter kit',[['shea','Raw shea butter','Unrefined, ivory'],['jojoba','Jojoba oil','USDA Organic, cold pressed'],['rosehip','Rosehip seed oil','Small bottle, keep in the fridge'],
-      ['tamanu','Tamanu oil','Patch test first'],['vite','Vitamin E','Mixed tocopherols'],['lav','Lavender essential oil','Optional. Patch test first'],['scale','Kitchen scale','Reads to 1 gram'],['jar','Dark glass jar','With a lid']]]
+      ['tamanu','Tamanu oil','Patch test first'],['vite','Vitamin E','Mixed tocopherols'],['scale','Kitchen scale','Reads to 1 gram'],['jar','Dark glass jar','With a lid']]]
   ];
   var SHOP_N=SHOP.reduce(function(n,g){return n+g[1].length},0);
   function shopN(){var n=0; SHOP.forEach(function(g){g[1].forEach(function(it){if(state.shop[it[0]])n++})}); return n}
@@ -601,7 +630,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   }
 
   var RECIPES={
-    butter:{rows:[['Shea butter',70,'#f1dfc6'],['Jojoba oil',13.5,'#d9bf8c'],['Rosehip seed oil',10,'#d9907a'],['Tamanu oil',5,'#a9c1a5'],['Vitamin E',1,'#bfa9d1'],['Lavender oil, optional',0.5,'#9db7d1']],
+    butter:{rows:[['Shea butter',70,'#f1dfc6'],['Jojoba oil',14,'#d9bf8c'],['Rosehip seed oil',10,'#d9907a'],['Tamanu oil',5,'#a9c1a5'],['Vitamin E',1,'#bfa9d1']],
       how:['Melt the shea over a water bath','Stir in jojoba, then freeze 15 minutes','Add the rest once it feels cool','Whip until fluffy. Dark jar, no water']},
     oil:{rows:[['Jojoba oil',70,'#d9bf8c'],['Rosehip seed oil',20,'#d9907a'],['Tamanu oil',9,'#a9c1a5'],['Vitamin E',1,'#bfa9d1']],
       how:['Weigh everything into a dark bottle','Shake until it looks even','Smooth onto damp skin after a shower','On lactic acid nights, lotion goes first']}
@@ -615,7 +644,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
       '<div class="stack">'+R.rows.map(function(r){return '<i style="flex:'+r[1]+';background:'+r[2]+'"></i>'}).join('')+'</div>'+
       R.rows.map(function(r){return '<div class="ing"><i style="background:'+r[2]+'"></i><span>'+r[0]+'</span><span class="pct num">'+r[1]+'%</span><b class="num">'+(r[1]*state.batch/100).toFixed(1)+' g</b></div>'}).join('')+'</section>'+
       '<section><h2>Method</h2><ol class="how" style="margin-top:6px">'+R.how.map(function(h,i){return '<li><span class="num">0'+(i+1)+'</span>'+h+'</li>'}).join('')+'</ol></section>'+
-      (ui.recipe==='butter'?'<p class="why">Scent is optional. Fragrance oils can irritate skin, so patch test on your inner arm first or leave it out.</p>':'');
+      (ui.recipe==='butter'?'<p class="why">Smooth it over Eucerin, not instead of it. Oils seal water in but add none. No essential oils, and patch test the tamanu first.</p>':'');
   }
   function vMore(){
     var b=ui.more==='butter';
@@ -623,13 +652,13 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
       '<div class="sheet"><div class="pills" role="group" aria-label="Section"><button class="pill" data-act="more" data-id="shop" aria-pressed="'+!b+'">Shopping list</button>'+
       '<button class="pill" data-act="more" data-id="butter" aria-pressed="'+b+'">Body butter</button></div>'+(b?vButter():vShop())+'</div>';
   }
-  function ezLine(p){var c=CATS[p.cat]; if(!p.on||!c.act||p.used)return ''; var end=addDays(parse(p.since||state.start),state.ramp*7); return days(new Date())<days(end)?'Easing in until '+nice(end):''}
+  function ezLine(p){var c=CATS[p.cat]; if(p.on&&p.ph){var nw=new Date(), f0=phase(p,nw); if(f0===null)return 'Starts '+nice(parse(p.ph[0].from)); var nx=nextPhase(p,nw); return nx?'Steps up '+nice(parse(nx.from)):''} if(!p.on||!c.act||p.used)return ''; var end=addDays(parse(p.since||state.start),state.ramp*7); return days(new Date())<days(end)?'Easing in until '+nice(end):''}
   function pic(p){var img=ui.pimg[p.id];return img?'<img src="'+img+'" alt="">':'<span class="init">'+esc(label(p).charAt(0))+'</span>'}
   function vShelf(){
     if(ui.prodSel&&prod(ui.prodSel))return vProduct(prod(ui.prodSel));
     var on=state.products.filter(function(p){return p.on}).length;
     var cards=state.products.map(function(p){var ez=ezLine(p);
-      return '<button class="pcard'+(p.on?'':' off')+'" data-act="psel" data-id="'+esc(p.id)+'" aria-label="'+esc(label(p))+', '+esc(p.p||'unnamed')+'"><span class="pic">'+pic(p)+(ez?'<span class="badge">Easing in</span>':(!p.on?'<span class="badge">Off</span>':''))+'</span>'+
+      return '<button class="pcard'+(p.on?'':' off')+'" data-act="psel" data-id="'+esc(p.id)+'" aria-label="'+esc(label(p))+', '+esc(p.p||'unnamed')+'"><span class="pic">'+pic(p)+(ez?'<span class="badge">'+(p.ph?esc(ez):'Easing in')+'</span>':(!p.on?'<span class="badge">Off</span>':''))+'</span>'+
         '<span><span class="lab">'+esc(label(p))+'</span><b>'+(p.p?esc(p.p):'Name this product')+'</b></span></button>'}).join('');
     return '<div class="field">'+top()+head(on+' in your rotation','Shelf')+'</div><div class="sheet">'+
       (cards?'<div class="grid2">'+cards+'</div>':'<p class="empty">Nothing on your shelf yet.</p>')+
@@ -646,10 +675,11 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
       '<section><div class="prod"><label class="lab" for="p-'+id+'">Product name</label><input class="txt" style="font-size:20px" id="p-'+id+'" data-edit="p" data-id="'+id+'" maxlength="40" placeholder="Name this product" value="'+esc(p.p)+'"'+dis()+'></div>'+
       '<div class="frow"><span>In my rotation</span><button class="sw" role="switch" data-act="sw" data-id="'+id+'" aria-checked="'+!!p.on+'" aria-label="In my rotation"'+dis()+'></button></div>'+
       (both?'<div class="frow" style="display:block"><p class="lab">When</p><div class="pills" style="margin-top:10px" role="group" aria-label="When">'+['am','pm','both'].map(function(x){return '<button class="pill" data-act="pwhen" data-id="'+x+'" aria-pressed="'+(w===x)+'"'+dis()+'>'+WHEN[x]+'</button>'}).join('')+'</div></div>':'')+
-      (c.act?'<div class="frow"><span>Nights a week</span><div class="stepper"><button data-act="pmax" data-id="-1" aria-label="Fewer nights"'+dis()+'>&minus;</button>'+
+      (p.ph?'<div class="frow" style="display:block"><p class="lab">Schedule</p>'+p.ph.map(function(f){return '<p class="sub" style="margin-top:8px">From '+nice(parse(f.from))+'. '+(f.days?f.days.map(function(x){return DOWL[x]}).join(', '):'Every day')+(f.every?', every other week':'')+'</p>'}).join('')+'</div>':'')+
+      (c.act&&!p.ph?'<div class="frow"><span>Nights a week</span><div class="stepper"><button data-act="pmax" data-id="-1" aria-label="Fewer nights"'+dis()+'>&minus;</button>'+
         '<b class="num" style="min-width:62px">'+(p.max||'Auto')+'</b><button data-act="pmax" data-id="1" aria-label="More nights"'+dis()+'>+</button></div></div>'+
         '<div class="frow"><span>I already use this regularly</span><button class="sw" role="switch" data-act="pused" aria-checked="'+!!p.used+'" aria-label="I already use this regularly"'+dis()+'></button></div>':'')+
-      (ez?'<p class="why" style="margin-top:14px">'+ez+'. It starts on fewer nights and steps up after that.</p>':'')+'</section>'+
+      (ez?'<p class="why" style="margin-top:14px">'+ez+(p.ph?'.':'. It starts on fewer nights and steps up after that.')+'</p>':'')+'</section>'+
       '<button class="link" style="align-self:center" data-act="delp" data-id="'+id+'"'+dis()+'>'+(ui.rm?'Tap again to remove it':'Remove from shelf')+'</button></div></div>';
   }
   function vSettings(){
@@ -670,6 +700,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   }
 
   var SHELF=[['Basics',[['cl','Cleanser',''],['oil','Cleansing oil or balm',''],['tn','Hydrating toner or essence',''],['mask','Clay or wash-off mask','Once a week, on your rest night'],['vc','Vitamin C serum',''],['se','Hydrating serum','Niacinamide, hyaluronic acid, snail'],['mo','Moisturizer',''],['sp','Sunscreen','']]],
+    ['Body',[['blot','Body lotion',''],['bacid','Body exfoliant','Lactic or glycolic acid'],['butter','Body butter or oil',''],['hand','Hand cream','']]],
     ['Actives',[['acid','AHA or BHA exfoliant','Glycolic, lactic, salicylic'],['aza','Azelaic acid',''],['ret','Retinoid','Retinol, adapalene, tretinoin'],['bp','Benzoyl peroxide','']]]];
   function optRow(act,id,title,sub,on){return '<button class="opt" data-act="'+act+'" data-id="'+id+'" aria-pressed="'+on+'"><span class="what"><b>'+title+'</b>'+(sub?'<span class="sub">'+sub+'</span>':'')+'</span><span class="tick">'+ic('check')+'</span></button>'}
   function vOnboard(){
@@ -842,13 +873,21 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
       goals:Array.isArray(d.goals)?d.goals.filter(function(g){return GOALS[g]}):[],name:typeof d.name==='string'?d.name.slice(0,20):'',
       theme:THEME_IDS[d.theme]?d.theme:(d.theme==='day'?'bone':'stone'),rest:(+d.rest>=0&&+d.rest<=6)?Math.floor(+d.rest):0,
       products:Array.isArray(d.products)?d.products.filter(function(p){return p&&typeof p.id==='string'&&CATS[p.cat]}).slice(0,24).map(function(p){
-        return {id:p.id.slice(0,24),cat:p.cat,n:typeof p.n==='string'?p.n.slice(0,30):'',p:String(p.p||'').slice(0,40),w:WHEN[p.w]?p.w:'',on:p.on!==false,x:p.x?1:0,since:/^\d{4}-\d{2}-\d{2}$/.test(p.since)?p.since:'',max:Math.max(0,Math.min(7,Math.floor(+p.max||0))),used:!!p.used}}):[],
+        return {id:p.id.slice(0,24),cat:p.cat,n:typeof p.n==='string'?p.n.slice(0,30):'',p:String(p.p||'').slice(0,40),w:WHEN[p.w]?p.w:'',on:p.on!==false,x:p.x?1:0,since:/^\d{4}-\d{2}-\d{2}$/.test(p.since)?p.since:'',max:Math.max(0,Math.min(7,Math.floor(+p.max||0))),used:!!p.used,ph:cleanPh(p.ph)}}):[],planV:+d.planV||0,
       checks:obj(d.checks),miles:obj(d.miles),shop:obj(d.shop),feel:obj(d.feel),batch:(+d.batch>=50&&+d.batch<=1000)?+d.batch:200};
   }
-  function adopt(d){ if(d&&typeof d==='object')state=clean(d.v===2?d:migrate(d)); }
+  function cleanPh(ph){ if(!Array.isArray(ph))return undefined; var o=ph.filter(function(f){return f&&/^\d{4}-\d{2}-\d{2}$/.test(f.from)}).slice(0,8).map(function(f){
+      var r={from:f.from}; if(Array.isArray(f.days))r.days=f.days.map(function(x){return Math.floor(+x)}).filter(function(x){return x>=0&&x<=6}); if(+f.every>1)r.every=Math.min(4,Math.floor(+f.every)); return r});
+    return o.length?o:undefined }
+  /* One time: move Al's earlier routine onto the new step-by-step plan, keeping check marks and photos. */
+  var upgraded=false;
+  function upgrade(st){ var ids={}; st.products.forEach(function(p){ids[p.id]=1}); if(st.planV>=3||!(ids.az&&ids.ex))return false;
+    st.products=herProducts(); st.start='2026-10-20'; st.rest=0; st.planV=3; st.extras=true; st.setup=true; return true }
+  function adopt(d){ if(d&&typeof d==='object'){state=clean(d.v===2?d:migrate(d)); if(upgrade(state))upgraded=true} }
 
   var h=(location.hash||'').slice(1); if(h)ui.tab=h;
   try{var saved=localStorage.getItem('skin-rotation'); if(saved)adopt(JSON.parse(saved))}catch(e){}
+  if(upgraded){upgraded=false;try{localStorage.setItem('skin-rotation',JSON.stringify(state))}catch(e){}}
   syncMsg='Saved on this phone';
   render();
   loadPhotos();
@@ -860,7 +899,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stro
       if(writing||snap.metadata.hasPendingWrites)return;
       syncMsg='Saved to your account';
       if(snap.exists){adopt(snap.data());ui.week=null;ui.day=null}
-      render();
+      render(); if(upgraded){upgraded=false;save()}
     },function(){ ref=null; syncMsg='Saved on this phone'; });
   }).catch(function(){});
 })();
