@@ -180,16 +180,72 @@ textarea.inp{min-height:80px;resize:vertical}
 .palettes i b:first-child{margin-left:0}
 
 /* setup */
-.ob{display:flex;flex-direction:column;gap:20px;padding-bottom:90px}
-.wordmark{align-self:flex-start;font-weight:800;font-size:clamp(70px,22vw,104px);line-height:1;letter-spacing:-.06em;background:var(--ol);color:var(--paper);padding:4px 26px 16px;border-radius:24px;transform:rotate(-4deg);margin-top:9vh;box-shadow:8px 8px 0 var(--c1)}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{padding:9px 14px;border-radius:12px;border:2px solid var(--ol);background:var(--card);font-weight:700;font-size:14px}
-.opt[aria-pressed="true"]{background:var(--c1);color:var(--on1);box-shadow:3px 3px 0 var(--ol)}
+[hidden]{display:none!important}
+.ob{min-height:calc(100dvh - 124px - env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:18px}
+.wordmark{align-self:flex-start;font-weight:800;font-size:clamp(70px,22vw,104px);line-height:1;letter-spacing:-.06em;background:var(--ol);color:var(--paper);padding:4px 26px 16px;border-radius:24px;transform:rotate(-4deg);margin-top:3vh;box-shadow:8px 8px 0 var(--c1)}
+.obh{font-size:clamp(32px,9.4vw,44px);line-height:.95;letter-spacing:-.05em}
+.obsub{margin-top:-8px}
+.obtop{display:flex;align-items:center;gap:12px}
+.obtop .hand{font-size:19px;white-space:nowrap;color:var(--sub)}
+.obprog{flex:1;height:14px;border:2.5px solid var(--ol);border-radius:8px;background:var(--card);overflow:hidden}
+.obprog i{display:block;height:100%;background:var(--c1);border-right:2.5px solid var(--ol);transition:width .45s cubic-bezier(.2,.8,.3,1.1)}
+.obeb{align-self:flex-start;font-family:var(--hand);font-weight:700;font-size:21px;background:var(--tape);color:#151215;padding:1px 14px 3px;transform:rotate(-2.5deg);margin:4px 0 -6px 2px}
+.obpart{display:flex;flex-direction:column;gap:12px}
+.obpart h3{font-family:var(--hand);font-weight:700;font-size:23px;line-height:1.1}
+.tiles{display:grid;grid-template-columns:repeat(var(--cols,2),minmax(0,1fr));gap:12px}
+.tiles.fill{flex:1;grid-auto-rows:minmax(64px,1fr)}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;text-align:left;padding:14px 14px 12px;min-height:66px;border:2.5px solid var(--ol);border-radius:16px;background:var(--card);color:var(--txt);box-shadow:4px 4px 0 var(--ol);transition:transform .15s,box-shadow .15s,background-color .2s;animation:rise .4s both;animation-delay:calc(var(--n,0)*35ms)}
+.tile:nth-child(4n+1){transform:rotate(-.9deg)}.tile:nth-child(4n+2){transform:rotate(.6deg)}.tile:nth-child(4n+3){transform:rotate(.8deg)}.tile:nth-child(4n){transform:rotate(-.5deg)}
+.tile b{font-weight:800;font-size:17px;line-height:1.08;letter-spacing:-.02em;padding-right:26px}
+.tile small{font-size:12px;font-weight:500;line-height:1.25;opacity:.78}
+.tile .ck{position:absolute;top:10px;right:10px;width:24px;height:24px;border:2.5px solid var(--ol);border-radius:50%;display:grid;place-items:center;background:var(--card)}
+.tile .ck svg{width:14px;height:14px;opacity:0;stroke-width:3.2}
+.tile[aria-pressed="true"]{background:var(--c1);color:var(--on1);transform:translate(-2px,-2px) rotate(-1.4deg);box-shadow:6px 6px 0 var(--ol)}
+.tile[aria-pressed="true"] .ck{background:var(--ol);color:var(--paper);animation:pop .35s}
+.tile[aria-pressed="true"] .ck svg{opacity:1}
+.tile.wide{grid-column:1/-1}
+.tile:active{transform:translate(3px,3px)!important;box-shadow:1px 1px 0 var(--ol)!important}
+.tiles.sm .tile{min-height:58px;padding:10px 6px;align-items:center;justify-content:center;text-align:center}
+.tiles.sm .tile b{padding-right:0;font-size:14.5px}
+.tiles.sm .tile .ck{display:none}
+.tiles.days{gap:6px}
+.tiles.days .tile{min-height:54px;padding:0;align-items:center;justify-content:center;border-radius:12px;box-shadow:3px 3px 0 var(--ol)}
+.tiles.days .tile b{padding:0;font-size:13px}
+.tiles.days .tile .ck{display:none}
+.ob0{gap:22px}
+.trio{flex:1;position:relative;min-height:230px}
+.trio div{position:absolute;left:3%;right:8%;height:40%;border:3px solid var(--ol);border-radius:20px;background:var(--tone);color:var(--ontone);box-shadow:6px 6px 0 var(--ol);padding:12px 18px;font-weight:800;font-size:clamp(34px,11vw,50px);letter-spacing:-.05em;line-height:1;display:flex;justify-content:space-between;align-items:flex-start;animation:rise .55s both}
+.trio div:nth-child(1){top:0;transform:rotate(-4deg)}
+.trio div:nth-child(2){top:30%;left:9%;right:2%;transform:rotate(3deg);animation-delay:.1s}
+.trio div:nth-child(3){top:60%;transform:rotate(-1.5deg);animation-delay:.2s}
+.trio small{font-family:var(--hand);font-size:20px;font-weight:700;letter-spacing:0}
+.namecard{display:flex;flex-direction:column;gap:6px;background:var(--card);border:2.5px solid var(--ol);border-radius:16px;padding:12px 14px 14px;box-shadow:4px 4px 0 var(--ol);transform:rotate(.6deg)}
+.namecard .hand{font-size:20px}
+.namecard .inp,.namerow .inp{width:100%}
+.names{display:flex;flex-direction:column;gap:12px}
+.namerow{display:flex;flex-direction:column;gap:6px;background:var(--card);border:2.5px solid var(--ol);border-radius:16px;padding:12px 14px;box-shadow:4px 4px 0 var(--ol);animation:rise .4s both;animation-delay:calc(var(--i)*50ms)}
+.rvs{display:flex;flex-direction:column;gap:12px}
+.rv{position:relative;display:flex;flex-direction:column;gap:4px;text-align:left;background:var(--card);color:var(--txt);border:2.5px solid var(--ol);border-radius:16px;padding:12px 64px 12px 14px;box-shadow:4px 4px 0 var(--ol);animation:rise .4s both;animation-delay:calc(var(--i)*45ms)}
+.rv:nth-child(odd){transform:rotate(-.6deg)}.rv:nth-child(even){transform:rotate(.5deg)}
+.rv b{font-weight:700;font-size:15px;line-height:1.3}
+.rv .hand{position:absolute;right:14px;top:50%;transform:translateY(-50%) rotate(-4deg);font-size:19px;color:var(--sub);text-decoration:underline}
 .cta{position:fixed;z-index:6;left:0;right:0;bottom:0;padding:24px 18px calc(16px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--paper) 40%)}
 .cta .btn{max-width:484px;margin:0 auto}
-.dots{display:flex;gap:5px}
-.dots i{width:18px;height:8px;border-radius:3px;border:1.5px solid var(--ol);background:var(--card)}
-.dots i.on{background:var(--ol)}
+.shop{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:11px 0;border-top:1.5px dashed var(--line);color:var(--txt)}
+.shop:first-of-type{margin-top:8px}
+.shop .box{flex:none;width:20px;height:20px;border:2.5px solid var(--ol);border-radius:5px;margin-top:1px;background:var(--card)}
+.shop b{display:block;font-weight:700;font-size:15px}
+.shop small{display:block;color:var(--sub);font-size:12.5px;margin-top:2px}
+.sug{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 0;border-top:1.5px dashed var(--line)}
+.sug:first-of-type{margin-top:8px}
+.sug b{display:block;font-weight:700;font-size:15px;margin-top:2px}
+.sug small{display:block;color:var(--sub);font-size:12.5px;margin-top:2px}
+.sug>span{flex:1;min-width:0}
+.sug .btn{flex:none;width:auto}
+.ing{display:grid;grid-template-columns:minmax(0,1fr) 34% 52px;gap:10px;align-items:center;padding:6px 0;font-weight:600;font-size:14px}
+.ing i{height:12px;border:2px solid var(--ol);border-radius:6px;background:linear-gradient(90deg,var(--c1) var(--w),var(--card) var(--w))}
+.ing b{text-align:right;font-weight:800}
+.recsteps{margin:12px 0 10px 20px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.4}
 
 /* dock and timer */
 .dock{position:fixed;z-index:5;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:496px;margin:0 auto;background:var(--ol);border:2.5px solid var(--ol);border-radius:18px;padding:6px}
@@ -277,7 +333,7 @@ textarea.inp{min-height:80px;resize:vertical}
 .chiprow{display:flex;gap:8px;overflow-x:auto;padding:12px 4px 8px;margin:4px -4px 0}
 .dragchip{flex:none;padding:8px 12px;border:2px solid var(--ol);border-radius:12px;background:var(--card);font-weight:700;font-size:13px;touch-action:none;white-space:nowrap;box-shadow:2px 2px 0 var(--ol);user-select:none;-webkit-user-select:none}
 .dragchip.used{opacity:.4}
-.ghost{position:fixed;z-index:30;pointer-events:none;transform:translate(-50%,-70%) rotate(-5deg) scale(1.08);box-shadow:5px 5px 0 var(--ol)}
+.dragghost{position:fixed;z-index:30;pointer-events:none;transform:translate(-50%,-70%) rotate(-5deg) scale(1.08);box-shadow:5px 5px 0 var(--ol)}
 .verdict{margin-top:14px;border:2.5px solid var(--ol);border-radius:14px;padding:12px 14px;box-shadow:3px 3px 0 var(--ol);animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
 .verdict.ok{background:var(--c2);color:#151215} .verdict.no{background:#ff9b9b;color:#151215} .verdict.care{background:#ffd48a;color:#151215}
 .verdict b{display:block;font-weight:800;font-size:19px;margin-bottom:2px}
@@ -429,10 +485,10 @@ textarea.inp{min-height:80px;resize:vertical}
     P_('pr','protein','ApHogee Two-Minute Keratin Reconstructor',{buy:true,note:'Light protein for brittle hair'})
   ]}
   function herState(){return {v:3,setup:true,name:MY_NAME,start:'2026-10-20',rest:0,
-    profile:{skin:'normal',sens:2,face:['marks','texture','circles'],body:['strawberry','texture','tone','hands'],hair:['strength','length','moisture'],tex:'4c',por:'unsure',washes:3,styles:['braids','wigs']},
-    hair:{washDays:[1,3,5],installed:null,takedown:null,trim:null},products:herProducts(),checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'},stickers:{},recapSeen:''}}
-  function blank(){return {v:3,setup:false,name:'',start:key(today()),rest:0,profile:{skin:'',sens:1,face:[],body:[],hair:[],tex:'',por:'',washes:2,styles:[]},
-    hair:{washDays:[2,6],installed:null,takedown:null,trim:null},products:[],checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'},stickers:{},recapSeen:''}}
+    profile:{skin:'normal',sens:2,pih:'y',face:['marks','tone','texture','circles'],body:['strawberry','rough','btone','bdry','hands'],hair:['breakage','hdry','length'],tex:'4c',chem:'natural',por:'unsure',washes:'3',styles:['braids','wigs'],time:'full',preg:''},
+    hair:{washDays:[1,3,5],every:1,anchor:null,installed:null,takedown:null,trim:null},products:herProducts(),checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'},stickers:{},recapSeen:''}}
+  function blank(){return {v:3,setup:false,name:'',start:key(today()),rest:0,profile:{skin:'',sens:1,pih:'',face:[],body:[],hair:[],tex:'',chem:'',por:'',washes:'1',styles:[],time:'full',preg:''},
+    hair:{washDays:[6],every:1,anchor:null,installed:null,takedown:null,trim:null},products:[],checks:{},feel:{},journal:{},look:{pal:'blue',mode:'light'},stickers:{},recapSeen:''}}
   var state=PERSONAL?herState():blank();
   var ui={tab:'home',area:'face',slot:{face:new Date().getHours()<15?'am':'pm',body:new Date().getHours()<15?'am':'pm',hair:'wash'},day:null,take:false,
     shelf:'all',q:'',add:null,sel:null,rm:false,ob:0,obd:null,photos:[],cmpA:null,cmpB:null,cmpX:50,jday:null,msg:''};
@@ -446,7 +502,7 @@ textarea.inp{min-height:80px;resize:vertical}
   function onDay(p,d){var f=phase(p,d);if(f===undefined)return true;if(!f)return false;
     if(f.every&&Math.floor((days(d)-days(parse(f.from)))/7)%f.every)return false;return !f.days||f.days.indexOf(d.getDay())>=0}
   function fits(p,slot){return (slot in T(p).s)&&(!p.slot||p.slot==='both'||p.slot===slot)}
-  function washDay(d){return state.hair.washDays.indexOf(d.getDay())>=0}
+  function washDay(d){var H=state.hair;if(H.washDays.indexOf(d.getDay())<0)return false;var e=+H.every||1;if(e<=1)return true;var a=parse(H.anchor||state.start),w=Math.round(((days(d)-d.getDay())-(days(a)-a.getDay()))/7);return ((w%e)+e)%e===0}
   function coDay(d){var w=state.hair.washDays.slice().sort(),i=w.indexOf(d.getDay());return w.length>=3&&i%2===1}
   function skinUpset(d){var f=state.feel[key(d)],y=state.feel[key(addDays(d,-1))];return f==='tight'||f==='sting'||y==='sting'}
   function steps(area,slot,d){
@@ -462,7 +518,7 @@ textarea.inp{min-height:80px;resize:vertical}
   function ck(d,slotKey){return (state.checks[key(d)]||{})[slotKey]||{}}
   function isOn(d,slotKey,id){return !!ck(d,slotKey)[id]}
   function prog(area,d){var n=0,all=0;AREAS[area].slots.forEach(function(s){var st=steps(area,s[0],d);all+=st.length;st.forEach(function(p){if(isOn(d,area+'-'+s[0],p.id))n++})});return [n,all]}
-  function streak(){var s=0,d=today();function full(x){var r=prog('face',x);return r[1]&&r[0]===r[1]}if(!full(d))d=addDays(d,-1);while(full(d)&&s<400){s++;d=addDays(d,-1)}return s}
+  function streak(){var s=0,d=today();function full(x){return fullDay(x)}if(!full(d))d=addDays(d,-1);while(full(d)&&s<400){s++;d=addDays(d,-1)}return s}
 
   /* ---------- PAO: months a product lasts once opened ---------- */
   function expiry(p){if(!p.opened||!(p.pao>0))return null;var d=parse(p.opened);d.setMonth(d.getMonth()+p.pao);return d}
@@ -487,7 +543,7 @@ textarea.inp{min-height:80px;resize:vertical}
       if(steps('body','pm',d).filter(function(p){return T(p).bact}).length>1)w('bacid','Two body acids on '+nice(d)+'. Use one a night.');
     }
     var on=state.products.filter(function(p){return p.on}), A=on.filter(function(p){return T(p).act});
-    if(A.length&&!on.some(function(p){return p.t==='sp'}))w('spf','Face actives without a sunscreen. Add SPF 30 or higher.');
+    if(A.length&&!on.some(function(p){return p.t==='sp'}))w('spf',state.products.some(function(p){return p.t==='sp'&&p.buy})?'Your sunscreen is on the shopping list. Get it before your actives start.':'Face actives without a sunscreen. Add SPF 30 or higher.');
     if(A.length>=3&&state.profile.sens>=2)w('many','Three face actives is a lot for skin that marks easily. Pause one.');
     on.forEach(function(p){var e=expiry(p); if(e&&days(e)<days(d0))w('exp'+p.id,label(p)+' is past its opened date. Replace it.')});
     if(on.some(function(p){return p.t==='shamp'})&&!on.some(function(p){return p.t==='cond'||p.t==='cowash'}))w('cond','You shampoo with nothing after. Add a conditioner, since bare shampoo is what makes hair dry and brittle.');
@@ -496,7 +552,8 @@ textarea.inp{min-height:80px;resize:vertical}
     if(A.length)ok.push('Every face active has its own night, and '+DOWL[state.rest]+' stays a rest night.');
     if(on.some(function(p){return T(p).bact}))ok.push('Body acids skip freshly shaved skin.');
     if(on.some(function(p){return p.t==='cond'}))ok.push('Every wash ends with conditioner.');
-    if(A.some(function(p){return p.t==='ret'}))tip.push('Skip retinoids if you are pregnant or nursing.');
+    if((state.profile.preg==='y'||state.profile.preg==='s')&&A.some(function(p){return p.t==='ret'}))w('preg','A retinoid is in your routine. Pause it while pregnant or breastfeeding.');
+    else if(A.some(function(p){return p.t==='ret'}))tip.push('Skip retinoids if you are pregnant or nursing.');
     if(A.length)tip.push('Rota plans by product type. If a label or your dermatologist says otherwise, follow them.');
     return {warn:warn,ok:ok,tip:tip};
   }
@@ -533,10 +590,10 @@ textarea.inp{min-height:80px;resize:vertical}
     drop:'<path d="M12 3c3.5 4.2 6.2 7.4 6.2 10.9a6.2 6.2 0 0 1-12.4 0C5.8 10.4 8.5 7.2 12 3z" fill="#6fa8ff" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/>'};
   var SK=['star','heart','moon','flower','drop'];
   function sticker(d){var n=days(d);return '<span class="st" style="--r:'+((n*37)%21-10)+'deg"><svg viewBox="0 0 24 24" aria-hidden="true">'+STK[SK[((n%5)+5)%5]]+'</svg></span>'}
-  function fullDay(d){var r=prog('face',d);return r[1]>0&&r[0]===r[1]}
+  function fullDay(d){var tot=0,ok=true;['face','body','hair'].forEach(function(a){AREAS[a].slots.forEach(function(s){var st=steps(a,s[0],d),c=ck(d,a+'-'+s[0]);tot+=st.length;st.forEach(function(p){if(!c[p.id])ok=false})})});return tot>0&&ok}
   function weekStickers(){var t=today(), s=addDays(t,-t.getDay()), n=0, h='';
     for(var i=0;i<7;i++){var d=addDays(s,i), f=fullDay(d); if(f)n++; h+='<div><div class="sc'+(key(d)===key(t)?' now':'')+'">'+(f?sticker(d):'')+'</div>'+DOW[d.getDay()].charAt(0)+'</div>'}
-    return '<button class="card" style="width:100%;display:block" data-act="tab" data-id="stickers"><div class="rowh"><h2>This week</h2><span class="hand">'+n+' sticker'+(n===1?'':'s')+'</span></div><div class="sweek" role="img" aria-label="'+n+' finished days this week">'+h+'</div><p class="tiny" style="margin-top:8px">Finish every face step in a day to earn its sticker. Tap for your sticker book.</p></button>'}
+    return '<button class="card" style="width:100%;display:block" data-act="tab" data-id="stickers"><div class="rowh"><h2>This week</h2><span class="hand">'+n+' sticker'+(n===1?'':'s')+'</span></div><div class="sweek" role="img" aria-label="'+n+' finished days this week">'+h+'</div><p class="tiny" style="margin-top:8px">Finish every face, body and hair step in a day to earn its sticker. Tap for your sticker book.</p></button>'}
   function monthStickers(d0){var y=d0.getFullYear(), m=d0.getMonth(), first=new Date(y,m,1), last=new Date(y,m+1,0).getDate(), h=['S','M','T','W','T','F','S'].map(function(l){return '<div class="lab">'+l+'</div>'}).join(''), n=0;
     for(var i=0;i<first.getDay();i++)h+='<div></div>';
     for(var dd=1;dd<=last;dd++){var d=new Date(y,m,dd), f=days(d)<=days(today())&&fullDay(d); if(f)n++; h+='<div class="'+(key(d)===key(today())&&!f?'now':'')+'">'+(f?sticker(d):dd)+'</div>'}
@@ -544,7 +601,7 @@ textarea.inp{min-height:80px;resize:vertical}
 
   function vHome(){
     var d=today(), h=d.getHours(), part=h<12?'morning':h<17?'afternoon':'evening', t=tonight(d), bz=barrier(), r=checks();
-    var hairNext=washDay(d)?(coDay(d)?'Co-wash day today':'Wash day today'):'Next wash '+(function(){for(var i=1;i<8;i++){var x=addDays(d,i);if(washDay(x))return DOWL[x.getDay()]}return 'not set'})();
+    var hairNext=washDay(d)?(coDay(d)?'Co-wash day today':'Wash day today'):'Next wash '+nextWash(d);
     var bodyActs=steps('body','pm',d).filter(function(p){return T(p).bact});
     var cards=[['face',(t==='rest'?'Rest night tonight':ACT_N[t]+' tonight'),'<span class="chip '+bz[0]+'">'+bz[1]+'</span>',t==='rest'?'r':t==='exf'?'x':'a'],
       ['body',bodyActs.length?label(bodyActs[0])+' tonight':'Moisture only tonight','',bodyActs.length?'x':'r'],
@@ -570,13 +627,13 @@ textarea.inp{min-height:80px;resize:vertical}
   function list(area,slot,d){var st=steps(area,slot,d);
     if(!st.length)return '<p class="note">'+(area==='hair'&&slot==='wash'?'Not a wash day. Your next one is '+nextWash(d)+'.':'Nothing scheduled here. Add products on your shelf.')+'</p>';
     return '<div class="steps">'+st.map(function(p){return stepRow(p,area,slot,d)}).join('')+'</div><p class="swipehint">swipe right to tick, left to skip</p>'}
-  function nextWash(d){for(var i=1;i<8;i++){var x=addDays(d,i);if(washDay(x))return DOWL[x.getDay()]}return 'not set'}
+  function nextWash(d){for(var i=1;i<36;i++){var x=addDays(d,i);if(washDay(x))return i<7?DOWL[x.getDay()]:DOWL[x.getDay()]+' '+nice(x)}return 'not set'}
   function weekStrip(area,d0){
     var s='';for(var i=0;i<7;i++){var d=addDays(d0,i), k=key(d), lab='', kd='k-r';
       if(area==='face'){var t=tonight(d);lab=t==='rest'?'Rest':ACT_N[t].slice(0,3);kd=t==='rest'?'k-r':t==='exf'?'k-x':'k-a'}
       else if(area==='body'){var bb=steps('body','pm',d).filter(function(p){return T(p).bact}).length>0;lab=bb?'Acid':'Moist';kd=bb?'k-x':'k-r'}
       else{var wd=washDay(d);lab=wd?(coDay(d)?'Co':'Wash'):'–';kd=wd?'k-a':'k-r'}
-      s+='<button class="dayb '+kd+(i===0?' today':'')+'" data-act="day" data-id="'+k+'" aria-pressed="'+(ui.day===k)+'" aria-label="'+DOWL[d.getDay()]+' '+nice(d)+', '+lab+'"><span>'+DOW[d.getDay()]+'</span><b class="num">'+d.getDate()+'</b><span class="k">'+lab+'</span></button>'}
+      s+='<button class="dayb '+kd+(k===key(today())?' today':'')+'" data-act="day" data-id="'+k+'" aria-pressed="'+(ui.day===k)+'" aria-label="'+DOWL[d.getDay()]+' '+nice(d)+', '+lab+'"><span>'+DOW[d.getDay()]+'</span><b class="num">'+d.getDate()+'</b><span class="k">'+lab+'</span></button>'}
     return '<div class="strip">'+s+'</div>'}
 
   function vArea(){
@@ -607,7 +664,7 @@ textarea.inp{min-height:80px;resize:vertical}
       '<section class="hero'+(ui.flip?' flip':ui.enter?' drop':'')+'" style="'+tone(hk)+'">'+hero+'</section>'+(isToday?'<button class="grip" data-act="peek" aria-expanded="'+!!ui.peek+'"><i></i>'+(ui.peek?'hide tomorrow':'pull for tomorrow')+'</button>'+peekHtml(area):'')+(area==='face'?'<div class="feel"><span class="eyebrow">Skin today</span><div class="pills">'+[['calm','Calm'],['tight','Tight'],['sting','Stinging']].map(function(o){
         return '<button class="pill" data-act="feel" data-id="'+o[0]+'" data-d="'+key(d)+'" aria-pressed="'+(state.feel[key(d)]===o[0])+'">'+o[1]+'</button>'}).join('')+'</div></div>':'')+
       tabs+(isToday&&steps(area,slot,d).length?'<button class="btn" data-act="play">'+ic('play')+'Start '+(A.slots.filter(function(x){return x[0]===slot})[0]||['',''])[1].toLowerCase()+' routine</button>':'')+list(area,slot,d)+
-      '<section><div class="rowh"><h2>This week</h2>'+(ui.day?'<button class="link" data-act="day" data-id="">Back to today</button>':'')+'</div><div style="margin-top:12px">'+weekStrip(area,today())+'</div></section>'+
+      '<section><div class="rowh"><h2>This week</h2>'+(ui.day?'<button class="link" data-act="day" data-id="">Back to today</button>':'')+'</div><div style="margin-top:12px">'+weekStrip(area,addDays(today(),-today().getDay()))+'</div></section>'+
       (mine.length?'<section class="card"><h2>Safety check</h2>'+alertsHtml({warn:mine,ok:[],tip:[]})+'</section>':'');
   }
   var TAKE=[['Take down gently','Coat the hair in conditioner or oil first. Pull shed hair out with your fingers.',0,null],
@@ -633,12 +690,12 @@ textarea.inp{min-height:80px;resize:vertical}
     var q=ui.q.trim().toLowerCase(), list=state.products.filter(function(p){return (ui.shelf==='all'||T(p).a===ui.shelf)&&(!q||(p.name+' '+label(p)).toLowerCase().indexOf(q)>=0)});
     var groups=['face','body','hair'].filter(function(a){return ui.shelf==='all'||ui.shelf===a}).map(function(a){var L=list.filter(function(p){return T(p).a===a});if(!L.length)return '';
       return '<section class="card"><p class="eyebrow">'+AREAS[a].n+' · '+L.length+'</p>'+L.map(function(p){var A=AREAS[a];
-        return '<button class="prod'+(p.on?'':' off')+'" data-act="psel" data-id="'+esc(p.id)+'"><span class="gem" style="--g1:'+A.g1+';--g2:'+A.g2+'">'+esc(label(p).charAt(0))+'</span><span><span class="tiny">'+esc(label(p))+'</span><b>'+esc(p.name)+'</b>'+(function(){var c=p.on?(p.opened||p.buy?paoChip(p):''):'<span class="chip">Paused</span>';return c?'<span style="display:block;margin-top:6px">'+c+'</span>':''})()+'</span>'+ic('right')+'</button>'}).join('')+'</section>'}).join('');
+        return '<button class="prod'+(p.on?'':' off')+'" data-act="psel" data-id="'+esc(p.id)+'"><span class="gem" style="--g1:'+A.g1+';--g2:'+A.g2+'">'+esc(label(p).charAt(0))+'</span><span><span class="tiny">'+esc(label(p))+'</span><b>'+esc(p.name)+'</b>'+(function(){var c=(p.on||p.buy)?(p.opened||p.buy?paoChip(p):''):'<span class="chip">Paused</span>';return c?'<span style="display:block;margin-top:6px">'+c+'</span>':''})()+'</span>'+ic('right')+'</button>'}).join('')+'</section>'}).join('');
     var buy=state.products.filter(function(p){return p.buy}).length;
     return bar()+'<div class="rowh"><h1>Shelf</h1><button class="btn sm" data-act="addopen">'+ic('plus')+'Add</button></div>'+
       '<label class="search">'+ic('search')+'<input id="q" placeholder="Search your shelf" value="'+esc(ui.q)+'" aria-label="Search your shelf"></label>'+
       '<div class="pills">'+[['all','All'],['face','Face'],['body','Body'],['hair','Hair']].map(function(x){return '<button class="pill" data-act="shelfa" data-id="'+x[0]+'" aria-pressed="'+(ui.shelf===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+
-      mixHtml()+(buy?'<p class="tiny">'+buy+' products marked to buy.</p>':'')+(groups||'<p class="note">Nothing here yet.</p>')+
+      mixHtml()+shopHtml()+(groups||'<p class="note">Nothing here yet.</p>')+sugHtml()+recipesHtml()+
       '<section class="card"><h2>Safety check</h2>'+alertsHtml(checks())+'</section>';
   }
   function typeOpts(area,sel){return Object.keys(TYPES).filter(function(t){return TYPES[t].a===area}).map(function(t){return '<option value="'+t+'"'+(t===sel?' selected':'')+'>'+TYPES[t].n+'</option>'}).join('')}
@@ -721,57 +778,175 @@ textarea.inp{min-height:80px;resize:vertical}
       '<section class="card"><div class="frow"><label for="sn">Name</label><input class="inp" id="sn" data-s="name" maxlength="20" value="'+esc(state.name)+'" placeholder="Optional"></div>'+
       '<div class="frow"><label for="ss">Day 1</label><input class="inp" type="date" id="ss" data-s="start" value="'+state.start+'"></div>'+
       '<div class="frow"><label for="sr">Rest night</label><select class="inp" id="sr" data-s="rest">'+DOWL.map(function(n,i){return '<option value="'+i+'"'+(state.rest===i?' selected':'')+'>'+n+'</option>'}).join('')+'</select></div></section>'+
-      '<section class="card"><h2>Hair</h2><p class="sub" style="margin-top:6px">Wash days. With three or more, the middle ones become co-wash days.</p><div class="days" style="margin-top:12px">'+[1,2,3,4,5,6,0].map(function(k){return '<button data-act="wd" data-id="'+k+'" aria-pressed="'+(wd.indexOf(k)>=0)+'" aria-label="'+DOWL[k]+'">'+DOW[k].slice(0,2)+'</button>'}).join('')+'</div>'+
+      '<section class="card"><h2>Hair</h2><p class="sub" style="margin-top:6px">Wash days. With three or more a week, the middle ones become co-wash days.</p><div class="days" style="margin-top:12px">'+[1,2,3,4,5,6,0].map(function(k){return '<button data-act="wd" data-id="'+k+'" aria-pressed="'+(wd.indexOf(k)>=0)+'" aria-label="'+DOWL[k]+'">'+DOW[k].slice(0,2)+'</button>'}).join('')+'</div>'+
+      '<div class="pills" style="margin-top:12px">'+[[1,'Every week'],[2,'Every 2 weeks'],[3,'Every 3 weeks'],[4,'Every 4 weeks']].map(function(x){return '<button class="pill" data-act="wevery" data-id="'+x[0]+'" aria-pressed="'+((+state.hair.every||1)===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+
       '<div class="frow" style="margin-top:8px"><label for="si">Current style in since</label><input class="inp" type="date" id="si" data-h="installed" value="'+esc(state.hair.installed||'')+'"></div>'+
       '<div class="frow"><label for="st">Last trim</label><input class="inp" type="date" id="st" data-h="trim" value="'+esc(state.hair.trim||'')+'"></div></section>'+
-      '<section class="card"><h2>Your goals</h2><p class="sub" style="margin-top:6px">'+[['Face',state.profile.face],['Body',state.profile.body],['Hair',state.profile.hair]].map(function(g){return g[0]+': '+(g[1].map(function(x){return GOALN[x]||x}).join(', ')||'none set')}).join('<br>')+'</p>'+
-      '<button class="btn ghost" style="margin-top:14px" data-act="redo">Redo the setup questions</button></section>'+
+      '<section class="card"><h2>Your answers</h2><p class="sub" style="margin-top:6px">'+[['Face',state.profile.face],['Body',state.profile.body],['Hair',state.profile.hair]].map(function(g){return '<b>'+g[0]+'</b> · '+(g[1].map(function(x){return goalName(g[0].toLowerCase(),x)}).join(', ')||'none set')}).join('<br>')+'</p>'+
+      '<button class="btn ghost" style="margin-top:14px" data-act="redo">Edit your answers</button></section>'+
       (online?'<section class="card"><h2>Backup</h2><p class="sub" style="margin:6px 0 14px">Everything lives on this phone. Save a backup file before you switch phones.</p><div class="duo"><button class="btn ghost" data-act="export">Save backup</button><button class="btn ghost" data-act="import">Restore</button></div>'+(ui.bmsg?'<p class="tiny" style="margin-top:10px">'+ui.bmsg+'</p>':'')+'</section>'
         :'<section class="card"><h2>Your data</h2><p class="sub" style="margin-top:6px">Your routine is saved to your account. Photos stay on this device.</p></section>')+
       '<p class="tiny" style="text-align:center">Rota is a planning tool, not medical advice.</p>';
   }
 
   /* ---------- onboarding ---------- */
-  var GOALN={marks:'Dark marks',texture:'Texture',breakouts:'Breakouts',circles:'Dark circles',lines:'Fine lines',dry:'Dryness',oily:'Oiliness',
-    strawberry:'Strawberry legs',tone:'Uneven tone',bacne:'Body acne',hydration:'Hydration',firm:'Firming',hands:'Dry hands',
-    strength:'Strength',length:'Length retention',moisture:'Moisture',growth:'Growth',scalp:'Scalp health',breakage:'Less breakage'};
+  var OPT={
+    face:[['marks','Dark spots or marks','Left by pimples or scratches'],['tone','Uneven tone','Darker or lighter patches'],['texture','Bumps or rough texture','Small bumps, rough patches'],['breakouts','Breakouts','Pimples, clogged pores'],['circles','Dark circles','Under the eyes'],['lines','Fine lines','Eyes, forehead, mouth'],['dry','Dry or tight','Feels tight or flaky'],['oily','Oily or shiny','Shiny by midday'],['red','Redness or irritation','Stings, itches, flushes'],['none','Nothing really','I just want a routine']],
+    body:[['strawberry','Strawberry legs','Dark dots on the legs'],['rough','Rough or bumpy skin','Arms, thighs or back'],['btone','Dark spots or uneven tone','Anywhere on the body'],['folds','Darker underarms, knees or elbows',''],['bacne','Body acne','Back, chest or shoulders'],['bdry','Dry or ashy skin','Especially after a shower'],['hands','Dry or cracked hands','From washing a lot'],['none','Nothing','']],
+    hair:[['breakage','Breaking or snapping','Short pieces in the sink'],['hdry','Dry or brittle','Rough, even with products'],['length','Not keeping length','Grows, but ends break off'],['thin','Thinning or slow growth',''],['shed','Shedding','More than usual on wash day'],['scalp','Itchy or flaky scalp',''],['split','Split ends',''],['edges','Edges thinning','Hairline or temples'],['none','Nothing','']],
+    sens:[['0','Rarely reacts','I can try most things'],['1','Sometimes stings','Some products bother me'],['2','Reacts easily','Strong products irritate me']],
+    pih:[['y','Yes, for weeks'],['s','Sometimes'],['n','Not really']],
+    tex:[['straight','Straight'],['wavy','Wavy'],['curly','Curly','3a to 3c'],['coily','Coily','4a or 4b'],['4c','Coily','4c']],
+    chem:[['natural','Natural'],['relaxed','Relaxed'],['texturized','Texturized']],
+    por:[['low','Low','Water beads on top'],['normal','Normal',''],['high','High','Soaks it up, dries fast'],['unsure','Not sure','']],
+    styles:[['braids','Braids'],['wigs','Wigs'],['sewin','Sew-ins'],['twists','Twists or locs'],['wng','Wash and go'],['press','Silk press'],['loose','Loose']],
+    washes:[['3','Every few days'],['2','Twice a week'],['1','Once a week'],['w2','Every 2 weeks'],['w3','Every 3 to 4 weeks'],['m','Once a month or less']],
+    time:[['quick','Quick','A few steps, in and out'],['full','Full','Every step, I enjoy it']],
+    rest:[['1','Mon'],['2','Tue'],['3','Wed'],['4','Thu'],['5','Fri'],['6','Sat'],['0','Sun']],
+    preg:[['n','No'],['y','Yes'],['s','Rather not say']]
+  };
+  var MULTI={face:1,body:1,hair:1,styles:1}, OPTN={};
+  Object.keys(OPT).forEach(function(k){OPTN[k]={};OPT[k].forEach(function(o){OPTN[k][o[0]]=o[1]+(k==='tex'&&o[2]?' '+o[2]:'')})});
+  /* names from the first version of the questions, so older answers still read well */
+  var GOALN={texture:'Bumps or rough texture',tone:'Uneven tone',hydration:'Dry skin',firm:'Firming',strength:'Breaking or snapping',moisture:'Dry or brittle',growth:'Thinning or slow growth',length:'Not keeping length',scalp:'Itchy or flaky scalp',breakage:'Breaking or snapping'};
+  var LEG={body:{texture:'rough',tone:'btone',hydration:'bdry'},hair:{strength:'breakage',moisture:'hdry',growth:'thin'}};
+  function goalName(a,x){return (OPTN[a]&&OPTN[a][x])||GOALN[x]||x}
   var OB=[
-    {k:'face',q:'What do you want for your face?',o:['marks','texture','breakouts','circles','lines','dry','oily'],multi:1},
-    {k:'body',q:'And for your body?',o:['strawberry','texture','tone','bacne','hydration','firm','hands'],multi:1},
-    {k:'sens',q:'How does your skin take to new products?',o:[['0','Rarely reacts'],['1','Sometimes stings'],['2','Marks or irritates easily']]},
-    {k:'hair',q:'What do you want for your hair?',o:['strength','length','moisture','growth','scalp','breakage'],multi:1},
-    {k:'tex',q:'Your hair texture',o:[['straight','Straight'],['wavy','Wavy'],['curly','Curly'],['coily','Coily 4a or 4b'],['4c','Coily 4c']]},
-    {k:'por',q:'Hair porosity',sub:'Low porosity hair repels water, high porosity soaks it up then dries fast.',o:[['low','Low'],['normal','Normal'],['high','High'],['unsure','Not sure']]},
-    {k:'washes',q:'How often do you wash your hair?',o:[['1','Once a week'],['2','Twice a week'],['3','Three times'],['4','Four or more']]},
-    {k:'shelf',q:'What do you already own?',sub:'Pick the types. You can add exact products after.',shelf:1}
+    {id:'face',eb:'your face',q:'What’s bothering your skin right now?',sub:'Pick everything that applies.',parts:[{k:'face'}]},
+    {id:'skin',eb:'your face',q:'How does your skin handle things?',parts:[{k:'sens',h:'When you try something new',cols:1},{k:'pih',h:'After a pimple or scratch heals, does a dark mark stay?',cols:3}]},
+    {id:'body',eb:'your body',q:'Anything bothering you on your body?',sub:'Pick everything that applies.',parts:[{k:'body'}]},
+    {id:'hair',eb:'your hair',q:'What’s going on with your hair?',sub:'Pick everything that applies.',parts:[{k:'hair'}]},
+    {id:'hairtype',eb:'your hair',q:'Tell Rota about your hair',parts:[{k:'tex',h:'Texture',cols:3},{k:'chem',h:'Right now it’s',cols:3},{k:'por',h:'Porosity',hs:'Not sure is fine. Rota keeps things balanced either way.'}]},
+    {id:'wear',eb:'your hair',q:'How do you wear it?',parts:[{k:'styles',h:'Most of the time, pick any',cols:3},{k:'washes',h:'How often do you wash it?'}]},
+    {id:'routine',eb:'your routine',q:'How do you like to do it?',parts:[{k:'time',h:'How much time'},{k:'rest',h:'Pick a rest night',hs:'One night a week with no strong products, so your skin can recover.',cols:7},{k:'preg',h:'Pregnant, trying or breastfeeding?',hs:'Some ingredients, like retinoids, are not for pregnancy. Rota leaves them out.',cols:3}]},
+    {id:'shelf',eb:'your shelf',q:'What do you already own?',sub:'Tap the types you have. You can name them next.',shelf:1},
+    {id:'names',eb:'your shelf',q:'Name what you have',sub:'Optional. It makes your routine read like your real shelf.',names:1},
+    {id:'review',eb:'last look',q:'Check your answers',review:1}
   ];
+  function blankObd(){return {name:'',face:[],body:[],hair:[],sens:'1',pih:'',tex:'',chem:'',por:'',styles:[],washes:'1',time:'full',rest:'0',preg:'',shelf:{},names:{},want:{}}}
+  function obPages(){var D=ui.obd;return OB.filter(function(p){if(D.keep&&(p.shelf||p.names))return false;if(p.names&&!Object.keys(D.shelf).some(function(t){return D.shelf[t]}))return false;return true})}
+  function pickProfile(D){return {skin:'',sens:+D.sens||0,pih:D.pih||'',face:D.face.slice(),body:D.body.slice(),hair:D.hair.slice(),tex:D.tex||'',chem:D.chem||'',por:D.por||'',styles:D.styles.slice(),washes:String(D.washes||'1'),time:D.time||'full',preg:D.preg||''}}
+
+  /* what to add, driven by what bothers them */
+  var HINT={aza:'Azelaic acid 10% or 15%',sp:'Sunscreen SPF 30 or higher',exf:'Gentle AHA or BHA exfoliant',ret:'Adapalene 0.1% or a gentle retinol',bp:'Benzoyl peroxide 2.5% to 5%',vc:'Vitamin C serum',mo:'Barrier moisturizer',serum:'Hydrating or niacinamide serum',cl:'Gentle cleanser',
+    bacid:'Lactic acid lotion, about 12%',bwash:'Benzoyl peroxide body wash',blot:'Thick body cream',butter:'Body butter or oil',hand:'Thick hand cream',bspf:'Sunscreen for hands and arms',
+    shamp:'Gentle sulfate-free shampoo',cowash:'Co-wash',cond:'Rinse-out conditioner',protein:'Light protein treatment',dc:'Deep conditioner',leave:'Water-based leave-in',hoil:'Light scalp oil',hbutter:'Butter for sealing ends',bonnet:'Satin bonnet or pillowcase'};
+  var SUG={
+    face:{marks:[['aza','Fades dark marks and is gentle on deeper skin tones'],['vc','Brightens and helps marks fade']],tone:[['aza','Evens tone without bleaching'],['vc','Brightens dull, uneven areas']],texture:[['exf','Smooths bumps and rough patches']],
+      breakouts:[['aza','Calms breakouts and the marks they leave'],['bp','Clears the bacteria behind pimples']],circles:[['vc','Can brighten the under-eye area over time']],lines:[['ret','The best-studied ingredient for fine lines']],
+      dry:[['mo','A richer cream holds water in'],['serum','A hydrating serum under your cream']],oily:[['serum','Niacinamide helps with shine']],red:[['mo','A plain barrier cream. Go easy on acids for now']]},
+    body:{strawberry:[['bacid','Clears the dots and smooths the skin']],rough:[['bacid','Smooths rough, bumpy skin']],btone:[['bacid','Evens body tone over time'],['bspf','Keeps spots from getting darker']],folds:[['bacid','Gentle acid on knees, elbows and underarms']],
+      bacne:[['bwash','Leave it on 1 to 2 minutes, then rinse']],bdry:[['blot','A thick cream on damp skin'],['butter','Seals the moisture in']],hands:[['hand','After every hand wash, and a thick layer at night']]},
+    hair:{breakage:[['protein','Light protein strengthens weak strands'],['dc','Softens hair so it bends instead of snapping'],['bonnet','Stops friction breakage overnight']],hdry:[['leave','Water-based moisture between washes'],['hbutter','Seals the moisture in']],
+      length:[['hbutter','Seal your ends, the oldest part of your hair'],['bonnet','Protects your ends while you sleep'],['leave','Keeps ends soft']],thin:[['hoil','A light scalp oil and a gentle massage']],shed:[['bonnet','Less friction overnight'],['hoil','Gentle scalp care. Sudden shedding is worth a doctor visit']],
+      scalp:[['shamp','Cleansing your scalp often enough keeps flakes down']],split:[['dc','Softens and protects the ends'],['hbutter','Seals the ends']],edges:[['hoil','A little oil on the edges, and less tension there']]}
+  };
+  function suggest(P,own){var out=[],seen={},preg=P.preg==='y'||P.preg==='s';
+    function add(t,w){if(own[t]||seen[t]||(t==='ret'&&preg))return;seen[t]=1;out.push([t,w])}
+    add('sp','The one step that protects everything else');
+    if(own.shamp&&!own.cowash)add('cond','Every wash should end with conditioner. Bare shampoo is what makes hair brittle');
+    ['face','body','hair'].forEach(function(a){(P[a]||[]).forEach(function(c){(SUG[a][c]||[]).forEach(function(x){add(x[0],x[1])})})});
+    add('cl','Every routine starts with a gentle cleanse');add('mo','Keeps your skin barrier strong');
+    if(!own.cowash)add('cond','Every wash should end with conditioner. Bare shampoo is what makes hair brittle');
+    return out}
+  function addWants(D){Object.keys(D.want||{}).filter(function(t){return D.want[t]&&TYPES[t]}).forEach(function(t){
+    if(state.products.some(function(p){return p.t===t}))return;
+    state.products.push({id:'w'+t+'-'+Date.now().toString(36),t:t,name:HINT[t]||TYPES[t].n,on:false,buy:true,note:typeof D.want[t]==='string'?D.want[t]:undefined})})}
+
+  function obTiles(k,cols,fill){var D=ui.obd, o=OPT[k], multi=MULTI[k], cur=D[k];
+    return '<div class="tiles'+(fill?' fill':'')+(k==='rest'?' days':cols>=3?' sm':'')+'" style="--cols:'+cols+'">'+o.map(function(x,i){
+      var on=multi?cur.indexOf(x[0])>=0:String(cur)===x[0], wide=cols===2&&o.length%2&&i===o.length-1;
+      return '<button class="tile'+(wide?' wide':'')+'" data-act="obo" data-k="'+k+'" data-id="'+x[0]+'" aria-pressed="'+on+'"><b>'+x[1]+'</b>'+(x[2]?'<small>'+x[2]+'</small>':'')+'<i class="ck">'+ic('check')+'</i></button>'}).join('')+'</div>'}
+  function obLab(k){var D=ui.obd, v=D[k];if(MULTI[k])return v.length?v.map(function(x){return goalName(k,x)}).join(', '):'Nothing picked';return v!==''&&v!=null?(OPTN[k][String(v)]||v):'Not answered'}
   function vOnboard(){
-    var s=ui.ob, D=ui.obd;
-    if(s===0)return '<div class="ob"><div class="wordmark">rota</div><h1 style="font-size:30px">Face, body and hair care, planned around you.</h1><p class="sub">Answer a few questions. Rota builds your routines, eases new actives in slowly, and checks every product against the rest.</p></div>'+
-      '<div class="cta"><button class="btn" data-act="obn">Begin</button></div>';
-    var Q=OB[s-1], body;
-    if(Q.shelf){body=['face','body','hair'].map(function(a){return '<section><p class="eyebrow">'+AREAS[a].n+'</p><div class="opts" style="margin-top:10px">'+Object.keys(TYPES).filter(function(t){return TYPES[t].a===a}).map(function(t){return '<button class="opt" data-act="obs" data-id="'+t+'" aria-pressed="'+!!D.shelf[t]+'">'+TYPES[t].n+'</button>'}).join('')+'</div></section>'}).join('')}
-    else body='<div class="opts">'+Q.o.map(function(o){var v=Array.isArray(o)?o[0]:o, n=Array.isArray(o)?o[1]:GOALN[o], on=Q.multi?D[Q.k].indexOf(v)>=0:String(D[Q.k])===v;
-      return '<button class="opt" data-act="obo" data-id="'+v+'" aria-pressed="'+on+'">'+n+'</button>'}).join('')+'</div>';
-    return '<div class="ob"><div class="bar"><button class="icon l" data-act="obb" aria-label="Back">'+ic('left')+'</button><div class="dots">'+OB.map(function(_,i){return '<i class="'+(i<s?'on':'')+'"></i>'}).join('')+'</div></div>'+
-      '<h1 style="font-size:32px">'+Q.q+'</h1>'+(Q.sub?'<p class="sub">'+Q.sub+'</p>':'')+body+'</div><div class="cta"><button class="btn" data-act="obn">'+(s===OB.length?'Build my routines':'Continue')+'</button></div>';
+    var s=ui.ob, D=ui.obd, P=obPages(), N=P.length;
+    if(s===0)return '<div class="ob ob0"><div class="wordmark">rota</div><h1 class="obh">Face, body and hair care, planned around you.</h1>'+
+      '<div class="trio" aria-hidden="true"><div style="'+tone('a')+'">Face<small>tonight, azelaic</small></div><div style="'+tone('r')+'">Body<small>moisture night</small></div><div style="'+tone('x')+'">Hair<small>wash day!</small></div></div>'+
+      '<label class="namecard"><span class="hand">what should Rota call you?</span><input class="inp" id="obname" maxlength="20" autocomplete="given-name" placeholder="Your name, optional" value="'+esc(D.name||'')+'"></label></div>'+
+      '<div class="cta"><button class="btn" data-act="obn">Let’s go</button></div>';
+    var Q=P[s-1], body='';
+    if(Q.shelf)body=['face','body','hair'].map(function(a){var ts=Object.keys(TYPES).filter(function(t){return TYPES[t].a===a});
+      return '<div class="obpart"><h3>'+AREAS[a].n+'</h3><div class="tiles sm" style="--cols:3">'+ts.map(function(t){return '<button class="tile" data-act="obs" data-id="'+t+'" aria-pressed="'+!!D.shelf[t]+'"><b>'+TYPES[t].n+'</b><i class="ck">'+ic('check')+'</i></button>'}).join('')+'</div></div>'}).join('');
+    else if(Q.names)body='<div class="names">'+Object.keys(D.shelf).filter(function(t){return D.shelf[t]}).map(function(t,i){var hits=CATALOG.filter(function(c){return c[1]===t});
+      return '<label class="namerow" style="--i:'+i+'"><span class="eyebrow">'+AREAS[TYPES[t].a].n+' · '+TYPES[t].n+'</span><input class="inp" data-obn="'+t+'" maxlength="60" placeholder="Brand and product" value="'+esc(D.names[t]||'')+'"'+(hits.length?' list="dl-'+t+'"':'')+'>'+
+        (hits.length?'<datalist id="dl-'+t+'">'+hits.map(function(c){return '<option value="'+esc(c[2])+'">'}).join('')+'</datalist>':'')+'</label>'}).join('')+'</div>';
+    else if(Q.review){
+      var rows=[['face','Face',obLab('face')],['skin','Your skin',obLab('sens')+' \u00b7 '+({y:'dark marks stay for weeks',s:'dark marks sometimes stay',n:'marks fade quickly'}[D.pih]||'marks not answered')],['body','Body',obLab('body')],['hair','Hair',obLab('hair')],
+        ['hairtype','Hair type',[obLab('tex'),obLab('chem'),obLab('por')+' porosity'].join(' · ')],['wear','Wear and wash',obLab('styles')+' · washed '+obLab('washes').toLowerCase()],
+        ['routine','Routine',obLab('time')+' routine · rest night '+DOWL[+D.rest]+(D.preg==='y'||D.preg==='s'?' · no retinoids':'')]];
+      if(!D.keep){var nS=Object.keys(D.shelf).filter(function(t){return D.shelf[t]}).length;rows.push(['shelf','Shelf',nS?nS+' product type'+(nS===1?'':'s'):'Nothing yet, Rota will suggest a start'])}
+      var own={};if(D.keep)state.products.forEach(function(p){own[p.t]=1});else Object.keys(D.shelf).forEach(function(t){if(D.shelf[t])own[t]=1});
+      var sg=suggest(pickProfile(D),own).slice(0,6);
+      body='<div class="rvs">'+rows.map(function(r,i){return '<button class="rv" style="--i:'+i+'" data-act="obgo" data-id="'+r[0]+'"><span class="eyebrow">'+r[1]+'</span><b>'+esc(r[2])+'</b><span class="hand">edit</span></button>'}).join('')+'</div>'+
+        (sg.length?'<div class="obpart"><h3>Worth adding</h3><p class="sub" style="margin-top:-6px">Based on your answers. Tap any to put it on your shopping list.</p><div class="tiles" style="--cols:1">'+sg.map(function(x){
+          return '<button class="tile" data-act="obw" data-id="'+x[0]+'" data-w="'+esc(x[1])+'" aria-pressed="'+!!D.want[x[0]]+'"><b>'+HINT[x[0]]+'</b><small>'+x[1]+'</small><i class="ck">'+ic('check')+'</i></button>'}).join('')+'</div></div>':'');
+    }
+    else{var one=Q.parts.length===1;body=Q.parts.map(function(p){var t=obTiles(p.k,p.cols||2,one);return one?t:'<div class="obpart"><h3>'+p.h+'</h3>'+(p.hs?'<p class="sub" style="margin-top:-6px">'+p.hs+'</p>':'')+t+'</div>'}).join('')}
+    var cta=s===N?(D.keep?'Save changes':'Build my routines'):D.ret?'Back to your answers':'Continue';
+    return '<div class="ob"><div class="obtop"><button class="icon l" data-act="obb" aria-label="'+(D.keep&&s===N?'Cancel':'Back')+'">'+ic(D.keep&&s===N?'x':'left')+'</button><div class="obprog" role="progressbar" aria-valuemin="0" aria-valuemax="'+N+'" aria-valuenow="'+s+'"><i style="width:'+(s/N*100)+'%"></i></div><span class="hand">'+s+' of '+N+'</span></div>'+
+      '<span class="obeb">'+Q.eb+'</span><h1 class="obh">'+Q.q+'</h1>'+(Q.sub?'<p class="sub obsub">'+Q.sub+'</p>':'')+body+'</div><div class="cta"><button class="btn" data-act="obn">'+cta+'</button></div>';
   }
-  /* Builds schedules for a new user: one new active at a time, two weeks apart, starting slowly. */
+  function obFinish(){var D=ui.obd;
+    if(D.keep){var P=state.profile, oldW=String(P.washes);state.name=(D.name||'').trim().slice(0,20);state.rest=+D.rest||0;Object.assign(P,pickProfile(D));
+      if(String(D.washes)!==oldW)setWash(D.washes);
+      if(D.preg==='y'||D.preg==='s')state.products.forEach(function(p){if(p.t==='ret'&&p.on){p.on=false;p.note='Paused for pregnancy or breastfeeding'}});
+      addWants(D)}
+    else build(D);
+    state.setup=true;ui.obd=null;ui.ob=0;ui.tab='home';ui.enter=true;commit();window.scrollTo(0,0)}
+  function setWash(w){w=String(w);var H=state.hair, M={'4':[1,2,4,6],'3':[1,3,5],'2':[2,6],'1':[6],w2:[6],w3:[6],m:[6]}, E={w2:2,w3:3,m:4};
+    H.washDays=(M[w]||[6]).slice();H.every=E[w]||1;H.anchor=key(today())}
+  /* Builds schedules for a new user: one new active at a time, started slowly, and slower still for skin that marks or reacts. */
   function build(D){
-    var st=key(today()), base=today(), list=[], n=0, sens=+D.sens||0;
+    state.name=(D.name||'').trim().slice(0,20); state.rest=+D.rest||0;
+    var base=today(), list=[], n=0, sens=+D.sens||0, careful=sens>=2||D.pih==='y', preg=D.preg==='y'||D.preg==='s', quick=D.time==='quick';
     function dt(w){return key(addDays(base,(w-1)*7))}
-    var used={}, PREF=[2,5,1,4,3,6], order=['aza','exf','ret','bp'].filter(function(t){return D.shelf[t]});
+    var used={}, PREF=[2,5,1,4,3,6], gap=careful?3:2, ramp=careful?4:3;
+    var order=['aza','exf','ret','bp'].filter(function(t){return D.shelf[t]&&!(t==='ret'&&preg)}), per=Math.max(1,Math.floor(6/Math.max(1,order.length)));
+    var prot=(D.styles||[]).some(function(s){return ['braids','wigs','sewin','twists'].indexOf(s)>=0});
     Object.keys(D.shelf).filter(function(t){return D.shelf[t]}).forEach(function(t){
-      var p={id:t+'-'+(n++),t:t,name:'Your '+TYPES[t].n.toLowerCase(),on:true};
-      if(TYPES[t].act){var i=order.indexOf(t), wk=2+i*2, per=Math.max(1,Math.floor(6/order.length)), a=Math.min(sens>=2?1:2,per), free=PREF.filter(function(k){return !used[k]&&k!==state.rest}), d1=free.slice(0,a).sort(), d2=free.slice(0,Math.min(a+1,per)).sort();
-        d2.forEach(function(k){used[k]=1}); p.ph=[{from:dt(wk),days:d1}].concat(d2.length>d1.length?[{from:dt(wk+3),days:d2}]:[])}
-      if(t==='bacid')p.ph=[{from:dt(2),days:[4]},{from:dt(4),days:[1,4]}];
+      var nm=String((D.names||{})[t]||'').trim().slice(0,60), p={id:t+'-'+(n++),t:t,name:nm||'Your '+TYPES[t].n.charAt(0).toLowerCase()+TYPES[t].n.slice(1),on:true};
+      if(t==='ret'&&preg){p.on=false;p.note='Paused for pregnancy or breastfeeding'}
+      else if(TYPES[t].act){var i=order.indexOf(t), wk=2+i*gap, a=Math.min(careful?1:2,per), cap=careful&&t==='exf'?Math.min(2,per):per, free=PREF.filter(function(k){return !used[k]&&k!==state.rest}), d1=free.slice(0,a).sort(), d2=free.slice(0,Math.max(a,Math.min(a+1,cap))).sort();
+        d2.forEach(function(k){used[k]=1}); p.ph=[{from:dt(wk),days:d1}].concat(d2.length>d1.length?[{from:dt(wk+ramp),days:d2}]:[])}
+      if(t==='bacid')p.ph=[{from:dt(2),days:[4]},{from:dt(careful?5:4),days:[1,4]}];
       if(t==='vc')p.ph=[{from:dt(2),days:[1,3,5]},{from:dt(3)}];
       if(t==='mask')p.ph=[{from:dt(order.length?7:2),days:[state.rest],every:2}];
+      if(quick&&t==='oil'){p.on=false;p.note='Paused to keep your routine quick'}
+      if(quick&&(t==='tn'||t==='serum'))p.slot='pm';
+      if(t==='shamp'&&prot)p.note='Scalp focus. Let the suds run down the length';
       list.push(p)});
-    var w=+D.washes||2; state.hair.washDays=w===1?[6]:w===2?[2,6]:w===3?[1,3,5]:[1,2,4,6];
-    state.products=list; state.start=st; state.profile={skin:'',sens:sens,face:D.face,body:D.body,hair:D.hair,tex:D.tex,por:D.por,washes:w,styles:[]}; state.setup=true;
+    state.products=list; setWash(D.washes); state.start=key(base); state.profile=pickProfile(D); addWants(D); state.setup=true;
   }
+  /* places a newly added or newly bought active on free nights, starting slowly */
+  function planActive(np){
+    if(np.t==='ret'&&(state.profile.preg==='y'||state.profile.preg==='s')){np.on=false;np.note='Paused for pregnancy or breastfeeding';return}
+    var bact=!T(np).act, taken={};
+    state.products.forEach(function(x){if(x!==np&&x.on&&(bact?T(x).bact:T(x).act))(x.ph||[]).forEach(function(f){(f.days||[]).forEach(function(k){taken[k]=1})})});
+    var free=[2,5,1,4,3,6].filter(function(k){return !taken[k]&&k!==state.rest});
+    if(!free.length){ui.msg2='Every night already has an active, so this one starts paused. Pick its days on the product page.';np.on=false;return}
+    var a1=(state.profile.sens>=2||state.profile.pih==='y')?1:2;
+    np.ph=[{from:key(today()),days:free.slice(0,a1).sort()}].concat(free.length>a1?[{from:key(addDays(today(),21)),days:free.slice(0,a1+1).sort()}]:[]);
+  }
+
+  /* ---------- shelf extras: shopping list, suggestions, recipes ---------- */
+  function shopHtml(){var L=state.products.filter(function(p){return p.buy});if(!L.length)return '';
+    return '<section class="card"><div class="rowh"><h2>Shopping list</h2><span class="hand">'+L.length+' to get</span></div>'+L.map(function(p){
+      return '<button class="shop" data-act="psel" data-id="'+esc(p.id)+'"><i class="box"></i><span><b>'+esc(p.name)+'</b><small>'+AREAS[T(p).a].n+' · '+esc(label(p))+(p.note?' · '+esc(p.note):'')+'</small></span></button>'}).join('')+
+      '<p class="tiny" style="margin-top:8px">Bought it? Open it and switch off Still to buy. It joins your routine, starting slowly if it’s an active.</p></section>'}
+  function sugHtml(){var own={};state.products.forEach(function(p){own[p.t]=1});var L=suggest(state.profile,own).slice(0,5);if(!L.length)return '';
+    return '<section class="card"><h2>Worth adding</h2><p class="sub" style="margin-top:4px">Based on what you told Rota. Add one to your shopping list.</p>'+L.map(function(x){
+      return '<div class="sug"><span><span class="tiny">'+AREAS[TYPES[x[0]].a].n+' · '+TYPES[x[0]].n+'</span><b>'+HINT[x[0]]+'</b><small>'+x[1]+'</small></span><button class="btn sm ghost" data-act="want" data-id="'+x[0]+'" data-w="'+esc(x[1])+'">'+ic('plus')+'List</button></div>'}).join('')+'</section>'}
+  var RECIPES={
+    butter:['Whipped body butter','Makes about 100 g. Weigh everything.','g',[['Shea butter',70],['Jojoba oil',14],['Rosehip oil',10],['Tamanu oil',5],['Vitamin E oil',1]],
+      ['Melt the shea butter gently in a bowl over simmering water.','Take it off the heat and stir in the jojoba.','When it starts to turn cloudy, stir in the rosehip, tamanu and vitamin E. They don’t like heat.','Chill 15 to 20 minutes, until the edges firm up.','Whip 3 to 5 minutes until fluffy, then spoon into a clean jar.'],
+      'Scoop with dry hands so no water gets in. Best within 3 months. No lavender needed. Tamanu comes from a nut, so leave it out if you have a nut allergy.'],
+    oil:['Body oil','Makes 100 ml.','ml',[['Jojoba oil',70],['Rosehip oil',20],['Tamanu oil',9],['Vitamin E oil',1]],
+      ['Pour everything into a clean, dark glass bottle.','Shake before each use.','Press into damp skin after your shower, or over your lotion.'],
+      'Keep it out of the sun. Best within 3 months. Same nut note for the tamanu.']};
+  function recipesHtml(){var r=ui.rec&&RECIPES[ui.rec];
+    return '<section class="card"><h2>Mix your own</h2><div class="pills" style="margin-top:12px">'+Object.keys(RECIPES).map(function(k){return '<button class="pill" data-act="rec" data-id="'+k+'" aria-pressed="'+(ui.rec===k)+'">'+RECIPES[k][0]+'</button>'}).join('')+'</div>'+
+      (r?'<p class="sub" style="margin-top:12px">'+r[1]+'</p><div style="margin-top:8px">'+r[3].map(function(x){return '<div class="ing"><span>'+x[0]+'</span><i style="--w:'+x[1]+'%"></i><b class="num">'+x[1]+' '+r[2]+'</b></div>'}).join('')+'</div>'+
+        '<ol class="recsteps">'+r[4].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol><p class="tiny">'+r[5]+'</p>':'<p class="tiny" style="margin-top:10px">Tap one to see the recipe.</p>')+'</section>'}
 
 
   /* ================= interactive layer ================= */
@@ -914,7 +1089,7 @@ textarea.inp{min-height:80px;resize:vertical}
     if(!G)return; var dx=e.clientX-G.x, dy=e.clientY-G.y;
     if(G.k==='sw'){if(!G.on){if(Math.abs(dx)>12&&Math.abs(dx)>Math.abs(dy)*1.3){G.on=true;G.el.classList.add('dragging');try{G.el.setPointerCapture(e.pointerId)}catch(x){}}else if(Math.abs(dy)>12){G=null;return}else return}
       G.dx=dx;G.el.style.transform='translateX('+Math.max(-140,Math.min(140,dx))+'px) rotate('+(dx/40)+'deg)';G.el.classList.toggle('sw-r',dx>80);G.el.classList.toggle('sw-l',dx<-80);e.preventDefault()}
-    else if(G.k==='ch'){if(!G.on&&Math.hypot(dx,dy)>8){G.on=true;G.g=G.el.cloneNode(true);G.g.classList.add('ghost');document.body.appendChild(G.g);try{G.el.setPointerCapture(e.pointerId)}catch(x){}}
+    else if(G.k==='ch'){if(!G.on&&Math.hypot(dx,dy)>8){G.on=true;G.g=G.el.cloneNode(true);G.g.classList.add('dragghost');document.body.appendChild(G.g);try{G.el.setPointerCapture(e.pointerId)}catch(x){}}
       if(G.on){G.g.style.left=e.clientX+'px';G.g.style.top=e.clientY+'px';var hot=document.elementFromPoint(e.clientX,e.clientY);document.querySelectorAll('.slot').forEach(function(s){s.classList.toggle('hot',!!hot&&s.contains(hot))});e.preventDefault()}}
     else if(G.k==='gr'&&G.el){G.on=true;G.dy=e.clientY-G.y;G.el.style.transition='none';G.el.style.maxHeight=Math.max(0,Math.min(220,(ui.peek?220:0)+G.dy*1.4))+'px'}
   },{passive:false});
@@ -932,7 +1107,7 @@ textarea.inp{min-height:80px;resize:vertical}
   /* ---------- render ---------- */
   function render(){
     applyLook();
-    if(!state.setup){docknav.hidden=true;setPillar('face');if(!ui.obd)ui.obd={face:[],body:[],hair:[],sens:'1',tex:'',por:'',washes:'2',shelf:{}};app.innerHTML=vOnboard();return}
+    if(!state.setup||(ui.obd&&ui.obd.keep)){docknav.hidden=true;timerEl.hidden=true;fx.innerHTML='';if(!ui.obd)ui.obd=blankObd();app.innerHTML=vOnboard();return}
     docknav.hidden=false;
     setPillar(ui.tab==='area'?ui.area:'face');
     if(ui.play){docknav.hidden=true;app.innerHTML=vPlay();paintTimer();fxRender();ui.pop=null;return}
@@ -987,8 +1162,8 @@ textarea.inp{min-height:80px;resize:vertical}
     else if(a==='shelfa'){ui.shelf=id;render()}
     else if(a==='psel'){ui.sel=id;ui.rm=false;render();window.scrollTo(0,0)}
     else if(a==='pclose'){ui.sel=null;ui.msg2='';render()}
-    else if(a==='pon'){p=prod(ui.sel);p.on=!p.on;commit()}
-    else if(a==='pbuy'){p=prod(ui.sel);p.buy=!p.buy;commit()}
+    else if(a==='pon'){p=prod(ui.sel);p.on=!p.on;ui.msg2='';if(p.on&&(T(p).act||T(p).bact)&&!p.ph)planActive(p);commit()}
+    else if(a==='pbuy'){p=prod(ui.sel);p.buy=!p.buy;ui.msg2='';if(!p.buy&&!p.on){p.on=true;if((T(p).act||T(p).bact)&&!p.ph)planActive(p)}commit()}
     else if(a==='pao'){p=prod(ui.sel);p.pao=Math.max(0,Math.min(60,(p.pao!=null?p.pao:T(p).pao)+(+id)));commit()}
     else if(a==='wait'){p=prod(ui.sel);p.wait=Math.max(0,Math.min(60,(p.wait!=null?p.wait:(T(p).wait||0))+(+id)));commit()}
     else if(a==='pslot'){p=prod(ui.sel);p.slot=id==='both'?undefined:id;commit()}
@@ -1002,8 +1177,7 @@ textarea.inp{min-height:80px;resize:vertical}
     else if(a==='lookup')lookup();
     else if(a==='hit'){var h=ui.add.hits[+id];Object.assign(ui.add,h);ui.add.res='<p class="tiny">Filled in below. Check the type before adding.</p>';render()}
     else if(a==='addsave'){var A=ui.add, np={id:'u'+Date.now().toString(36),t:A.t,name:A.name.trim().slice(0,60),on:true,buy:!!A.buy,opened:isDate(A.opened)?A.opened:'',pao:A.pao!=null?A.pao:TYPES[A.t].pao};
-      if(TYPES[A.t].act||TYPES[A.t].bact){var taken=TYPES[A.t].act?(function(){var t={};state.products.forEach(function(x){if(x.on&&T(x).act)(x.ph||[]).forEach(function(f){(f.days||[]).forEach(function(k){t[k]=1})})});return t})():(function(){var t={};state.products.forEach(function(x){if(x.on&&T(x).bact)(x.ph||[]).forEach(function(f){(f.days||[]).forEach(function(k){t[k]=1})})});return t})();
-        var free=[2,5,1,4,3,6].filter(function(k){return !taken[k]&&k!==state.rest}); if(!free.length)ui.msg2='Every night already has an active, so this one starts paused. Pick its days on the product page.'; var a1=state.profile.sens>=2?1:2; np.ph=free.length?[{from:key(today()),days:free.slice(0,a1).sort()}].concat(free.length>a1?[{from:key(addDays(today(),21)),days:free.slice(0,a1+1).sort()}]:[]):undefined; if(!free.length)np.on=false}
+      if(TYPES[A.t].act||TYPES[A.t].bact)planActive(np);
       state.products.push(np);ui.add=null;ui.sel=np.id;ui.shelf='all';commit();window.scrollTo(0,0)}
     else if(a==='jd'){var nd=addDays(ui.jday?parse(ui.jday):today(),+id);if(days(nd)<=days(today())){ui.jday=key(nd);render()}}
     else if(a==='jr'){var jj=J(ui.jday?parse(ui.jday):today()),v=+b.dataset.v;jj[id]=jj[id]===v?undefined:v;commit()}
@@ -1012,15 +1186,22 @@ textarea.inp{min-height:80px;resize:vertical}
     else if(a==='photo')document.getElementById('shot').click();
     else if(a==='pick2'){if(ui.cmpB===id)ui.cmpA=id;else ui.cmpB=id;render()}
     else if(a==='wd'){var w=state.hair.washDays,k3=+id,i3=w.indexOf(k3);if(i3>=0)w.splice(i3,1);else w.push(k3);w.sort();commit()}
-    else if(a==='redo'){ui.ob=1;ui.obd={face:state.profile.face.slice(),body:state.profile.body.slice(),hair:state.profile.hair.slice(),sens:String(state.profile.sens),tex:state.profile.tex,por:state.profile.por,washes:String(state.profile.washes),shelf:{},keep:true};state.setup=false;render();window.scrollTo(0,0)}
+    else if(a==='redo'){var PF=state.profile;ui.obd=Object.assign(blankObd(),{name:state.name,face:PF.face.slice(),body:PF.body.slice(),hair:PF.hair.slice(),sens:String(PF.sens),pih:PF.pih||'',tex:PF.tex||'',chem:PF.chem||'',por:PF.por||'',styles:(PF.styles||[]).slice(),washes:String(PF.washes),time:PF.time||'full',rest:String(state.rest),preg:PF.preg||'',keep:true});ui.ob=obPages().length;render();window.scrollTo(0,0)}
     else if(a==='export')exportData();
     else if(a==='import')document.getElementById('restore').click();
-    else if(a==='obn'){if(ui.ob===OB.length){if(ui.obd.keep){state.profile=Object.assign(state.profile,{face:ui.obd.face,body:ui.obd.body,hair:ui.obd.hair,sens:+ui.obd.sens,tex:ui.obd.tex,por:ui.obd.por,washes:+ui.obd.washes});state.setup=true}else build(ui.obd);ui.tab='home';ui.ob=0;commit()}else{ui.ob++;render()}window.scrollTo(0,0)}
-    else if(a==='obb'){ui.ob=Math.max(0,ui.ob-1);render()}
-    else if(a==='obo'){var Q=OB[ui.ob-1];if(Q.multi){var arr=ui.obd[Q.k],ii=arr.indexOf(id);if(ii>=0)arr.splice(ii,1);else arr.push(id)}else ui.obd[Q.k]=id;render()}
+    else if(a==='obn'){var D=ui.obd,N=obPages().length;if(ui.ob>=N){obFinish();return}if(ui.ob>0&&D.ret){D.ret=false;ui.ob=N}else ui.ob++;render();window.scrollTo(0,0)}
+    else if(a==='obb'){var D2=ui.obd,N2=obPages().length;if(D2.keep&&ui.ob>=N2){ui.obd=null;ui.ob=0;render()}else if(D2.ret){D2.ret=false;ui.ob=N2;render()}else{ui.ob=Math.max(0,ui.ob-1);render()}window.scrollTo(0,0)}
+    else if(a==='obo'){var kk=b.dataset.k,D3=ui.obd;if(MULTI[kk]){var arr=D3[kk];if(id==='none')D3[kk]=arr.indexOf('none')>=0?[]:['none'];else{arr=arr.filter(function(x){return x!=='none'});var ii=arr.indexOf(id);if(ii>=0)arr.splice(ii,1);else arr.push(id);D3[kk]=arr}}else D3[kk]=id;render()}
     else if(a==='obs'){ui.obd.shelf[id]=!ui.obd.shelf[id];render()}
+    else if(a==='obgo'){var ix=obPages().map(function(p){return p.id}).indexOf(id);if(ix>=0){ui.ob=ix+1;ui.obd.ret=true;render();window.scrollTo(0,0)}}
+    else if(a==='obw'){var W=ui.obd.want;if(W[id])delete W[id];else W[id]=b.dataset.w||true;render()}
+    else if(a==='want'){if(!state.products.some(function(p){return p.t===id}))state.products.push({id:'w'+id+'-'+Date.now().toString(36),t:id,name:HINT[id]||TYPES[id].n,on:false,buy:true,note:b.dataset.w||undefined});commit()}
+    else if(a==='rec'){ui.rec=ui.rec===id?null:id;render()}
+    else if(a==='wevery'){state.hair.every=+id;if(!state.hair.anchor)state.hair.anchor=key(today());commit()}
   });
   document.addEventListener('input',function(e){var t=e.target;
+    if(t.id==='obname'&&ui.obd){ui.obd.name=t.value;return}
+    if(t.dataset&&t.dataset.obn&&ui.obd){ui.obd.names[t.dataset.obn]=t.value;return}
     if(t.id==='q'){ui.q=t.value;var pos=t.selectionStart;render();var n=document.getElementById('q');n.focus();n.setSelectionRange(pos,pos)}
     else if(t.id==='aq'){ui.add.q=t.value;ui.add.res='';var p2=t.selectionStart;render();var n2=document.getElementById('aq');n2.focus();n2.setSelectionRange(p2,p2)}
     else if(t.id==='nn'){ui.add.name=t.value;var bt=document.querySelector('[data-act=addsave]');if(bt)bt.disabled=!t.value.trim()}
@@ -1081,12 +1262,14 @@ textarea.inp{min-height:80px;resize:vertical}
     do{dirty=false;try{await ref.set(JSON.parse(JSON.stringify(state)))}catch(e){if(e&&e.code==='invalid_argument')readOnly=true;break}}while(dirty);writing=false}
   function obj(o){return o&&typeof o==='object'&&!Array.isArray(o)?JSON.parse(JSON.stringify(o)):{}}
   function cleanPh(ph){if(!Array.isArray(ph))return undefined;var o=ph.filter(function(f){return f&&isDate(f.from)}).slice(0,8).map(function(f){var r={from:f.from};if(Array.isArray(f.days))r.days=f.days.map(Number).filter(function(x){return x>=0&&x<=6});if(+f.every>1)r.every=Math.min(8,Math.floor(+f.every));return r});return o.length?o:undefined}
+  function sv(x){return typeof x==='string'?x.slice(0,12):''}
+  function strs(a,area){var L=(LEG[area]||{});return Array.isArray(a)?a.filter(function(x){return typeof x==='string'}).slice(0,20).map(function(x){return L[x]||x}).filter(function(x,i,o){return o.indexOf(x)===i}):[]}
   function adopt(d){
     if(!d||typeof d!=='object'||d.v!==3)return;
     var b=blank(), h=obj(d.hair), pr=obj(d.profile);
     state={v:3,setup:!!d.setup,name:typeof d.name==='string'?d.name.slice(0,20):'',start:isDate(d.start)?d.start:b.start,rest:(+d.rest>=0&&+d.rest<=6)?Math.floor(+d.rest):0,
-      profile:Object.assign(b.profile,{face:Array.isArray(pr.face)?pr.face:[],body:Array.isArray(pr.body)?pr.body:[],hair:Array.isArray(pr.hair)?pr.hair:[],sens:+pr.sens||0,tex:String(pr.tex||''),por:String(pr.por||''),washes:+pr.washes||2,styles:Array.isArray(pr.styles)?pr.styles:[]}),
-      hair:{washDays:Array.isArray(h.washDays)?h.washDays.map(Number).filter(function(x){return x>=0&&x<=6}):[],installed:isDate(h.installed)?h.installed:null,takedown:isDate(h.takedown)?h.takedown:null,trim:isDate(h.trim)?h.trim:null},
+      profile:Object.assign(b.profile,{face:strs(pr.face,'face'),body:strs(pr.body,'body'),hair:strs(pr.hair,'hair'),sens:+pr.sens||0,pih:sv(pr.pih),tex:sv(pr.tex),chem:sv(pr.chem),por:sv(pr.por),washes:String(pr.washes||'2').slice(0,3),styles:strs(pr.styles),time:pr.time==='quick'?'quick':'full',preg:sv(pr.preg)}),
+      hair:{washDays:Array.isArray(h.washDays)?h.washDays.map(Number).filter(function(x){return x>=0&&x<=6}):[],installed:isDate(h.installed)?h.installed:null,takedown:isDate(h.takedown)?h.takedown:null,trim:isDate(h.trim)?h.trim:null,every:(+h.every>=1&&+h.every<=8)?Math.floor(+h.every):1,anchor:isDate(h.anchor)?h.anchor:null},
       products:(Array.isArray(d.products)?d.products:[]).filter(function(p){return p&&typeof p.id==='string'&&TYPES[p.t]}).slice(0,80).map(function(p){
         return {id:p.id.slice(0,30),t:p.t,name:String(p.name||'').slice(0,60),label:p.label?String(p.label).slice(0,40):undefined,note:p.note?String(p.note).slice(0,80):undefined,on:p.on!==false,buy:!!p.buy,
           slot:['am','pm','wash','night'].indexOf(p.slot)>=0?p.slot:undefined,opened:isDate(p.opened)?p.opened:'',pao:p.pao!=null&&+p.pao>=0?Math.min(60,Math.floor(+p.pao)):undefined,wait:p.wait!=null&&+p.wait>=0?Math.min(60,Math.floor(+p.wait)):undefined,ph:cleanPh(p.ph)}}),
