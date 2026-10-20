@@ -1,11 +1,11 @@
 {
- "name": "AuraSkin & Care",
- "short_name": "AuraSkin",
+ "name": "Rota",
+ "short_name": "Rota",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
- "background_color": "#120E17",
- "theme_color": "#120E17",
+ "background_color": "#fff3df",
+ "theme_color": "#fff3df",
  "icons": [
   {
    "src": "icon-192.png",
